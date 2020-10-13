@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `nome` VARCHAR(100) NOT NULL,
   `senha` VARCHAR(100) NOT NULL,
   `tipo` CHAR(1) NOT NULL,
-  `data_acesso` DATETIME NOT NULL,
+  `dataAcesso` DATETIME NOT NULL,
   `ativo` BIT NOT NULL,
   PRIMARY KEY (`idUsuario`))
 ENGINE = InnoDB;
@@ -34,11 +34,11 @@ ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `Veiculo` (
   `idVeiculo` INT NOT NULL,
-  `Marca` VARCHAR(100) NULL,
-  `Modelo` VARCHAR(100) NULL,
-  `Cor` VARCHAR(100) NULL,
-  `Placa` CHAR(7) NOT NULL,
-  `Tipo` CHAR(1) NULL,
+  `marca` VARCHAR(100) NULL,
+  `modelo` VARCHAR(100) NULL,
+  `cor` VARCHAR(100) NULL,
+  `placa` CHAR(7) NOT NULL,
+  `tipo` CHAR(1) NULL,
   `idCliente` INT NOT NULL,
   PRIMARY KEY (`idVeiculo`),
   INDEX `FK_Veiculo_Cliente_idx` (`idCliente` ASC) VISIBLE,
@@ -49,11 +49,13 @@ CREATE TABLE IF NOT EXISTS `Veiculo` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+
 CREATE TABLE IF NOT EXISTS `Vaga` (
   `idVaga` INT NOT NULL,
-  `Patio` VARCHAR(100) NOT NULL,
-  `Disponivel` BIT NOT NULL,
-  `CodVaga` CHAR(3) NOT NULL,
+  `patio` VARCHAR(100) NOT NULL,
+  `disponivel` BIT NOT NULL,
+  `codVaga` CHAR(3) NOT NULL,
   PRIMARY KEY (`idVaga`))
 ENGINE = InnoDB;
 
@@ -89,18 +91,18 @@ CREATE TABLE `Regra` (
 ENGINE = InnoDB;
  
 CREATE TABLE `Usuario_Regra` (
-  `usuario_id` INT NOT NULL,
-  `regra_id` INT NOT NULL,
-  PRIMARY KEY (`usuario_id`, `regra_id`),
-  INDEX `fk_Usuario_Regra_Regra_idx` (`regra_id` ASC),
-  INDEX `fk_Usuario_Regra_Usuario_idx` (`usuario_id` ASC),
+  `idUsuario` INT NOT NULL,
+  `idRegra` INT NOT NULL,
+  PRIMARY KEY (`idUsuario`, `idRegra`),
+  INDEX `fk_Usuario_Regra_regraIdx` (`idRegra` ASC),
+  INDEX `fk_Usuario_regraIdUsuariox` (`idUsuario` ASC),
   CONSTRAINT `fk_Usuario_Regra_Usuario`
-    FOREIGN KEY (`usuario_id`)
+    FOREIGN KEY (`idUsuario`) 
     REFERENCES `Usuario` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Usuario_Regra_Regra`
-    FOREIGN KEY (`regra_id`)
+    FOREIGN KEY (`idRegra`)
     REFERENCES `Regra` (`idRegra`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
