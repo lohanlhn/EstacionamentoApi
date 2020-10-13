@@ -74,7 +74,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Veiculo_Vaga`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Veiculo_Vaga` (
+CREATE TABLE IF NOT EXISTS `Vaga_Ocupada` (
   `id` INT NOT NULL,
   `horaEntrada` DATETIME NOT NULL,
   `horaSaida` DATETIME NULL,
