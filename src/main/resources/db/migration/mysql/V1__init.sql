@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `Valores` (
   `id` INT NOT NULL,
-  `tipo` VARCHAR(100) NOT NULL,
+  `minutagem` VARCHAR(100) NOT NULL,
   `valor` DOUBLE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
