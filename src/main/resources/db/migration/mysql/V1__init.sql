@@ -1,3 +1,6 @@
+-- -----------------------------------------------------
+-- Table `Valores`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Valores` (
   `id` INT NOT NULL,
   `minutagem` VARCHAR(100) NOT NULL,
@@ -17,7 +20,8 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `tipo` CHAR(1) NOT NULL,
   `dataAcesso` DATETIME NOT NULL,
   `ativo` BIT NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -26,11 +30,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Cliente` (
   `id` INT NOT NULL,
-  `telefone` CHAR(11) NULL,
-  `cpf` VARCHAR(12) NULL,
+  `telefone` CHAR(11) NULL DEFAULT NULL,
+  `cpf` VARCHAR(12) NULL DEFAULT NULL,
   `idUsuario` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC) VISIBLE,
+  INDEX `FK_Cliente_Usuario` (`idUsuario` ASC) VISIBLE,
   CONSTRAINT `FK_Cliente_Usuario`
     FOREIGN KEY (`idUsuario`)
     REFERENCES `Usuario` (`id`)
@@ -44,10 +49,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Veiculo` (
   `id` INT NOT NULL,
-  `marca` VARCHAR(100) NULL,
-  `cor` VARCHAR(100) NULL,
+  `marca` VARCHAR(100) NULL DEFAULT NULL,
+  `cor` VARCHAR(100) NULL DEFAULT NULL,
   `placa` CHAR(7) NOT NULL,
-  `tipo` CHAR(1) NULL,
+  `tipo` CHAR(1) NULL DEFAULT NULL,
   `idCliente` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `placa_UNIQUE` (`placa` ASC) VISIBLE,
@@ -72,13 +77,13 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Veiculo_Vaga`
+-- Table `Vaga_Ocupada`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Vaga_Ocupada` (
   `id` INT NOT NULL,
   `horaEntrada` DATETIME NOT NULL,
-  `horaSaida` DATETIME NULL,
-  `valor` DOUBLE NULL,
+  `horaSaida` DATETIME NULL DEFAULT NULL,
+  `valor` DOUBLE NULL DEFAULT NULL,
   `idVaga` INT NOT NULL,
   `idVeiculo` INT NOT NULL,
   PRIMARY KEY (`id`),
