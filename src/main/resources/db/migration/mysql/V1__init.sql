@@ -1,9 +1,11 @@
 -- -----------------------------------------------------
 -- Table `Valores`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `Valores` ;
+
 CREATE TABLE IF NOT EXISTS `Valores` (
   `id` INT NOT NULL,
-  `minutagem` VARCHAR(100) NOT NULL,
+  `minutagem` INT NOT NULL,
   `valor` DOUBLE NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -12,6 +14,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Usuario`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `Usuario` ;
+
 CREATE TABLE IF NOT EXISTS `Usuario` (
   `id` INT NOT NULL,
   `nome` VARCHAR(100) NOT NULL,
@@ -28,6 +32,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Cliente`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `Cliente` ;
+
 CREATE TABLE IF NOT EXISTS `Cliente` (
   `id` INT NOT NULL,
   `telefone` CHAR(11) NULL DEFAULT NULL,
@@ -47,6 +53,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Veiculo`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `Veiculo` ;
+
 CREATE TABLE IF NOT EXISTS `Veiculo` (
   `id` INT NOT NULL,
   `marca` VARCHAR(100) NULL DEFAULT NULL,
@@ -68,6 +76,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Vaga`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `Vaga` ;
+
 CREATE TABLE IF NOT EXISTS `Vaga` (
   `id` INT NOT NULL,
   `codVaga` CHAR(3) NOT NULL,
@@ -79,11 +89,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Vaga_Ocupada`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `Vaga_Ocupada` ;
+
 CREATE TABLE IF NOT EXISTS `Vaga_Ocupada` (
   `id` INT NOT NULL,
   `horaEntrada` DATETIME NOT NULL,
   `horaSaida` DATETIME NULL DEFAULT NULL,
   `valor` DOUBLE NULL DEFAULT NULL,
+  `paga` BIT NOT NULL,
   `idVaga` INT NOT NULL,
   `idVeiculo` INT NOT NULL,
   PRIMARY KEY (`id`),
