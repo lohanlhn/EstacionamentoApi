@@ -1,8 +1,6 @@
 -- -----------------------------------------------------
 -- Table `Valores`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Valores` ;
-
 CREATE TABLE IF NOT EXISTS `Valores` (
   `id` INT NOT NULL,
   `minutagem` INT NOT NULL,
@@ -14,8 +12,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Usuario`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Usuario` ;
-
 CREATE TABLE IF NOT EXISTS `Usuario` (
   `id` INT NOT NULL,
   `nome` VARCHAR(100) NOT NULL,
@@ -32,12 +28,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Cliente`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Cliente` ;
-
 CREATE TABLE IF NOT EXISTS `Cliente` (
   `id` INT NOT NULL,
   `telefone` CHAR(11) NULL DEFAULT NULL,
-  `cpf` VARCHAR(12) NULL DEFAULT NULL,
+  `cpf` CHAR(11) NULL DEFAULT NULL,
   `idUsuario` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC) VISIBLE,
@@ -53,14 +47,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Veiculo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Veiculo` ;
-
 CREATE TABLE IF NOT EXISTS `Veiculo` (
   `id` INT NOT NULL,
   `marca` VARCHAR(100) NULL DEFAULT NULL,
   `cor` VARCHAR(100) NULL DEFAULT NULL,
   `placa` CHAR(7) NOT NULL,
-  `tipo` CHAR(1) NULL DEFAULT NULL,
+  `tipo` CHAR(1) NOT NULL,
   `idCliente` INT NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `placa_UNIQUE` (`placa` ASC) VISIBLE,
@@ -76,8 +68,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `Vaga`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Vaga` ;
-
 CREATE TABLE IF NOT EXISTS `Vaga` (
   `id` INT NOT NULL,
   `codVaga` CHAR(3) NOT NULL,
@@ -87,11 +77,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Vaga_Ocupada`
+-- Table `VagaOcupada`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `Vaga_Ocupada` ;
-
-CREATE TABLE IF NOT EXISTS `Vaga_Ocupada` (
+CREATE TABLE IF NOT EXISTS `VagaOcupada` (
   `id` INT NOT NULL,
   `horaEntrada` DATETIME NOT NULL,
   `horaSaida` DATETIME NULL DEFAULT NULL,

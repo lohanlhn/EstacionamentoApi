@@ -12,16 +12,17 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Valores")
 public class Valores implements Serializable{
-	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+   	private static final long serialVersionUID = 1L;
+	
+   	@Id
+   	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@Column(name = "tipo", length = 100,nullable = false)
-	private String tipo;
-	
-	@Column(name = "valor", nullable = false)
+   	
+   	@Column(name = "minutagem", nullable = false)
+	private int minutagem;
+   	
+   	@Column(name = "valor", nullable = false)
 	private double valor;
 
 	public int getId() {
@@ -32,12 +33,12 @@ public class Valores implements Serializable{
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public int getMinutagem() {
+		return minutagem;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setMinutagem(int minutagem) {
+		this.minutagem = minutagem;
 	}
 
 	public double getValor() {
@@ -50,8 +51,8 @@ public class Valores implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Valores [id=" + id + ", tipo=" + tipo + ", valor=" + valor + "]";
+		return "Valores [id=" + id + ", minutagem=" + minutagem + ", valor=" + valor + "]";
 	}
-	
-	
+   	
+   	
 }

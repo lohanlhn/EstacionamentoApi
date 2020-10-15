@@ -2,49 +2,45 @@ package com.estacionamento.api.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "Usuario")
-public class Usuario implements Serializable {
-
+public class Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+   	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-
+	
 	@Column(name = "nome", nullable = false, length = 100)
 	private String nome;
-
-	@Column(name = "cpf", nullable = false, length = 11, unique = true)
-	private String cpf;
-
+	
+	@Column(name = "email", nullable = false, length = 100,unique = true)
+	private String email;
+	
 	@Column(name = "senha", nullable = false, length = 100)
 	private String senha;
-
+	
+	@Column(name = "tipo", nullable = false)
+	private char tipo;
+	
+	@Column(name = "dataAcesso", nullable = false)
+	private Date dataAcesso;
+	
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo;
-
-	@Column(name = "data_Acesso", nullable = false)
-	private Date dataAcesso;
-
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "Usuario_Regra", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "regra_id") })
-	private List<Regra> regras;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	private Cliente cliente;
 
 	public int getId() {
 		return id;
@@ -62,12 +58,12 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getCpf() {
-		return cpf;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSenha() {
@@ -78,20 +74,12 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
-	public boolean getAtivo() {
-		return ativo;
+	public char getTipo() {
+		return tipo;
 	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-
-	public List<Regra> getRegras() {
-		return regras;
-	}
-
-	public void setRegras(List<Regra> regras) {
-		this.regras = regras;
+	public void setTipo(char tipo) {
+		this.tipo = tipo;
 	}
 
 	public Date getDataAcesso() {
@@ -102,10 +90,19 @@ public class Usuario implements Serializable {
 		this.dataAcesso = dataAcesso;
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario[id=" + id + "," + "nome=" + nome + "," + "cpf=" + cpf + "," + "senha=" + senha + "," + "ativo="
-				+ ativo + "]";
+	public boolean isAtivo() {
+		return ativo;
 	}
 
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", tipo=" + tipo
+				+ ", dataAcesso=" + dataAcesso + ", ativo=" + ativo + "]";
+	}
+	
+	
 }
