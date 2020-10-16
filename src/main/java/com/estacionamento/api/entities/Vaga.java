@@ -18,9 +18,40 @@ public class Vaga implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name = "codVaga", length = 3, nullable = false)
+	@Column(name = "codVaga", length = 3, nullable = false, unique = true)
 	private String codVaga;
 	
 	@Column(name = "disponivel", nullable = false)
 	private boolean disponivel;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getCodVaga() {
+		return codVaga;
+	}
+
+	public void setCodVaga(String codVaga) {
+		this.codVaga = codVaga;
+	}
+
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
+	}
+
+	@Override
+	public String toString() {
+		return "Vaga [id=" + id + ", codVaga=" + codVaga + ", disponivel=" + disponivel + "]";
+	}
+	
+	
 }
