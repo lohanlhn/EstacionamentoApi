@@ -21,6 +21,6 @@ public class Vaga implements Serializable {
 	@Column(name = "codVaga", length = 3, nullable = false)
 	private String codVaga;
 	
-	@Column(name = "codVaga", nullable = false)
+	@Column(name = "disponivel", nullable = false)
 	private boolean disponivel;
 }
