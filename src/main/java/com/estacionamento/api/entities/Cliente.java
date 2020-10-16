@@ -32,11 +32,11 @@ public class Cliente implements Serializable {
 	@Column(name = "cpf", length = 11 ,unique = true)
 	private String cpf;
 
-	@OneToOne(mappedBy = "Cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Usuario usuario;
 	
 	@JsonManagedReference
-	@OneToMany(mappedBy = "Cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Veiculo> veiculos; 
 
 	public int getId() {

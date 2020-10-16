@@ -14,10 +14,10 @@ import com.estacionamento.api.utils.ConsistenciaException;
 @Service
 public class ValoresService {
 
-private static final Logger log = LoggerFactory.getLogger(ValoresService.class);
-	
+	private static final Logger log = LoggerFactory.getLogger(ValoresService.class);
+
 	@Autowired
-	private ValoresRepository valoresRepository ;
+	private ValoresRepository valoresRepository;
 
 	public Optional<Valores> buscarPorId(int id) throws ConsistenciaException {
 		log.info("Service: buscando um valores com o id: {}", id);
@@ -38,9 +38,8 @@ private static final Logger log = LoggerFactory.getLogger(ValoresService.class);
 
 		if (valores.getId() > 0)
 			buscarPorId(valores.getId());
-		
-			return valoresRepository.save(valores);
-		
+
+		return valoresRepository.save(valores);
 
 	}
 }
