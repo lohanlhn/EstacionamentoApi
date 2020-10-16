@@ -1,5 +1,9 @@
 package com.estacionamento.api.repositories;
 
-public interface ValoresRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.estacionamento.api.entities.Valores;
+
+public interface ValoresRepository extends JpaRepository<Valores, Integer>{
 
 }

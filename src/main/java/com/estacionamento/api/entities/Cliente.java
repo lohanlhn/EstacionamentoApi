@@ -29,7 +29,7 @@ public class Cliente implements Serializable {
 	@Column(name = "telefone", length = 11)
 	private String telefone;
 
-	@Column(name = "cpf", length = 11)
+	@Column(name = "cpf", length = 11 ,unique = true)
 	private String cpf;
 
 	@OneToOne(mappedBy = "Cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
