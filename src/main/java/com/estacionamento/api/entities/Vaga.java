@@ -40,13 +40,15 @@ public class Vaga implements Serializable {
 		this.codVaga = codVaga;
 	}
 
-	public boolean isDisponivel() {
+	public boolean getDisponivel() {
 		return disponivel;
 	}
 
 	public void setDisponivel(boolean disponivel) {
 		this.disponivel = disponivel;
 	}
+	
+	
 
 	@Override
 	public String toString() {

@@ -1,5 +1,6 @@
 package com.estacionamento.api.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -46,5 +47,26 @@ public class VagaService {
 			throw new ConsistenciaException("O CodVaga: {} já está cadastrado para outra vaga", vaga.getCodVaga());
 		}
 
+	}
+
+	public Optional<List<Vaga>> buscarTodasAsVagas() throws ConsistenciaException {
+		log.info("Service: buscando todas os vagas");
+
+		Optional<List<Vaga>> vagas = Optional.ofNullable(vagaRepository.findAll());
+
+		if (!vagas.isPresent() || vagas.get().size() < 0) {
+			log.info("Service: nenhuma vaga foi encontrada");
+			throw new ConsistenciaException("Nenhum vaga foi encontrada");
+		}
+		return vagas;
+	}
+	
+	public void excluirPorId(int id) throws ConsistenciaException{
+		
+		log.info("Service: excluíndo vaga de ID: {}", id);
+		
+		buscarPorId(id);
+		
+		vagaRepository.deleteById(id);
 	}
 }

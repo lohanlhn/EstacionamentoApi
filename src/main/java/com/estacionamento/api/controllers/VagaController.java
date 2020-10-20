@@ -16,41 +16,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.estacionamento.api.dtos.ValoresDto;
-import com.estacionamento.api.entities.Valores;
+import com.estacionamento.api.dtos.VagaDto;
+import com.estacionamento.api.entities.Vaga;
 import com.estacionamento.api.response.Response;
-import com.estacionamento.api.services.ValoresService;
+import com.estacionamento.api.services.VagaService;
 import com.estacionamento.api.utils.ConsistenciaException;
 import com.estacionamento.api.utils.ConversaoUtils;
 
 @RestController
-@RequestMapping("/api/valores")
+@RequestMapping("/api/vaga")
 @CrossOrigin(origins = "*")
-public class ValoresController {
-
+public class VagaController {
+	
 	private static final Logger log = LoggerFactory.getLogger(ValoresController.class);
 
 	@Autowired
-	private ValoresService valoresService;
-
+	private VagaService vagaService;
+	
 	/**
-	 * Retorna os dados de todas os valores cadastrados
-	 *
-	 * @return Lista de valores cadastrados
+	 * Retorna os dados de todas as vagas cadastradas
+	 * 
+	 * @return Lista de vagas cadastradas
 	 */
-	@GetMapping(value = "/todos")
-	public ResponseEntity<Response<List<ValoresDto>>> buscarTodosOsValores() {
-
-		Response<List<ValoresDto>> response = new Response<List<ValoresDto>>();
-
+	@GetMapping(value = "/todas")
+	public ResponseEntity<Response<List<VagaDto>>> buscarTodosAsVagas() {
+		
+		Response<List<VagaDto>> response = new Response<List<VagaDto>>();
+		
 		try {
-			log.info("Controller: buscando todos os valores");
-
-			Optional<List<Valores>> valores = valoresService.buscarTodosOsValores();
-
-			response.setDados(ConversaoUtils.ConverterListaValores(valores.get()));
-
+			log.info("Controller: buscando todas as vagas");
+			
+			Optional<List<Vaga>> vagas = vagaService.buscarTodasAsVagas();
+			
+			response.setDados(ConversaoUtils.ConverterListaVaga(vagas.get()));
+			
 			return ResponseEntity.ok(response);
+					
 		} catch (ConsistenciaException e) {
 			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
 			response.adicionarErro(e.getMensagem());
@@ -64,22 +65,22 @@ public class ValoresController {
 
 		}
 	}
-
+	
 	/**
-	 * Persiste um valor na base.
+	 * Persiste uma vaga na base.
 	 *
-	 * @param Dados de entrada do valor
-	 * @return Dados do valor persistido
+	 * @param Dados de entrada da vaga
+	 * @return Dados da vaga persistida
 	 */
 	@PostMapping
-	public ResponseEntity<Response<ValoresDto>> salvar(@RequestBody ValoresDto valoresDto) {
-		Response<ValoresDto> response = new Response<ValoresDto>();
+	public ResponseEntity<Response<VagaDto>> salvar(@RequestBody VagaDto vagaDto) {
+		Response<VagaDto> response = new Response<VagaDto>();
 
 		try {
-			log.info("Controller: salvando o valor: {}", valoresDto.toString());
+			log.info("Controller: salvando a vaga: {}", vagaDto.toString());
 
-			Valores valores = this.valoresService.salvar(ConversaoUtils.ConverterValoresDto(valoresDto));
-			response.setDados(ConversaoUtils.ConverterValores(valores));
+			Vaga vaga = this.vagaService.salvar(ConversaoUtils.ConverterVagaDto(vagaDto));
+			response.setDados(ConversaoUtils.ConverterVaga(vaga));
 			return ResponseEntity.ok(response);
 		} catch (ConsistenciaException e) {
 			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
@@ -97,9 +98,9 @@ public class ValoresController {
 	}
 	
 	/**
-	 * Exclui um valor a partir do id informado no parâmtero
+	 * Exclui uma vaga a partir do id informado no parâmtero
 	 * 
-	 * @param id do valor a ser excluído
+	 * @param id da vaga a ser excluída
 	 * @return Sucesso/erro
 	 */
 	@DeleteMapping(value = "excluir/{id}")
@@ -110,7 +111,7 @@ public class ValoresController {
 		try {
 			log.info("Controller: excluíndo valor de ID: {}", id);
 			
-			valoresService.excluirPorId(id);
+			vagaService.excluirPorId(id);
 			
 			response.setDados("Valor de id: " + id + "excluído com sucesso");
 			
