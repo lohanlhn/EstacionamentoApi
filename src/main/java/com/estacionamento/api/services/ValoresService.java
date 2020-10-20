@@ -1,5 +1,6 @@
 package com.estacionamento.api.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -41,5 +42,27 @@ public class ValoresService {
 
 		return valoresRepository.save(valores);
 
+	}
+	
+	public Optional<List<Valores>> buscarTodosOsValores() throws ConsistenciaException{
+		log.info("Service: buscando todos os valores");
+		
+		Optional<List<Valores>> valores = Optional.ofNullable(valoresRepository.findAll());
+		
+		
+		if(!valores.isPresent() || valores.get().size() < 0) {
+			log.info("Service: nenhum valor foi encontrado");
+			throw new ConsistenciaException("Nenhum valor foi encontrado");
+		}
+		return valores;
+	}
+	
+	public void excluirPorId(int id) throws ConsistenciaException{
+		
+		log.info("Service: excluíndo valor de ID: {}", id);
+		
+		buscarPorId(id);
+		
+		valoresRepository.deleteById(id);
 	}
 }
