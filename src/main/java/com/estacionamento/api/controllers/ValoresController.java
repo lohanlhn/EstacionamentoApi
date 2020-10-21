@@ -34,7 +34,7 @@ public class ValoresController {
 	private ValoresService valoresService;
 
 	/**
-	 * Retorna os dados de todas os valores cadastrados
+	 * Retorna os dados de todos os valores cadastrados
 	 *
 	 * @return Lista de valores cadastrados
 	 */

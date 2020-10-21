@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Vaga")
+@Table(name = "vaga")
 public class Vaga implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class Vaga implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name = "codVaga", length = 3, nullable = false, unique = true)
+	@Column(name = "codvaga", length = 3, nullable = false, unique = true)
 	private String codVaga;
 	
 	@Column(name = "disponivel", nullable = false)

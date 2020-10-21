@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Usuario")
+@Table(name = "usuario")
 public class Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -33,7 +33,7 @@ public class Usuario implements Serializable{
 	@Column(name = "tipo", nullable = false)
 	private char tipo;
 	
-	@Column(name = "dataAcesso", nullable = false)
+	@Column(name = "dataacesso", nullable = false)
 	private Date dataAcesso;
 	
 	@Column(name = "ativo", nullable = false)

@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-@Table(name = "VagaOcupada")
+@Table(name = "vagaocupada")
 public class VagaOcupada implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -23,10 +23,10 @@ public class VagaOcupada implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name = "horaEntrada", nullable = false)
+	@Column(name = "horaentrada", nullable = false)
 	private Date horaEntrada;
 	
-	@Column(name = "horaSaida")
+	@Column(name = "horasaida")
 	private Date horaSaida;
 	
 	@Column(name = "valor")

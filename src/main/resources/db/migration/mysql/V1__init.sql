@@ -71,9 +71,9 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Vaga` (
   `id` INT NOT NULL,
   `codVaga` CHAR(3) NOT NULL,
-  `disponivel` BIT NOT NULL,
-  PRIMARY KEY (`id`))
-  UNIQUE INDEX `codVaga_UNIQUE` (`codVaga'` ASC) VISIBLE,
+  `disponivel` BIT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `codVaga_UNIQUE` (`codVaga` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
