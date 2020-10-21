@@ -1,8 +1,14 @@
 package com.estacionamento.api.dtos;
 
+import javax.validation.constraints.NotEmpty;
+
 public class ValoresDto {
 	private String id;
+	
+	@NotEmpty(message= "minutagem não pode ser vazio")	
 	private String minutagem;
+	
+	@NotEmpty(message= "minutagem não pode ser vazio")	
 	private String valor;
 	
 	public void setId(String id) {

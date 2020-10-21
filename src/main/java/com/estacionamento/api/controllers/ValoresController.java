@@ -3,10 +3,13 @@ package com.estacionamento.api.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,12 +75,20 @@ public class ValoresController {
 	 * @return Dados do valor persistido
 	 */
 	@PostMapping
-	public ResponseEntity<Response<ValoresDto>> salvar(@RequestBody ValoresDto valoresDto) {
+	public ResponseEntity<Response<ValoresDto>> salvar(@Valid @RequestBody ValoresDto valoresDto, BindingResult result) {
 		Response<ValoresDto> response = new Response<ValoresDto>();
 
 		try {
 			log.info("Controller: salvando o valor: {}", valoresDto.toString());
 
+			if(result.hasErrors()) {
+				for(int i = 0; i < result.getErrorCount(); i++) {
+					response.adicionarErro(result.getAllErrors().get(i).getDefaultMessage());
+				}
+				log.info("Controller: os campos obrigatórios não foram preenchidos");
+				return ResponseEntity.badRequest().body(response);
+			}
+			
 			Valores valores = this.valoresService.salvar(ConversaoUtils.ConverterValoresDto(valoresDto));
 			response.setDados(ConversaoUtils.ConverterValores(valores));
 			return ResponseEntity.ok(response);

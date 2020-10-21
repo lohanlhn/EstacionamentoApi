@@ -3,10 +3,13 @@ package com.estacionamento.api.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,12 +76,20 @@ public class VagaController {
 	 * @return Dados da vaga persistida
 	 */
 	@PostMapping
-	public ResponseEntity<Response<VagaDto>> salvar(@RequestBody VagaDto vagaDto) {
+	public ResponseEntity<Response<VagaDto>> salvar(@Valid @RequestBody VagaDto vagaDto, BindingResult result) {
 		Response<VagaDto> response = new Response<VagaDto>();
 
 		try {
 			log.info("Controller: salvando a vaga: {}", vagaDto.toString());
 
+			if(result.hasErrors()) {
+				for(int i = 0; i < result.getErrorCount(); i++) {
+					response.adicionarErro(result.getAllErrors().get(i).getDefaultMessage());
+				}
+				log.info("Controller: os campos obrigatórios não foram preenchidos");
+				return ResponseEntity.badRequest().body(response);
+			}
+			
 			Vaga vaga = this.vagaService.salvar(ConversaoUtils.ConverterVagaDto(vagaDto));
 			response.setDados(ConversaoUtils.ConverterVaga(vaga));
 			return ResponseEntity.ok(response);
