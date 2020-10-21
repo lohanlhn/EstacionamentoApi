@@ -2,7 +2,7 @@
 -- Table `Valores`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Valores` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `minutagem` INT NOT NULL,
   `valor` DOUBLE NOT NULL,
   PRIMARY KEY (`id`))
@@ -13,7 +13,7 @@ ENGINE = InnoDB;
 -- Table `Usuario`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Usuario` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `senha` VARCHAR(100) NOT NULL,
@@ -29,7 +29,7 @@ ENGINE = InnoDB;
 -- Table `Cliente`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Cliente` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `telefone` CHAR(11) NULL DEFAULT NULL,
   `cpf` CHAR(11) NULL DEFAULT NULL,
   `idUsuario` INT NOT NULL,
@@ -48,7 +48,7 @@ ENGINE = InnoDB;
 -- Table `Veiculo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Veiculo` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `marca` VARCHAR(100) NULL DEFAULT NULL,
   `cor` VARCHAR(100) NULL DEFAULT NULL,
   `placa` CHAR(7) NOT NULL,
@@ -69,7 +69,7 @@ ENGINE = InnoDB;
 -- Table `Vaga`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Vaga` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `codVaga` CHAR(3) NOT NULL,
   `disponivel` BIT NULL,
   PRIMARY KEY (`id`),
@@ -81,7 +81,7 @@ ENGINE = InnoDB;
 -- Table `VagaOcupada`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `VagaOcupada` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `horaEntrada` DATETIME NOT NULL,
   `horaSaida` DATETIME NULL DEFAULT NULL,
   `valor` DOUBLE NULL DEFAULT NULL,
