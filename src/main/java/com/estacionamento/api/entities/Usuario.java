@@ -2,15 +2,20 @@ package com.estacionamento.api.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "usuario")
@@ -41,6 +46,13 @@ public class Usuario implements Serializable{
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	private Cliente cliente;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+   	@JoinTable(name = "Usuario_Regra",
+   	           joinColumns = { @JoinColumn(name = "usuario_id") },
+   	           inverseJoinColumns = { @JoinColumn(name = "regra_id") })
+   	private List<Regra> regras;
+
 
 	public int getId() {
 		return id;
@@ -90,12 +102,28 @@ public class Usuario implements Serializable{
 		this.dataAcesso = dataAcesso;
 	}
 
-	public boolean isAtivo() {
+	public boolean getAtivo() {
 		return ativo;
 	}
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public List<Regra> getRegras() {
+		return regras;
+	}
+
+	public void setRegras(List<Regra> regras) {
+		this.regras = regras;
 	}
 
 	@Override
