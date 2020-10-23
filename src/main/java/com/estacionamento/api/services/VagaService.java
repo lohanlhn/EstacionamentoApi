@@ -26,8 +26,8 @@ public class VagaService {
 		Optional<Vaga> vaga = vagaRepository.findById(id);
 
 		if (!vaga.isPresent()) {
-			log.info("Service: Nenhum usuário com id: {} foi encontrado", id);
-			throw new ConsistenciaException("Nenhum usuário com id: {} foi encontrado", id);
+			log.info("Service: Nenhuma vaga com id: {} foi encontrado", id);
+			throw new ConsistenciaException("Nenhuma vaga com id: {} foi encontrado", id);
 		}
 
 		return vaga;

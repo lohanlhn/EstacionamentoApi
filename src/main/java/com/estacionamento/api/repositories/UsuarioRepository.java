@@ -10,7 +10,7 @@ import com.estacionamento.api.entities.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 	@Transactional(readOnly = true)
-   	Usuario findByEmailAndAtivo(String email, boolean ativo);
+   	Usuario findByEmail(String email);
    	
    	@Transactional
    	@Modifying(clearAutomatically = true)

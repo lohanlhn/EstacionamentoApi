@@ -57,7 +57,7 @@ public class UsuarioService {
  
           	log.info("Service: criando credenciais para o usuário de email: '{}'", email);
  
-          	Optional<Usuario> usuario = Optional.ofNullable(usuarioRepository.findByEmailAndAtivo(email, true));
+          	Optional<Usuario> usuario = Optional.ofNullable(usuarioRepository.findByEmail(email));
  
           	if (!usuario.isPresent()) {
                  	log.info("Service: Nenhum usuário ativo com email: {} foi encontrado", email);

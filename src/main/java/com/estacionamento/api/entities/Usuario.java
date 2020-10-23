@@ -13,8 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+
 import javax.persistence.JoinColumn;
 
 @Entity
@@ -44,8 +45,8 @@ public class Usuario implements Serializable{
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	private Cliente cliente;
+//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	private Cliente cliente;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
    	@JoinTable(name = "Usuario_Regra",
@@ -110,13 +111,13 @@ public class Usuario implements Serializable{
 		this.ativo = ativo;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+//	public Cliente getCliente() {
+//		return cliente;
+//	}
+//
+//	public void setCliente(Cliente cliente) {
+//		this.cliente = cliente;
+//	}
 
 	public List<Regra> getRegras() {
 		return regras;

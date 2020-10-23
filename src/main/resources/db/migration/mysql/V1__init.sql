@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `Cliente` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC) VISIBLE,
   INDEX `FK_Cliente_Usuario` (`idUsuario` ASC) VISIBLE,
+  UNIQUE INDEX `idUsuario_UNIQUE` (`idUsuario` ASC) VISIBLE,
   CONSTRAINT `FK_Cliente_Usuario`
     FOREIGN KEY (`idUsuario`)
     REFERENCES `Usuario` (`id`)
@@ -71,7 +72,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Vaga` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `codVaga` CHAR(3) NOT NULL,
-  `disponivel` BIT NULL,
+  `disponivel` BIT NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `codVaga_UNIQUE` (`codVaga` ASC) VISIBLE)
 ENGINE = InnoDB;

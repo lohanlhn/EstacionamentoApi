@@ -31,8 +31,8 @@ public class Cliente implements Serializable {
 
 	@Column(name = "cpf", length = 11 ,unique = true)
 	private String cpf;
-
-	@OneToOne(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Usuario usuario;
 	
 	@JsonManagedReference
@@ -63,13 +63,13 @@ public class Cliente implements Serializable {
 		this.cpf = cpf;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+//	public Usuario getUsuario() {
+//		return usuario;
+//	}
+//
+//	public void setUsuario(Usuario usuario) {
+//		this.usuario = usuario;
+//	}
 	
 
 	public List<Veiculo> getVeiculos() {
