@@ -19,6 +19,11 @@ INSERT INTO `usuario_regra` (`usuario_id`, `regra_id`) VALUES (
 );
  
 INSERT INTO `usuario_regra` (`usuario_id`, `regra_id`) VALUES (
+(SELECT `id` FROM usuario WHERE email = 'adm@email.com'),
+(SELECT `id` FROM regra WHERE nome = 'ROLE_FUNC')
+);
+
+INSERT INTO `usuario_regra` (`usuario_id`, `regra_id`) VALUES (
 (SELECT `id` FROM usuario WHERE email = 'func@email.com'),
 (SELECT `id` FROM regra WHERE nome = 'ROLE_FUNC')
 );

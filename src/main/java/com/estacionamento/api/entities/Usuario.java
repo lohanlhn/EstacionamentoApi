@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 
@@ -37,7 +38,7 @@ public class Usuario implements Serializable{
 	private String senha;
 	
 	@Column(name = "tipo", nullable = false)
-	private char tipo;
+	private String tipo;
 	
 	@Column(name = "dataacesso", nullable = false)
 	private Date dataAcesso;
@@ -87,11 +88,11 @@ public class Usuario implements Serializable{
 		this.senha = senha;
 	}
 
-	public char getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(char tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
@@ -110,6 +111,11 @@ public class Usuario implements Serializable{
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
+	
+	@PrePersist
+   	public void prePersist() {
+         	dataAcesso = new Date();
+   	}
 
 //	public Cliente getCliente() {
 //		return cliente;
