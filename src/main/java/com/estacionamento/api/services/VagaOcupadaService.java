@@ -48,7 +48,7 @@ public class VagaOcupadaService {
 
 	}
 	
-	public Vaga ocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
+	public Optional<Vaga> ocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
 		log.info("Service: Ocupando a Vaga : {}", ocuparVaga.getCodVaga());
 		
 		Optional<Vaga> vaga = vagaRepository.findById(ocuparVaga.getId()); 
@@ -70,7 +70,7 @@ public class VagaOcupadaService {
 		
 		return vagaRepository.alterarDisponibilidade(ocuparVaga.getDisponivel(), ocuparVaga.getId());
 	}
-	public Vaga desocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
+	public Optional<Vaga> desocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
 		log.info("Service: Desocupando a Vaga : {}", ocuparVaga.getCodVaga());
 		
 		Optional<Vaga> vaga = vagaRepository.findById(ocuparVaga.getId()); 
