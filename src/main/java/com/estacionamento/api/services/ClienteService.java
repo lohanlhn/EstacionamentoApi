@@ -45,7 +45,7 @@ public class ClienteService {
 		return cliente;
 
 	}
-
+//test
 	public Cliente salvar(Cliente cliente) throws ConsistenciaException {
 		log.info("Sevice: salvando o cliente: {}", cliente);
 
