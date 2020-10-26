@@ -26,10 +26,10 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(name = "telefone", length = 11)
+	@Column(name = "telefone", length = 11, nullable = true)
 	private String telefone;
 
-	@Column(name = "cpf", length = 11 ,unique = true)
+	@Column(name = "cpf", length = 11 ,unique = true, nullable = true)
 	private String cpf;
 	
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
