@@ -45,7 +45,7 @@ public class Usuario implements Serializable{
 	
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo;
-	
+	//teste
 //	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //	private Cliente cliente;
 	
