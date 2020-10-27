@@ -16,5 +16,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
    	@Modifying(clearAutomatically = true)
    	@Query("UPDATE Usuario SET senha = :novasenha WHERE id = :idusuario")
    	void alterarSenhaUsuario(@Param("novasenha") String novasenha, @Param("idusuario") int idusuario);
+   	
+   	@Transactional(readOnly = true)
+   	Usuario findByUsuarioId(@Param("id") int id);
+   	
 
 }
