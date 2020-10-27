@@ -17,7 +17,7 @@ public class ClienteService {
 	
 	@Autowired
 	private ClienteRepository clienteRepository ;
-
+	
 	public Optional<Cliente> buscarPorId(int id) throws ConsistenciaException {
 		log.info("Service: buscando um cliente com o id: {}", id);
 
@@ -25,13 +25,27 @@ public class ClienteService {
 
 		if (!cliente.isPresent()) {
 			log.info("Service: Nenhum cliente com id: {} foi encontrado", id);
-			throw new ConsistenciaException("Nenhum cliente com id: {} foi encontrado", id);
+			throw new ConsistenciaException("Nenhum cliente com CPf: {} foi encontrado", id);
 		}
 
 		return cliente;
 
 	}
 
+	public Optional<Cliente> buscarPorCPF(String cpf) throws ConsistenciaException {
+		log.info("Service: buscando um cliente com o CPF: {}", cpf);
+
+		Optional<Cliente> cliente = clienteRepository.findByCpf(cpf);
+
+		if (!cliente.isPresent()) {
+			log.info("Service: Nenhum cliente com CPF: {} foi encontrado", cpf);
+			throw new ConsistenciaException("Nenhum cliente com CPf: {} foi encontrado", cpf);
+		}
+
+		return cliente;
+
+	}
+//test
 	public Cliente salvar(Cliente cliente) throws ConsistenciaException {
 		log.info("Sevice: salvando o cliente: {}", cliente);
 
