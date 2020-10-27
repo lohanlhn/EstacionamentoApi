@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,31 +31,32 @@ import com.estacionamento.api.utils.ConversaoUtils;
 @RequestMapping("/api/vaga")
 @CrossOrigin(origins = "*")
 public class VagaController {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(ValoresController.class);
 
 	@Autowired
 	private VagaService vagaService;
-	
+
 	/**
 	 * Retorna os dados de todas as vagas cadastradas
 	 * 
 	 * @return Lista de vagas cadastradas
 	 */
 	@GetMapping(value = "/todas")
+	@PreAuthorize("hasAnyRole('FUNC')")
 	public ResponseEntity<Response<List<VagaDto>>> buscarTodosAsVagas() {
-		
+
 		Response<List<VagaDto>> response = new Response<List<VagaDto>>();
-		
+
 		try {
 			log.info("Controller: buscando todas as vagas");
-			
+
 			Optional<List<Vaga>> vagas = vagaService.buscarTodasAsVagas();
-			
+
 			response.setDados(ConversaoUtils.ConverterListaVaga(vagas.get()));
-			
+
 			return ResponseEntity.ok(response);
-					
+
 		} catch (ConsistenciaException e) {
 			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
 			response.adicionarErro(e.getMensagem());
@@ -68,7 +70,7 @@ public class VagaController {
 
 		}
 	}
-	
+
 	/**
 	 * Persiste uma vaga na base.
 	 *
@@ -76,20 +78,21 @@ public class VagaController {
 	 * @return Dados da vaga persistida
 	 */
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ADM')")
 	public ResponseEntity<Response<VagaDto>> salvar(@Valid @RequestBody VagaDto vagaDto, BindingResult result) {
 		Response<VagaDto> response = new Response<VagaDto>();
 
 		try {
 			log.info("Controller: salvando a vaga: {}", vagaDto.toString());
 
-			if(result.hasErrors()) {
-				for(int i = 0; i < result.getErrorCount(); i++) {
+			if (result.hasErrors()) {
+				for (int i = 0; i < result.getErrorCount(); i++) {
 					response.adicionarErro(result.getAllErrors().get(i).getDefaultMessage());
 				}
 				log.info("Controller: os campos obrigatórios não foram preenchidos");
 				return ResponseEntity.badRequest().body(response);
 			}
-			
+
 			Vaga vaga = this.vagaService.salvar(ConversaoUtils.ConverterVagaDto(vagaDto));
 			response.setDados(ConversaoUtils.ConverterVaga(vaga));
 			return ResponseEntity.ok(response);
@@ -107,7 +110,7 @@ public class VagaController {
 		}
 
 	}
-	
+
 	/**
 	 * Exclui uma vaga a partir do id informado no parâmtero
 	 * 
@@ -115,19 +118,20 @@ public class VagaController {
 	 * @return Sucesso/erro
 	 */
 	@DeleteMapping(value = "excluir/{id}")
-	public ResponseEntity<Response<String>> excluirPorId(@PathVariable("id") int id){
-		
+	@PreAuthorize("hasAnyRole('ADM')")
+	public ResponseEntity<Response<String>> excluirPorId(@PathVariable("id") int id) {
+
 		Response<String> response = new Response<String>();
-		
+
 		try {
 			log.info("Controller: excluíndo valor de ID: {}", id);
-			
+
 			vagaService.excluirPorId(id);
-			
+
 			response.setDados("Valor de id: " + id + "excluído com sucesso");
-			
+
 			return ResponseEntity.ok(response);
-		}catch (ConsistenciaException e) {
+		} catch (ConsistenciaException e) {
 
 			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
 			response.adicionarErro(e.getMensagem());

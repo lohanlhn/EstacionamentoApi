@@ -41,6 +41,7 @@ public class AuthenticationController {
  
    	@Autowired
    	private UserDetailsService userDetailsService;
+   	
  
    	/**
    	 * Retorna uma novo token válido caso o login (email) e senha sejam válidos
@@ -97,5 +98,6 @@ public class AuthenticationController {
          	}
  
    	}
+ 
  
 }

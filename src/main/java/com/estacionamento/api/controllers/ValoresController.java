@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,6 +43,7 @@ public class ValoresController {
 	 * @return Lista de valores cadastrados
 	 */
 	@GetMapping(value = "/todos")
+	@PreAuthorize("hasAnyRole('FUNC')")
 	public ResponseEntity<Response<List<ValoresDto>>> buscarTodosOsValores() {
 
 		Response<List<ValoresDto>> response = new Response<List<ValoresDto>>();
@@ -75,6 +77,7 @@ public class ValoresController {
 	 * @return Dados do valor persistido
 	 */
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ADM')")
 	public ResponseEntity<Response<ValoresDto>> salvar(@Valid @RequestBody ValoresDto valoresDto, BindingResult result) {
 		Response<ValoresDto> response = new Response<ValoresDto>();
 
@@ -114,6 +117,7 @@ public class ValoresController {
 	 * @return Sucesso/erro
 	 */
 	@DeleteMapping(value = "excluir/{id}")
+	@PreAuthorize("hasAnyRole('ADM')")
 	public ResponseEntity<Response<String>> excluirPorId(@PathVariable("id") int id){
 		
 		Response<String> response = new Response<String>();

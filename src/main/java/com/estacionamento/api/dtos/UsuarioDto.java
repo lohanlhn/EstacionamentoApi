@@ -26,6 +26,11 @@ public class UsuarioDto {
    	@NotEmpty(message = "Tipo não pode ser vazio")
    	private String tipo;
    	
+   	@NotEmpty(message = "Senha não pode ser vazio.")
+   	@Length(min = 8, max = 25,
+   	message = "Senha deve conter entre 8 e 25 caracteres.")
+   	private String senha;
+   	
    	private List<RegraDto> regras;
 
 	public String getId() {
@@ -74,6 +79,16 @@ public class UsuarioDto {
 
 	public void setRegras(List<RegraDto> regras) {
 		this.regras = regras;
+	}
+	
+	
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	@Override
