@@ -12,7 +12,7 @@ public interface VagaRepository extends JpaRepository<Vaga, Integer>{
 	
 	@Transactional
 	@Modifying(clearAutomatically = true)
-	@Query("UPDATE Vaga SET disponivel = :situacao WHERE id = :idVaga")
+	@Query("UPDATE Vaga SET disponivel = :situacao WHERE id = :idvaga")
 	void alterarDisponibilidade(@Param("situacao") boolean situacao, @Param("idvaga") int idvaga);
 
 }
