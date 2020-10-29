@@ -1,16 +1,20 @@
 package com.estacionamento.api.utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.estacionamento.api.dtos.RegraDto;
 import com.estacionamento.api.dtos.UsuarioDto;
 import com.estacionamento.api.dtos.VagaDto;
+import com.estacionamento.api.dtos.VagaOcupadaDto;
 import com.estacionamento.api.dtos.ValoresDto;
 import com.estacionamento.api.entities.Regra;
 import com.estacionamento.api.entities.Usuario;
 import com.estacionamento.api.entities.Vaga;
+import com.estacionamento.api.entities.VagaOcupada;
 import com.estacionamento.api.entities.Valores;
+import com.estacionamento.api.entities.Veiculo;
 import com.sun.el.parser.ParseException;
 
 public class ConversaoUtils {
@@ -166,6 +170,47 @@ public class ConversaoUtils {
 
      	return regrasDto;
 
+	}
+	
+	public static VagaOcupadaDto converterVagaOcupada(VagaOcupada vagaOcupada) {
+		VagaOcupadaDto vagaOcupadaDto = new VagaOcupadaDto();
+		
+		vagaOcupadaDto.setId(Integer.toString(vagaOcupada.getId()));
+		vagaOcupadaDto.setHoraEntrada(vagaOcupada.getHoraEntrada().toString());
+		vagaOcupadaDto.setHoraSaida(vagaOcupada.getHoraSaida().toString());
+		vagaOcupadaDto.setValor(Double.toString(vagaOcupada.getValor()));
+		vagaOcupadaDto.setPaga(Boolean.toString(vagaOcupada.isPaga()));
+		
+		
+		vagaOcupadaDto.setVaga(String.valueOf(vagaOcupada.getVaga().getId()));
+		vagaOcupadaDto.setVeiculo(String.valueOf(vagaOcupada.getVeiculo().getId()));
+		
+		
+		return vagaOcupadaDto;
+	}
+	
+	public static VagaOcupada ConverterVagaOcupadaDto(VagaOcupadaDto vagaOcupadaDto)throws ParseException, java.text.ParseException {
+		VagaOcupada vagaOcupada = new VagaOcupada();
+		
+		if (vagaOcupadaDto.getId() != null && vagaOcupadaDto.getId() != "")
+			vagaOcupada.setId(Integer.parseInt(vagaOcupadaDto.getId()));
+		
+		vagaOcupada.setHoraEntrada(new SimpleDateFormat("dd/MM/yyyy").parse(vagaOcupadaDto.getHoraEntrada()));
+		vagaOcupada.setHoraSaida(new SimpleDateFormat("dd/MM/yyyy").parse(vagaOcupadaDto.getHoraSaida()));
+		vagaOcupada.setValor(Double.parseDouble(vagaOcupadaDto.getValor()));
+		vagaOcupada.setPaga(Boolean.parseBoolean(vagaOcupadaDto.getPaga()));
+		
+		Vaga vaga = new Vaga();
+		
+		vaga.setId(Integer.parseInt(vagaOcupadaDto.getVaga()));
+		vagaOcupada.setVaga(vaga);
+		
+		Veiculo veiculo = new Veiculo();
+		
+		veiculo.setId(Integer.parseInt(vagaOcupadaDto.getVeiculo()));
+		vagaOcupada.setVeiculo(veiculo);
+		
+		return vagaOcupada;
 	}
 
 	
