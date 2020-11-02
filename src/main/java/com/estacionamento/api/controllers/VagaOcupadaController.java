@@ -42,7 +42,7 @@ public class VagaOcupadaController {
 	
 	@GetMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
-	public ResponseEntity<Response<VagaOcupadaDto>> bucarPorId (@PathVariable("id") int id) {
+	public ResponseEntity<Response<VagaOcupadaDto>> buscarPorId (@PathVariable("id") int id) {
 		
 		Response<VagaOcupadaDto> response = new Response<VagaOcupadaDto>();
 		
@@ -187,6 +187,36 @@ public class VagaOcupadaController {
 
 		}
 		
+	}
+	
+	@GetMapping(value = "Valor/{idVagaOcupada}")
+	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
+	public ResponseEntity<Response<VagaOcupadaDto>> VerValor(@PathVariable("idVagaOcupada") int id) throws java.text.ParseException{
+		
+		Response<VagaOcupadaDto> response = new Response<VagaOcupadaDto>();
+		
+		try {
+			log.info("Controller: Buscando Valor");
+			
+			Optional<VagaOcupada> vagaOcupada = vagaOcupadaService.buscarPorId(id);
+			vagaOcupada.get().setValor(vagaOcupadaService.VerValor(vagaOcupada));
+			
+			response.setDados(ConversaoUtils.converterVagaOcupada(vagaOcupada.get()));
+			
+			return ResponseEntity.ok(response);
+			
+		}catch (ConsistenciaException e) {
+
+			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
+			response.adicionarErro(e.getMensagem());
+			return ResponseEntity.badRequest().body(response);
+
+		} catch (Exception e) {
+
+			log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage());
+			response.adicionarErro("Ocorreu um erro na aplicação: {}", e.getMessage());
+			return ResponseEntity.status(500).body(response);
+		}
 	}
 
 }

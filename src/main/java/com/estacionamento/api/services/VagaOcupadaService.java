@@ -105,12 +105,12 @@ public class VagaOcupadaService {
 		vagaRepository.alterarDisponibilidade(ocuparVaga.getDisponivel(), ocuparVaga.getId());
 	}
 	
-	public VagaOcupada VerValor (VagaOcupada vagaOcupada) throws ConsistenciaException, ParseException{
+	public double VerValor (Optional<VagaOcupada> vagaOcupada) throws ConsistenciaException, ParseException{
 		log.info("Service: Buscando o Valor.");
 		
 		List<Valores> valores = valoresRepository.findAll();
-		vagaOcupada.setValor(CalculaValor.CalculaValores(valores, vagaOcupada));
+		vagaOcupada.get().setValor(CalculaValor.CalculaValores(valores, vagaOcupada));
 		
-		return vagaOcupada;
+		return vagaOcupada.get().getValor();
 	}
 }
