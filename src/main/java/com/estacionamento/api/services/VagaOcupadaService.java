@@ -1,5 +1,7 @@
 package com.estacionamento.api.services;
 
+import java.text.ParseException;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -8,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.estacionamento.api.entities.VagaOcupada;
+import com.estacionamento.api.entities.Valores;
 import com.estacionamento.api.repositories.VagaOcupadaRepository;
 import com.estacionamento.api.entities.Vaga;
 import com.estacionamento.api.repositories.VagaRepository;
+import com.estacionamento.api.repositories.ValoresRepository;
 import com.estacionamento.api.utils.ConsistenciaException;
+import com.estacionamento.api.utils.CalculaValor;
 
 @Service
 public class VagaOcupadaService {
@@ -23,6 +28,9 @@ public class VagaOcupadaService {
 	
 	@Autowired
 	private VagaRepository vagaRepository;
+	
+	@Autowired
+	private ValoresRepository valoresRepository;
 
 	public Optional<VagaOcupada> buscarPorId(int id) throws ConsistenciaException {
 		log.info("Service: buscando um vagaOcupada com o id: {}", id);
@@ -49,7 +57,7 @@ public class VagaOcupadaService {
 	}
 	
 	public void ocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
-		ocuparVaga.setDisponivel(true);
+		ocuparVaga.setDisponivel(false);
 		
 		log.info("Service: Ocupando a Vaga : {}", ocuparVaga.getCodVaga());
 		
@@ -73,7 +81,7 @@ public class VagaOcupadaService {
 		vagaRepository.alterarDisponibilidade(ocuparVaga.getDisponivel(), ocuparVaga.getId());
 	}
 	public void desocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
-		ocuparVaga.setDisponivel(false);
+		ocuparVaga.setDisponivel(true);
 		log.info("Service: Desocupando a Vaga : {}", ocuparVaga.getCodVaga());
 		
 		Optional<Vaga> vaga = vagaRepository.findById(ocuparVaga.getId()); 
@@ -95,5 +103,14 @@ public class VagaOcupadaService {
 		
 		
 		vagaRepository.alterarDisponibilidade(ocuparVaga.getDisponivel(), ocuparVaga.getId());
+	}
+	
+	public VagaOcupada VerValor (VagaOcupada vagaOcupada) throws ConsistenciaException, ParseException{
+		log.info("Service: Buscando o Valor.");
+		
+		List<Valores> valores = valoresRepository.findAll();
+		vagaOcupada.setValor(CalculaValor.CalculaValores(valores, vagaOcupada));
+		
+		return vagaOcupada;
 	}
 }
