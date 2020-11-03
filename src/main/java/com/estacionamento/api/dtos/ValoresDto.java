@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 public class ValoresDto {
 	private String id;
 
-//teste
+//teste git kraken
 	
 	@NotEmpty(message= "minutagem não pode ser vazio")	
 	private String minutagem;
