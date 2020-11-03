@@ -198,8 +198,8 @@ public class VagaOcupadaController {
 		try {
 			log.info("Controller: Buscando Valor");
 			
-			Optional<VagaOcupada> vagaOcupada = vagaOcupadaService.buscarPorId(id);
-			vagaOcupada.get().setValor(vagaOcupadaService.VerValor(vagaOcupada));
+			Optional<VagaOcupada> vagaOcupada = Optional.empty();
+			vagaOcupada.get().setValor(vagaOcupadaService.VerValor(id));
 			
 			response.setDados(ConversaoUtils.converterVagaOcupada(vagaOcupada.get()));
 			
