@@ -131,7 +131,7 @@ public class UsuarioController {
 	 * @param Dados de entrada do usuário
 	 * @return Dados do usuario persistido
 	 */
-	@PostMapping
+	@PostMapping(value = "/funcionario")
 	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
 	public ResponseEntity<Response<UsuarioDto>> salvarFuncionario(@Valid @RequestBody UsuarioDto usuarioDto,
 			BindingResult result) {
