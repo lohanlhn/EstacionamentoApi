@@ -1,5 +1,7 @@
 package com.estacionamento.api.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,12 +12,12 @@ import com.estacionamento.api.entities.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 	@Transactional(readOnly = true)
-   	Usuario findByEmail(String email);
+   	Optional<Usuario> findByEmail(String email);
    	
    	@Transactional
    	@Modifying(clearAutomatically = true)
-   	@Query("UPDATE Usuario SET senha = :novasenha WHERE id = :idusuario")
-   	void alterarSenhaUsuario(@Param("novasenha") String novasenha, @Param("idusuario") int idusuario);
+   	@Query("UPDATE Usuario SET senha = :novasenha WHERE email = :emailUsuario")
+   	void alterarSenhaUsuario(@Param("novasenha") String novasenha, @Param("emailUsuario") String emailUsuario);
    	
 
 }

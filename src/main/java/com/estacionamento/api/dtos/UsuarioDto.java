@@ -6,6 +6,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
  
 import org.hibernate.validator.constraints.Length;
+
+import com.estacionamento.api.entities.Cliente;
  
 public class UsuarioDto {
  
@@ -32,6 +34,8 @@ public class UsuarioDto {
    	private String senha;
    	
    	private List<RegraDto> regras;
+   	
+   	private Cliente cliente;
 
 	public String getId() {
 		return id;
@@ -90,12 +94,23 @@ public class UsuarioDto {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+		
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
 	@Override
 	public String toString() {
 		return "UsuarioDto [id=" + id + ", nome=" + nome + ", email=" + email + ", ativo=" + ativo + ", tipo=" + tipo
-				+ "]";
+				+ ", senha=" + senha + ", regras=" + regras + ", cliente=" + cliente + "]";
 	}
+
+	
    	
    	
 }

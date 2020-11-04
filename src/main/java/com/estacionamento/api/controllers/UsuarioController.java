@@ -75,7 +75,7 @@ public class UsuarioController {
 	}
 
 	/**
-	 * Persiste um usuário na base.
+	 * Persiste um usuário cliente na base.
 	 *
 	 * @param Dados de entrada do usuário
 	 * @return Dados do usuario persistido
@@ -124,6 +124,58 @@ public class UsuarioController {
 		}
 
 	}
+		
+	/**
+	 * Persiste um usuário funcionario na base.
+	 *
+	 * @param Dados de entrada do usuário
+	 * @return Dados do usuario persistido
+	 */
+	@PostMapping
+	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
+	public ResponseEntity<Response<UsuarioDto>> salvarFuncionario(@Valid @RequestBody UsuarioDto usuarioDto,
+			BindingResult result) {
+
+		Response<UsuarioDto> response = new Response<UsuarioDto>();
+
+		try {
+
+			log.info("Controller: salvando o usuario: {}", usuarioDto.toString());
+
+			// Verificando se todos os campos da DTO foram preenchidos
+			if (result.hasErrors()) {
+
+				for (int i = 0; i < result.getErrorCount(); i++) {
+					response.adicionarErro(result.getAllErrors().get(i).getDefaultMessage());
+				}
+
+				log.info("Controller: Os campos obrigatórios não foram preenchidos");
+				return ResponseEntity.badRequest().body(response);
+
+			}
+
+			// Converte o objeto usuarioDto para um objeto do tipo Usuario (entidade)
+			Usuario usuario = ConversaoUtils.ConverterUsuarioDto(usuarioDto);
+
+			// Salvando o usuário
+			response.setDados(ConversaoUtils.ConverterUsuario(this.usuarioService.salvarFuncionario(usuario)));
+			return ResponseEntity.ok(response);
+
+		} catch (ConsistenciaException e) {
+
+			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
+			response.adicionarErro(e.getMensagem());
+			return ResponseEntity.badRequest().body(response);
+
+		} catch (Exception e) {
+
+			log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage());
+			response.adicionarErro("Ocorreu um erro na aplicação: {}", e.getMessage());
+			return ResponseEntity.status(500).body(response);
+
+		}
+
+	}
 
 	/**
 	 * Altera a senha do usuário, verificando o próprio usuário e a senha atual.
@@ -139,7 +191,7 @@ public class UsuarioController {
 
 		try {
 
-			log.info("Controller: alterando a senha do usuário: {}", senhaDto.getIdUsuario());
+			log.info("Controller: alterando a senha do usuário: {}", senhaDto.getEmail());
 
 			// Verificando se todos os campos da DTO foram preenchidos
 			if (result.hasErrors()) {
@@ -154,8 +206,7 @@ public class UsuarioController {
 			}
 
 			// Alterando a senha do usuário
-			this.usuarioService.alterarSenhaUsuario(senhaDto.getSenhaAtual(), senhaDto.getNovaSenha(),
-					Integer.parseInt(senhaDto.getIdUsuario()));
+			this.usuarioService.alterarSenhaUsuario(senhaDto.getSenhaAtual(), senhaDto.getNovaSenha(), senhaDto.getEmail());
 
 			response.setDados(senhaDto);
 			return ResponseEntity.ok(response);

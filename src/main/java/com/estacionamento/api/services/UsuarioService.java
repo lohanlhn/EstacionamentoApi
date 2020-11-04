@@ -57,12 +57,27 @@ public class UsuarioService {
 		return usuario;
 
 	}
+	
+	public Optional<Usuario> buscarPorEmail(String email) throws ConsistenciaException {
+
+		log.info("Service: buscando um usuário com o id: {}", email);
+
+		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
+
+		if (!usuario.isPresent()) {
+			log.info("Service: Nenhum usuário com id: {} foi encontrado", email);
+			throw new ConsistenciaException("Nenhum usuário com id: {} foi encontrado", email);
+		}
+
+		return usuario;
+
+	}
 
 	public Optional<Usuario> verificarCredenciais(String email) throws ConsistenciaException {
 
 		log.info("Service: criando credenciais para o usuário de email: '{}'", email);
 
-		Optional<Usuario> usuario = Optional.ofNullable(usuarioRepository.findByEmail(email));
+		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 
 		if (!usuario.isPresent()) {
 			log.info("Service: Nenhum usuário ativo com email: {} foi encontrado", email);
@@ -122,7 +137,7 @@ public class UsuarioService {
 		
 			Cliente cliente = new Cliente();
 			
-			cliente.setUsuario(usuarioRepository.findByEmail(usuario.getEmail()));
+			cliente.setUsuario(usuarioRepository.findByEmail(usuario.getEmail()).get());
 			
 			clienteReprository.save(cliente);
 			
@@ -136,13 +151,73 @@ public class UsuarioService {
 		}
 
 	}
+	
+	public Usuario salvarFuncionario(Usuario usuario) throws ConsistenciaException {
 
-	public void alterarSenhaUsuario(String senhaAtual, String novaSenha, int id) throws ConsistenciaException {
+		log.info("Service: salvando o usuario: {}", usuario);
 
-		log.info("Service: alterando a senha do usuário: {}", id);
+		// Se foi informando ID na DTO, é porque trata-se de uma ALTERAÇÃO
+		if (usuario.getId() > 0) {
+
+			// Verificar se o ID existe na base
+			Optional<Usuario> usr = buscarPorId(usuario.getId());
+
+			// Setando a senha do objeto usuário com a mesma senha encontarda na base.
+			// Se não fizermos isso, a senha fica em branco.
+			usuario.setSenha(usr.get().getSenha());
+
+		}
+
+		// Carregando as regras definidas para o usuário, caso existam
+		if (usuario.getRegras() != null) {
+
+			List<Regra> aux = new ArrayList<Regra>(usuario.getRegras().size());
+
+			for (Regra regra : usuario.getRegras()) {
+
+				Optional<Regra> rg = Optional.ofNullable(regraReprository.findByNome(regra.getNome()));
+
+				if (rg.isPresent()) {
+					aux.add(rg.get());
+				} else {
+
+					log.info("A regra '{}' não existe", regra.getNome());
+					throw new ConsistenciaException("A regra '{}' não existe", regra.getNome());
+
+				}
+
+			}
+
+			usuario.setRegras(aux);
+
+		}
+		//Verifica se o tipo de usuario está correto
+		if(!usuario.getTipo().equals("F")) {
+			log.info("O tipo deve ser F");
+			throw new ConsistenciaException("O tipo deve ser F");
+		}
+
+		try {
+			
+			usuarioRepository.save(usuario);
+			
+			return usuario;
+
+		} catch (DataIntegrityViolationException e) {
+
+			log.info("Service: O email '{}' já está cadastrado para outro usuário", usuario.getEmail());
+			throw new ConsistenciaException("O email '{}' já está cadastrado para outro usuário", usuario.getEmail());
+
+		}
+
+	}
+
+	public void alterarSenhaUsuario(String senhaAtual, String novaSenha, String email) throws ConsistenciaException {
+
+		log.info("Service: alterando a senha do usuário: {}", email);
 
 		// Verificar se existe um usuário com o ID informado
-		Optional<Usuario> usr = buscarPorId(id);
+		Optional<Usuario> usr = buscarPorEmail(email);
 
 		// String token = request.getHeader("Authorization");
 		String token = httpServletRequest.getHeader("Authorization");
@@ -173,7 +248,7 @@ public class UsuarioService {
 
 		}
 
-		usuarioRepository.alterarSenhaUsuario(SenhaUtils.gerarHash(novaSenha), id);
+		usuarioRepository.alterarSenhaUsuario(SenhaUtils.gerarHash(novaSenha), email);
 
 	}
 

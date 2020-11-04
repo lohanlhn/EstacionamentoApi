@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
@@ -45,10 +46,9 @@ public class Usuario implements Serializable{
 	
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo;
-	//teste
-	//teste 2
-//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	private Cliente cliente;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Cliente cliente;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
    	@JoinTable(name = "Usuario_Regra",
@@ -118,13 +118,13 @@ public class Usuario implements Serializable{
          	dataAcesso = new Date();
    	}
 
-//	public Cliente getCliente() {
-//		return cliente;
-//	}
-//
-//	public void setCliente(Cliente cliente) {
-//		this.cliente = cliente;
-//	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
 	public List<Regra> getRegras() {
 		return regras;
