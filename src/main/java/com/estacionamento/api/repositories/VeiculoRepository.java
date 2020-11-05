@@ -13,7 +13,7 @@ import com.estacionamento.api.entities.Veiculo;
 @Transactional(readOnly = true)
 public interface VeiculoRepository extends JpaRepository<Veiculo, Integer>{
 	
-	@Query("SELECT ve FROM Veiculo ve WHERE ve.cliente_id = :clienteId")
+	@Query("SELECT  FROM Veiculo  WHERE cliente_id = :clienteId")
 	List<Veiculo> findByClienteId(@Param("clienteid") int clienteId);
 
 }
