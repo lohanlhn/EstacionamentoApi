@@ -40,7 +40,7 @@ public class VeiculoService {
 	public Optional<List<Veiculo>> buscarPorClienteId (int clienteId) throws ConsistenciaException {
 		
 		log.info("Service: Buscando os veiculos do cliente de id: {}", clienteId);
-		Optional<List<Veiculo>> veiculos = Optional.ofNullable(veiculoRepository.findByClienteId(clienteId));
+		Optional<List<Veiculo>> veiculos = Optional.ofNullable(veiculoRepository.findBycliente_id(clienteId));
 		
 		if(!veiculos.isPresent() || veiculos.get().size() < 1) {
 			log.info("Service: Nenhum veiculo encontrado do cliente de Id: {}", clienteId);
