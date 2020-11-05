@@ -9,6 +9,8 @@ import com.estacionamento.api.dtos.UsuarioDto;
 import com.estacionamento.api.dtos.VagaDto;
 import com.estacionamento.api.dtos.VagaOcupadaDto;
 import com.estacionamento.api.dtos.ValoresDto;
+import com.estacionamento.api.dtos.VeiculoDto;
+import com.estacionamento.api.entities.Cliente;
 import com.estacionamento.api.entities.Regra;
 import com.estacionamento.api.entities.Usuario;
 import com.estacionamento.api.entities.Vaga;
@@ -211,6 +213,39 @@ public class ConversaoUtils {
 		vagaOcupada.setVeiculo(veiculo);
 		
 		return vagaOcupada;
+	}
+	
+	public static VeiculoDto conveterVeiculo (Veiculo veiculo) throws ParseException {
+		VeiculoDto veiculoDto = new VeiculoDto();
+		
+		veiculoDto.setId(Integer.toString(veiculo.getId()));
+		veiculoDto.setMarca(veiculo.getMarca());
+		veiculoDto.setCor(veiculo.getCor());
+		veiculoDto.setPlaca(veiculo.getPlaca());
+		veiculoDto.setTipo(String.valueOf(veiculo.getTipo()));
+		veiculoDto.setClienteid(Integer.toString(veiculo.getCliente().getId()));
+		
+		return veiculoDto;
+	}
+	
+	public static Veiculo coverterVeiculoDto (VeiculoDto veiculoDto) throws ParseException {
+		Veiculo veiculo = new Veiculo();
+		
+		if (veiculoDto.getId() != null && veiculoDto.getId() != "")
+			veiculo.setId(Integer.parseInt(veiculoDto.getId()));
+		
+		veiculo.setMarca(veiculoDto.getMarca());
+		veiculo.setCor(veiculoDto.getCor());
+		veiculo.setPlaca(veiculoDto.getPlaca());
+		veiculo.setTipo(veiculoDto.getTipo().charAt(0));
+		
+		Cliente cliente = new Cliente();
+		cliente.setId(Integer.parseInt(veiculoDto.getClienteid()));
+		
+		veiculo.setCliente(cliente);
+		
+		return veiculo;
+		
 	}
 
 	

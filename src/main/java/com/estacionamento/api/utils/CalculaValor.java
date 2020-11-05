@@ -25,16 +25,17 @@ public class CalculaValor {
 		
 		
 		
+		int total30 = (int) (diffMin/30);
+		int total15 = (int) ((diffMin%30)/15);
+		int total1 = (int) ((diffMin%30)%15);
 		
+		double Valor30 = total30 * valores.get(2).getValor();
+		double Valor15 = total15 * valores.get(1).getValor();
+		double Valor1 = total1 * valores.get(0).getValor();
 		
+		double valotTotal = Valor30 + Valor15 + Valor1;
 		
-		
-		vagaOcupada.get().setValor(0);
-		
-		for(int i = 0; i < calcula.size(); i++) {
-			double b = calcula.get(i).tik * calcula.get(i).valor;
-			vagaOcupada.get().setValor(vagaOcupada.get().getValor() + b);
-		}
+		vagaOcupada.get().setValor(valotTotal);
 		
 		
 		
