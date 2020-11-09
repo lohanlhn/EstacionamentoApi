@@ -47,8 +47,8 @@ public class Usuario implements Serializable{
 	@Column(name = "ativo", nullable = false)
 	private boolean ativo;
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Cliente cliente;
+//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	private Cliente cliente;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
    	@JoinTable(name = "Usuario_Regra",
@@ -118,13 +118,13 @@ public class Usuario implements Serializable{
          	dataAcesso = new Date();
    	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+//	public Cliente getCliente() {
+//		return cliente;
+//	}
+//
+//	public void setCliente(Cliente cliente) {
+//		this.cliente = cliente;
+//	}
 
 	public List<Regra> getRegras() {
 		return regras;
