@@ -120,4 +120,28 @@ public class VagaOcupadaService {
 		
 		return vagaOcupada.get().getValor();
 	}
+	
+	public void alterarValor (Optional<VagaOcupada> vagaOcupada) throws ConsistenciaException{
+		log.info("Service: Alterando o valor salvo.");
+		
+		if(!vagaOcupada.isPresent()) {
+			log.info("Service nenhuma VagaOcupada com id: {} foi encontado", vagaOcupada.get().getId());
+			throw new ConsistenciaException("Nenhum vagaOcupada com id: {} foi encontrado", vagaOcupada.get().getId());
+		}
+		
+		vagaOcupadaRepository.alterarValor(vagaOcupada.get().getValor(), vagaOcupada.get().getId());
+	}
+	
+	public void alterarHoraSaida (Optional<VagaOcupada> vagaOcupada) throws ConsistenciaException{
+		log.info("Service: Alterando a HoraSaida salvo.");
+		
+		if(!vagaOcupada.isPresent()) {
+			log.info("Service nenhuma VagaOcupada com id: {} foi encontado", vagaOcupada.get().getId());
+			throw new ConsistenciaException("Nenhum vagaOcupada com id: {} foi encontrado", vagaOcupada.get().getId());
+		}
+		
+		vagaOcupadaRepository.alterarHoraSaida(vagaOcupada.get().getHoraSaida(), vagaOcupada.get().getId());
+	}
+	
+	
 }
