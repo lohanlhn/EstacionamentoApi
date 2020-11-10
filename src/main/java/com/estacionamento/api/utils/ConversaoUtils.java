@@ -3,6 +3,7 @@ package com.estacionamento.api.utils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.estacionamento.api.dtos.RegraDto;
 import com.estacionamento.api.dtos.UsuarioDto;
@@ -245,6 +246,18 @@ public class ConversaoUtils {
 		veiculo.setCliente(cliente);
 		
 		return veiculo;
+		
+	}
+	
+	public static List<VeiculoDto> converterListaVeiculo (Optional<List<Veiculo>> listaVeiculo) throws ParseException {
+		
+		List<VeiculoDto> listVeiculoDto = new ArrayList<VeiculoDto>();
+		
+		for (Veiculo veiculo : listaVeiculo.get()) {
+			listVeiculoDto.add(conveterVeiculo(veiculo));
+		}
+		
+		return listVeiculoDto;
 		
 	}
 
