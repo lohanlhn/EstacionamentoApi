@@ -106,6 +106,14 @@ public class UsuarioService {
 			usuario.setSenha(usr.get().getSenha());
 
 		}
+		else {
+			 
+         	// Se NÃO foi informando ID na DTO, é porque trata-se de uma INCLUSÃO
+         	// Neste caso, podemos setar uma senha incial igual ao CPF (provisória)
+         	usuario.setSenha(SenhaUtils.gerarHash(usuario.getEmail()));
+
+  	}
+
 
 		// Carregando as regras definidas para o usuário, caso existam
 		if (usuario.getRegras() != null) {
