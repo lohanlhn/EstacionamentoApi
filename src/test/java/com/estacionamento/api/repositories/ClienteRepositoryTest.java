@@ -66,13 +66,7 @@ public class ClienteRepositoryTest {
 		
 	}
 	
-	@Test
-	public void testFindByCpf() {
-		
-		Optional<Cliente> cliente = clienteRepository.findByCpf(clienteTeste.getCpf());
-		assertEquals(clienteTeste.getCpf(), cliente.get().getCpf());
-		
-	}
+	
 	
 	
 }
