@@ -53,27 +53,6 @@ public class ClienteServiceTest {
 		
 	}
 	
-	@Test
-	public void testBuscarPorCpfExistente() throws ConsistenciaException {	
-		
-		BDDMockito.given(clienteRepository.findByCpf(Mockito.anyString()))
-			.willReturn(Optional.of(new Cliente()));
-		
-		Optional<Cliente> resultado = clienteService.buscarPorCPF("29041602054");
-		
-		assertTrue(resultado.isPresent());
-		
-	}
-	
-	@Test(expected = ConsistenciaException.class)
-	public void testBuscarPorCpfNaoExistente() throws ConsistenciaException {	
-		
-		BDDMockito.given(clienteRepository.findByCpf(Mockito.anyString()))
-		.willReturn(null);
-		
-		clienteService.buscarPorCPF("29041602054");
-		
-	}
 	
 	
 }
