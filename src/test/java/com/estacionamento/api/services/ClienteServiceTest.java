@@ -59,7 +59,7 @@ public class ClienteServiceTest {
 		BDDMockito.given(clienteRepository.findByCpf(Mockito.anyString()))
 			.willReturn(Optional.of(new Cliente()));
 		
-		Optional<Cliente> resultado = clienteService.buscarPorCPF("12345678910");
+		Optional<Cliente> resultado = clienteService.buscarPorCPF("29041602054");
 		
 		assertTrue(resultado.isPresent());
 		
@@ -71,7 +71,7 @@ public class ClienteServiceTest {
 		BDDMockito.given(clienteRepository.findByCpf(Mockito.anyString()))
 		.willReturn(null);
 		
-		clienteService.buscarPorCPF("12345678910");
+		clienteService.buscarPorCPF("29041602054");
 		
 	}
 	
