@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,6 +34,11 @@ public class ClienteRepositoryTest {
 	private Cliente clienteTeste;
 	
 	private void CriarClienteTestes() throws ParseException {
+		clienteTeste = new Cliente();
+		clienteTeste.setTelefone("43995818432");
+		clienteTeste.setCpf("05887098082");
+		
+	}
 		
 	@Test
 	public void testFindById() {
@@ -45,8 +51,8 @@ public class ClienteRepositoryTest {
 	@Test
 	public void testFindByCpf() {
 		
-		Cliente cliente = clienteRepository.findByCpf(clienteTeste.getCpf());
-		assertEquals(clienteTeste.getCpf(), cliente.getCpf());
+		Optional<Cliente> cliente = clienteRepository.findByCpf(clienteTeste.getCpf());
+		assertEquals(clienteTeste.getCpf(), cliente.get().getCpf());
 		
 	}
 	
