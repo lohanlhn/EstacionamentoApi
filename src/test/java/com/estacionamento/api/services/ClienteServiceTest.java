@@ -71,7 +71,7 @@ public class ClienteServiceTest {
 		BDDMockito.given(clienteRepository.findByCpf(Mockito.anyString()))
 		.willReturn(null);
 		
-		clienteService.buscarPorCPF("12345678911");
+		clienteService.buscarPorCPF("12345678910");
 		
 	}
 	
