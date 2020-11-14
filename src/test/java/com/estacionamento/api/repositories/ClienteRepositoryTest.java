@@ -33,22 +33,34 @@ public class ClienteRepositoryTest {
 	
 	private Cliente clienteTeste;
 	
-	private Cliente CriarClienteTestes() throws ParseException {
+	private void CriarClienteTestes() throws ParseException {
+			
+			clienteTeste = new Cliente();
+			
+			clienteTeste.setTelefone("12345678910");
+			clienteTeste.setCpf("05887098082");
+			
+		}
 		
-		clienteTeste = new Cliente();
+		@Before
+		public void setUp() throws Exception {
+			
+			CriarClienteTestes();
+			clienteRepository.save(clienteTeste);
+			
+		}
 		
-		clienteTeste.setId('4');
-		clienteTeste.setTelefone("12345678910");
-		clienteTeste.setCpf("05887098082");
-		
-		return clienteTeste;
-		
-	}
+		@After
+		public void tearDown() throws Exception {
+			
+			clienteRepository.deleteAll();
+			
+		}
+	
 		
 	@Test
-	public void testFindById() throws ParseException {
+	public void testFindById() {
 		
-		clienteTeste = CriarClienteTestes();
 		Cliente cliente = clienteRepository.findById(clienteTeste.getId()).get();
 		assertEquals(clienteTeste.getId(), cliente.getId());
 		
