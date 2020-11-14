@@ -65,15 +65,7 @@ public class ClienteServiceTest {
 		
 	}
 	
-	@Test(expected = ConsistenciaException.class)
-	public void testBuscarPorCpfNaoExistente() throws ConsistenciaException {	
-		
-		BDDMockito.given(clienteRepository.findByCpf(Mockito.anyString()))
-		.willReturn(null);
-		
-		clienteService.buscarPorCPF("29041602054");
-		
-	}
+	
 	
 	
 }
