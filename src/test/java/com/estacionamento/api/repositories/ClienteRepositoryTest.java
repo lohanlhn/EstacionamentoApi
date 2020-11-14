@@ -33,16 +33,18 @@ public class ClienteRepositoryTest {
 	
 	private Cliente clienteTeste;
 	
-	private void CriarClienteTestes() throws ParseException {
+	private Cliente CriarClienteTestes() throws ParseException {
 		clienteTeste = new Cliente();
 		clienteTeste.setTelefone("43995818432");
 		clienteTeste.setCpf("05887098082");
 		
+		return clienteTeste;
 	}
 		
 	@Test
-	public void testFindById() {
+	public void testFindById() throws ParseException {
 		
+		clienteTeste = CriarClienteTestes();
 		Cliente cliente = clienteRepository.findById(clienteTeste.getId()).get();
 		assertEquals(clienteTeste.getId(), cliente.getId());
 		
