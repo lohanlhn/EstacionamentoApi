@@ -34,11 +34,15 @@ public class ClienteRepositoryTest {
 	private Cliente clienteTeste;
 	
 	private Cliente CriarClienteTestes() throws ParseException {
+		
 		clienteTeste = new Cliente();
-		clienteTeste.setTelefone("43995818432");
+		
+		clienteTeste.setId('4');
+		clienteTeste.setTelefone("12345678910");
 		clienteTeste.setCpf("05887098082");
 		
 		return clienteTeste;
+		
 	}
 		
 	@Test
