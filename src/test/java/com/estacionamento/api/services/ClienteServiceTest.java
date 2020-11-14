@@ -57,7 +57,7 @@ public class ClienteServiceTest {
 	public void testBuscarPorCpfExistente() throws ConsistenciaException {	
 		
 		BDDMockito.given(clienteRepository.findByCpf(Mockito.anyString()))
-			.willReturn(new Cliente());
+			.willReturn(Optional.of(new Cliente()));
 		
 		Optional<Cliente> resultado = clienteService.buscarPorCPF("12345678911");
 		
