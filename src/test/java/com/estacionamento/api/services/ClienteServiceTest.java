@@ -66,6 +66,17 @@ public class ClienteServiceTest {
 	}
 	
 	
-	
+	@Test(expected = ConsistenciaException.class)
+	public void testSalvarIdNaoEncontrado() throws ConsistenciaException {	
+		
+		BDDMockito.given(clienteRepository.findById(Mockito.anyInt()))
+		.willReturn(Optional.empty());
+		
+		Cliente c = new Cliente();
+		c.setId(1);
+		
+		clienteService.salvar(c);
+
+	}
 	
 }

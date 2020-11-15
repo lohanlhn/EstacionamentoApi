@@ -36,7 +36,7 @@ public class ClienteRepositoryTest {
 	private void CriarClienteTestes() throws ParseException {
 			
 			clienteTeste = new Cliente();
-			
+			clienteTeste.setId(1);
 			clienteTeste.setTelefone("12345678910");
 			clienteTeste.setCpf("05887098082");
 			
