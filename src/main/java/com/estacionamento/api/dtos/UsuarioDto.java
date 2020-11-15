@@ -29,11 +29,12 @@ public class UsuarioDto {
    	message = "Senha deve conter entre 8 e 25 caracteres.")
    	private String senha;
    	
+   	@NotEmpty(message = "Telefone não pode ser vazio.")
    	@Length(min = 10, max = 11,
    		   	message = "O telefone deve conter entre 10 e 11 caracteres.")
    	private String telefone;
    	
-   	@CPF
+   	@CPF(message = "Cpf deve ser valido")
    	@Length(min = 11, max = 11,
    		   	message = "O cpf deve conter 11 caracteres.")
    	private String cpf;
