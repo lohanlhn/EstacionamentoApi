@@ -85,7 +85,7 @@ public class VagaOcupadaController {
 				return ResponseEntity.badRequest().body(response);
 			}
 			
-			VagaOcupada vagaOcupada = ConversaoUtils.ConverterVagaOcupadaDto(vagaOcupadaDto);
+			VagaOcupada vagaOcupada = ConversaoUtils.converterVagaOcupadaDto(vagaOcupadaDto);
 			
 			response.setDados(ConversaoUtils.converterVagaOcupada(this.vagaOcupadaService.salvar(vagaOcupada)));
 			
@@ -126,7 +126,7 @@ public class VagaOcupadaController {
 				return ResponseEntity.badRequest().body(response);
 			}
 			
-			Vaga vaga = ConversaoUtils.ConverterVagaDto(vagaDto);
+			Vaga vaga = ConversaoUtils.converterVagaDto(vagaDto);
 			
 			this.vagaOcupadaService.ocuparVaga(vaga);
 			response.setDados(vagaDto);
@@ -166,7 +166,7 @@ public class VagaOcupadaController {
 				return ResponseEntity.badRequest().body(response);
 			}
 			
-			Vaga vaga = ConversaoUtils.ConverterVagaDto(vagaDto);
+			Vaga vaga = ConversaoUtils.converterVagaDto(vagaDto);
 			
 			this.vagaOcupadaService.desocuparVaga(vaga);
 			response.setDados(vagaDto);
@@ -237,7 +237,7 @@ public class VagaOcupadaController {
 				return ResponseEntity.badRequest().body(response);
 			}
 			
-			Optional<VagaOcupada> vagaOcupada = Optional.ofNullable(ConversaoUtils.ConverterVagaOcupadaDto(vagaOcupadaDto));
+			Optional<VagaOcupada> vagaOcupada = Optional.ofNullable(ConversaoUtils.converterVagaOcupadaDto(vagaOcupadaDto));
 			
 			this.vagaOcupadaService.alterarValor(vagaOcupada);
 			response.setDados(vagaOcupadaDto);
@@ -278,7 +278,7 @@ public class VagaOcupadaController {
 				return ResponseEntity.badRequest().body(response);
 			}
 			
-			Optional<VagaOcupada> vagaOcupada = Optional.ofNullable(ConversaoUtils.ConverterVagaOcupadaDto(vagaOcupadaDto));
+			Optional<VagaOcupada> vagaOcupada = Optional.ofNullable(ConversaoUtils.converterVagaOcupadaDto(vagaOcupadaDto));
 			
 			this.vagaOcupadaService.alterarValor(vagaOcupada);
 			response.setDados(vagaOcupadaDto);

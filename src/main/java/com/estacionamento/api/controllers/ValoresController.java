@@ -53,7 +53,7 @@ public class ValoresController {
 
 			Optional<List<Valores>> valores = valoresService.buscarTodosOsValores();
 
-			response.setDados(ConversaoUtils.ConverterListaValores(valores.get()));
+			response.setDados(ConversaoUtils.converterListaValores(valores.get()));
 
 			return ResponseEntity.ok(response);
 		} catch (ConsistenciaException e) {
@@ -92,8 +92,8 @@ public class ValoresController {
 				return ResponseEntity.badRequest().body(response);
 			}
 			
-			Valores valores = this.valoresService.salvar(ConversaoUtils.ConverterValoresDto(valoresDto));
-			response.setDados(ConversaoUtils.ConverterValores(valores));
+			Valores valores = this.valoresService.salvar(ConversaoUtils.converterValoresDto(valoresDto));
+			response.setDados(ConversaoUtils.converterValores(valores));
 			return ResponseEntity.ok(response);
 		} catch (ConsistenciaException e) {
 			log.info("Controller: Inconsistência de dados: {}", e.getMessage());

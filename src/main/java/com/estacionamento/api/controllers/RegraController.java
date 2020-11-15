@@ -47,7 +47,7 @@ public class RegraController {
  
                 	Optional<Regra> regra = regraService.buscarPorId(id);
  
-                	response.setDados(ConversaoUtils.ConverterRegra(regra.get()));
+                	response.setDados(ConversaoUtils.converterRegra(regra.get()));
  
                 	return ResponseEntity.ok(response);
  
@@ -84,7 +84,7 @@ public class RegraController {
  
                 	Optional<Regra> regra = regraService.buscarPorNome(nome);
  
-                	response.setDados(ConversaoUtils.ConverterRegra(regra.get()));
+                	response.setDados(ConversaoUtils.converterRegra(regra.get()));
  
                 	return ResponseEntity.ok(response);
  
@@ -120,7 +120,7 @@ public class RegraController {
  
                 	Optional<List<Regra>> regras = regraService.buscarTodasAsRegras();
  
-                	response.setDados(ConversaoUtils.ConverterListaRegras(regras.get()));
+                	response.setDados(ConversaoUtils.converterListaRegras(regras.get()));
  
                 	return ResponseEntity.ok(response);
  

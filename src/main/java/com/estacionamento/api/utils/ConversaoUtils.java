@@ -21,7 +21,7 @@ import com.estacionamento.api.entities.Veiculo;
 import com.sun.el.parser.ParseException;
 
 public class ConversaoUtils {
-	public static Valores ConverterValoresDto(ValoresDto valoresDto) throws ParseException{
+	public static Valores converterValoresDto(ValoresDto valoresDto) throws ParseException{
 		
 		Valores valores = new Valores();
 		
@@ -34,7 +34,7 @@ public class ConversaoUtils {
 		return valores;
 	}
 	
-	public static ValoresDto ConverterValores(Valores valores) {
+	public static ValoresDto converterValores(Valores valores) {
 		ValoresDto valoresDto = new ValoresDto();
 		
 		valoresDto.setId(String.valueOf(valores.getId()));
@@ -44,17 +44,17 @@ public class ConversaoUtils {
 		return valoresDto;
 	}
 	
-	public static List<ValoresDto> ConverterListaValores(List<Valores> valores){
+	public static List<ValoresDto> converterListaValores(List<Valores> valores){
 	
 		List<ValoresDto> valoresDto = new ArrayList<ValoresDto>();
 		
 		for(Valores valor : valores) 
-			valoresDto.add(ConverterValores(valor));
+			valoresDto.add(converterValores(valor));
 		
 		return valoresDto;
 	}
 	
-	public static Vaga ConverterVagaDto(VagaDto vagaDto) throws ParseException{
+	public static Vaga converterVagaDto(VagaDto vagaDto) throws ParseException{
 		Vaga vaga = new Vaga();
 		
 		if(vagaDto.getId() != null && vagaDto.getId() !="")
@@ -66,7 +66,7 @@ public class ConversaoUtils {
 		return vaga;
 	}
 	
-	public static VagaDto ConverterVaga(Vaga vaga) {
+	public static VagaDto converterVaga(Vaga vaga) {
 		VagaDto vagaDto = new VagaDto();
 		
 		vagaDto.setId(String.valueOf(vaga.getId()));
@@ -76,17 +76,17 @@ public class ConversaoUtils {
 		return vagaDto;
 	}
 	
-	public static List<VagaDto> ConverterListaVaga(List<Vaga> vagas){
+	public static List<VagaDto> converterListaVaga(List<Vaga> vagas){
 		
 		List<VagaDto> vagasDto = new ArrayList<VagaDto>();
 		
 		for(Vaga vaga : vagas) 
-			vagasDto.add(ConverterVaga(vaga));
+			vagasDto.add(converterVaga(vaga));
 		
 		return vagasDto;
 	}
 	
-	public static Usuario ConverterUsuarioDto(UsuarioDto usuarioDto) {
+	public static Usuario converterUsuarioDto(UsuarioDto usuarioDto) {
 		 
      	Usuario usuario = new Usuario();
 
@@ -102,7 +102,7 @@ public class ConversaoUtils {
 
 	}
 
-	public static UsuarioDto ConverterUsuario(Usuario usuario) {
+	public static UsuarioDto converterUsuario(Usuario usuario) {
 
      	UsuarioDto usuarioDto = new UsuarioDto();
 
@@ -117,17 +117,17 @@ public class ConversaoUtils {
 
 	}
 	
-	public static List<UsuarioDto> ConverterListaUsuario(List<Usuario> usuarios){
+	public static List<UsuarioDto> converterListaUsuario(List<Usuario> usuarios){
 		
 		List<UsuarioDto> usuariosDto = new ArrayList<UsuarioDto>();
 		
 		for(Usuario usuario : usuarios) 
-			usuariosDto.add(ConverterUsuario(usuario));
+			usuariosDto.add(converterUsuario(usuario));
 		
 		return usuariosDto;
 	}
 
-	public static RegraDto ConverterRegra(Regra regra) {
+	public static RegraDto converterRegra(Regra regra) {
 
      	RegraDto regraDto = new RegraDto();
 
@@ -139,12 +139,12 @@ public class ConversaoUtils {
 
 	}
 
-	public static List<RegraDto> ConverterListaRegras(List<Regra> regras) {
+	public static List<RegraDto> converterListaRegras(List<Regra> regras) {
 
      	List<RegraDto> regrasDto = new ArrayList<RegraDto>();
 
      	for (Regra regra : regras)
-            	regrasDto.add(ConverterRegra(regra));
+            	regrasDto.add(converterRegra(regra));
 
      	return regrasDto;
 
@@ -167,7 +167,7 @@ public class ConversaoUtils {
 		return vagaOcupadaDto;
 	}
 	
-	public static VagaOcupada ConverterVagaOcupadaDto(VagaOcupadaDto vagaOcupadaDto)throws ParseException, java.text.ParseException {
+	public static VagaOcupada converterVagaOcupadaDto(VagaOcupadaDto vagaOcupadaDto)throws ParseException, java.text.ParseException {
 		VagaOcupada vagaOcupada = new VagaOcupada();
 		
 		if (vagaOcupadaDto.getId() != null && vagaOcupadaDto.getId() != "")

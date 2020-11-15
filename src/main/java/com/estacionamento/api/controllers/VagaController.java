@@ -53,7 +53,7 @@ public class VagaController {
 
 			Optional<List<Vaga>> vagas = vagaService.buscarTodasAsVagas();
 
-			response.setDados(ConversaoUtils.ConverterListaVaga(vagas.get()));
+			response.setDados(ConversaoUtils.converterListaVaga(vagas.get()));
 
 			return ResponseEntity.ok(response);
 
@@ -93,8 +93,8 @@ public class VagaController {
 				return ResponseEntity.badRequest().body(response);
 			}
 
-			Vaga vaga = this.vagaService.salvar(ConversaoUtils.ConverterVagaDto(vagaDto));
-			response.setDados(ConversaoUtils.ConverterVaga(vaga));
+			Vaga vaga = this.vagaService.salvar(ConversaoUtils.converterVagaDto(vagaDto));
+			response.setDados(ConversaoUtils.converterVaga(vaga));
 			return ResponseEntity.ok(response);
 		} catch (ConsistenciaException e) {
 			log.info("Controller: Inconsistência de dados: {}", e.getMessage());

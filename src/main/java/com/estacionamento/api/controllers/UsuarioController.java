@@ -54,7 +54,7 @@ public class UsuarioController {
 
 			Optional<Usuario> usuario = usuarioService.buscarPorId(id);
 
-			response.setDados(ConversaoUtils.ConverterUsuario(usuario.get()));
+			response.setDados(ConversaoUtils.converterUsuario(usuario.get()));
 
 			return ResponseEntity.ok(response);
 
@@ -90,7 +90,7 @@ public class UsuarioController {
 
 			Optional<List<Usuario>> funcionarios = usuarioService.buscarTodosOsFuncionarios();
 
-			response.setDados(ConversaoUtils.ConverterListaUsuario(funcionarios.get()));
+			response.setDados(ConversaoUtils.converterListaUsuario(funcionarios.get()));
 
 			return ResponseEntity.ok(response);
 
@@ -137,10 +137,10 @@ public class UsuarioController {
 			}
 
 			// Converte o objeto usuarioDto para um objeto do tipo Usuario (entidade)
-			Usuario usuario = ConversaoUtils.ConverterUsuarioDto(usuarioDto);
+			Usuario usuario = ConversaoUtils.converterUsuarioDto(usuarioDto);
 
 			// Salvando o usuário
-			response.setDados(ConversaoUtils.ConverterUsuario(this.usuarioService.salvarCliente(usuario, usuarioDto.getTelefone(), usuarioDto.getCpf())));
+			response.setDados(ConversaoUtils.converterUsuario(this.usuarioService.salvarCliente(usuario, usuarioDto.getTelefone(), usuarioDto.getCpf())));
 			return ResponseEntity.ok(response);
 
 		} catch (ConsistenciaException e) {
@@ -189,10 +189,10 @@ public class UsuarioController {
 			}
 
 			// Converte o objeto usuarioDto para um objeto do tipo Usuario (entidade)
-			Usuario usuario = ConversaoUtils.ConverterUsuarioDto(usuarioDto);
+			Usuario usuario = ConversaoUtils.converterUsuarioDto(usuarioDto);
 
 			// Salvando o usuário
-			response.setDados(ConversaoUtils.ConverterUsuario(this.usuarioService.salvarFuncionario(usuario)));
+			response.setDados(ConversaoUtils.converterUsuario(this.usuarioService.salvarFuncionario(usuario)));
 			return ResponseEntity.ok(response);
 
 		} catch (ConsistenciaException e) {
