@@ -1,7 +1,6 @@
 package com.estacionamento.api.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
 
@@ -40,15 +37,6 @@ public class Usuario implements Serializable{
 	
 	@Column(name = "tipo", nullable = false)
 	private String tipo;
-	
-	@Column(name = "dataacesso", nullable = false)
-	private Date dataAcesso;
-	
-	@Column(name = "ativo", nullable = false)
-	private boolean ativo;
-	
-//	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	private Cliente cliente;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
    	@JoinTable(name = "Usuario_Regra",
@@ -97,35 +85,6 @@ public class Usuario implements Serializable{
 		this.tipo = tipo;
 	}
 
-	public Date getDataAcesso() {
-		return dataAcesso;
-	}
-
-	public void setDataAcesso(Date dataAcesso) {
-		this.dataAcesso = dataAcesso;
-	}
-
-	public boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-	
-	@PrePersist
-   	public void prePersist() {
-         	dataAcesso = new Date();
-   	}
-
-//	public Cliente getCliente() {
-//		return cliente;
-//	}
-//
-//	public void setCliente(Cliente cliente) {
-//		this.cliente = cliente;
-//	}
-
 	public List<Regra> getRegras() {
 		return regras;
 	}
@@ -137,8 +96,7 @@ public class Usuario implements Serializable{
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", tipo=" + tipo
-				+ ", dataAcesso=" + dataAcesso + ", ativo=" + ativo + "]";
+				+ ", regras=" + regras + "]";
 	}
-	
 	
 }

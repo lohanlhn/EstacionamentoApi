@@ -10,7 +10,7 @@ import com.estacionamento.api.entities.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 	
-	@Transactional(readOnly = true)
-	Optional<Cliente> findByCpf(@Param("cpf") String cpf);
 
+	@Transactional(readOnly = true)
+	Optional<Cliente> findByUsuarioId(@Param("id") int id);
 }

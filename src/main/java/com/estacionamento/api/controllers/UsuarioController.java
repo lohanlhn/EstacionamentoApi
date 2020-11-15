@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.estacionamento.api.dtos.SenhaDto;
 import com.estacionamento.api.dtos.UsuarioDto;
 import com.estacionamento.api.entities.Usuario;
 import com.estacionamento.api.response.Response;
@@ -43,7 +42,7 @@ public class UsuarioController {
 	 * @return Dados do usuário
 	 */
 	@GetMapping(value = "/{id}")
-	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
+	@PreAuthorize("hasAnyRole('ADM')")
 	public ResponseEntity<Response<UsuarioDto>> buscarPorId(@PathVariable("id") int id) {
 
 		Response<UsuarioDto> response = new Response<UsuarioDto>();
@@ -106,7 +105,7 @@ public class UsuarioController {
 			Usuario usuario = ConversaoUtils.ConverterUsuarioDto(usuarioDto);
 
 			// Salvando o usuário
-			response.setDados(ConversaoUtils.ConverterUsuario(this.usuarioService.salvarCliente(usuario)));
+			response.setDados(ConversaoUtils.ConverterUsuario(this.usuarioService.salvarCliente(usuario, usuarioDto.getTelefone(), usuarioDto.getCpf())));
 			return ResponseEntity.ok(response);
 
 		} catch (ConsistenciaException e) {
@@ -132,7 +131,7 @@ public class UsuarioController {
 	 * @return Dados do usuario persistido
 	 */
 	@PostMapping(value = "/funcionario")
-	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
+	@PreAuthorize("hasAnyRole('ADM')")
 	public ResponseEntity<Response<UsuarioDto>> salvarFuncionario(@Valid @RequestBody UsuarioDto usuarioDto,
 			BindingResult result) {
 
@@ -159,56 +158,6 @@ public class UsuarioController {
 
 			// Salvando o usuário
 			response.setDados(ConversaoUtils.ConverterUsuario(this.usuarioService.salvarFuncionario(usuario)));
-			return ResponseEntity.ok(response);
-
-		} catch (ConsistenciaException e) {
-
-			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
-			response.adicionarErro(e.getMensagem());
-			return ResponseEntity.badRequest().body(response);
-
-		} catch (Exception e) {
-
-			log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage());
-			response.adicionarErro("Ocorreu um erro na aplicação: {}", e.getMessage());
-			return ResponseEntity.status(500).body(response);
-
-		}
-
-	}
-
-	/**
-	 * Altera a senha do usuário, verificando o próprio usuário e a senha atual.
-	 *
-	 * @param Dados de entrada do usuário
-	 * @return Dados do usuario persistido
-	 */
-	@PostMapping(value = "/senha")
-	public ResponseEntity<Response<SenhaDto>> alterarSenhaUsuario(@Valid @RequestBody SenhaDto senhaDto,
-			BindingResult result) {
-
-		Response<SenhaDto> response = new Response<SenhaDto>();
-
-		try {
-
-			log.info("Controller: alterando a senha do usuário: {}", senhaDto.getEmail());
-
-			// Verificando se todos os campos da DTO foram preenchidos
-			if (result.hasErrors()) {
-
-				for (int i = 0; i < result.getErrorCount(); i++) {
-					response.adicionarErro(result.getAllErrors().get(i).getDefaultMessage());
-				}
-
-				log.info("Controller: Os campos obrigatórios não foram preenchidos");
-				return ResponseEntity.badRequest().body(response);
-
-			}
-
-			// Alterando a senha do usuário
-			this.usuarioService.alterarSenhaUsuario(senhaDto.getSenhaAtual(), senhaDto.getNovaSenha(), senhaDto.getEmail());
-
-			response.setDados(senhaDto);
 			return ResponseEntity.ok(response);
 
 		} catch (ConsistenciaException e) {

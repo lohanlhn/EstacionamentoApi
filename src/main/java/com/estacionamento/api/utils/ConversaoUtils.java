@@ -94,10 +94,11 @@ public class ConversaoUtils {
             	usuario.setId(Integer.parseInt(usuarioDto.getId()));
 
      	usuario.setNome(usuarioDto.getNome());
-     	usuario.setEmail(usuarioDto.getEmail());
-     	usuario.setAtivo(Boolean.parseBoolean(usuarioDto.getAtivo()));
+     	usuario.setEmail(usuarioDto.getEmail());     	
      	usuario.setSenha(usuarioDto.getSenha());
      	usuario.setTipo(usuarioDto.getTipo());
+     	
+     	     	
 
      	if (usuarioDto.getRegras() != null && usuarioDto.getRegras().size() > 0) {
 
@@ -125,10 +126,9 @@ public class ConversaoUtils {
      	usuarioDto.setId(Integer.toString(usuario.getId()));
 
      	usuarioDto.setNome(usuario.getNome());
-     	usuarioDto.setEmail(usuario.getEmail());
-     	usuarioDto.setAtivo(Boolean.toString(usuario.getAtivo()));
+     	usuarioDto.setEmail(usuario.getEmail());     
      	usuarioDto.setSenha(usuario.getSenha());
-     	usuarioDto.setTipo(usuario.getTipo());
+     	usuarioDto.setTipo(usuario.getTipo());     	
 
      	if (usuario.getRegras() != null) {
             	

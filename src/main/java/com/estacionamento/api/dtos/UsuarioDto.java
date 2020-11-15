@@ -6,8 +6,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
  
 import org.hibernate.validator.constraints.Length;
-
-import com.estacionamento.api.entities.Cliente;
+import org.hibernate.validator.constraints.br.CPF;
  
 public class UsuarioDto {
  
@@ -20,10 +19,7 @@ public class UsuarioDto {
    	
    	@NotEmpty(message = "Email não pode ser vazio.")
    	@Email( message = "Email inválido.")
-   	private String email;
-   	
-   	@NotEmpty(message = "Ativo não pode ser vazio.")
-   	private String ativo;
+   	private String email;   
    	
    	@NotEmpty(message = "Tipo não pode ser vazio")
    	private String tipo;
@@ -33,9 +29,17 @@ public class UsuarioDto {
    	message = "Senha deve conter entre 8 e 25 caracteres.")
    	private String senha;
    	
-   	private List<RegraDto> regras;
+   	@Length(min = 10, max = 11,
+   		   	message = "O telefone deve conter entre 10 e 11 caracteres.")
+   	private String telefone;
    	
-   	//private Cliente cliente;
+   	@CPF
+   	@Length(min = 11, max = 11,
+   		   	message = "O cpf deve conter 11 caracteres.")
+   	private String cpf;
+   	
+   	private List<RegraDto> regras;   	
+   	
 
 	public String getId() {
 		return id;
@@ -60,15 +64,7 @@ public class UsuarioDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public String getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(String ativo) {
-		this.ativo = ativo;
-	}
-
+	
 	public String getTipo() {
 		return tipo;
 	}
@@ -94,23 +90,27 @@ public class UsuarioDto {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-		
-//
-//	public Cliente getCliente() {
-//		return cliente;
-//	}
-//
-//	public void setCliente(Cliente cliente) {
-//		this.cliente = cliente;
-//	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
 	@Override
 	public String toString() {
-		return "UsuarioDto [id=" + id + ", nome=" + nome + ", email=" + email + ", ativo=" + ativo + ", tipo=" + tipo
-				+ ", senha=" + senha + ", regras=" + regras + ", cliente=" +   "]";
+		return "UsuarioDto [id=" + id + ", nome=" + nome + ", email=" + email + ", tipo=" + tipo + ", senha=" + senha
+				+ ", telefone=" + telefone + ", cpf=" + cpf + ", regras=" + regras + "]";
 	}
-
 	
-   	
-   	
 }

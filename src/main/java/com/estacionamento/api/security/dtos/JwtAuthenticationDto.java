@@ -7,8 +7,8 @@ import org.hibernate.validator.constraints.Length;
  
 public class JwtAuthenticationDto {
  
-   	@NotEmpty(message = "CPF não pode ser vazio.")
-   	@Email( message = "CPF inválido.")
+   	@NotEmpty(message = "Email não pode ser vazio.")
+   	@Email( message = "Email inválido.")
    	private String email;
    	
    	@NotEmpty(message = "Senha não pode ser vazia.")
@@ -31,10 +31,11 @@ public class JwtAuthenticationDto {
    	public void setSenha(String senha) {
          	this.senha = senha;
    	}
+
+	@Override
+	public String toString() {
+		return "JwtAuthenticationDto [email=" + email + ", senha=" + senha + "]";
+	}
  
-   	@Override
-   	public String toString() {
-         	return "JwtAuthenticationRequestDto[cpf=" + email + ", senha=" + senha + "]";
-   	}
    	
 }
