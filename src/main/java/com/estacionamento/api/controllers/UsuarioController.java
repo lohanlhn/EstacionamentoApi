@@ -1,5 +1,6 @@
 package com.estacionamento.api.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -71,6 +72,40 @@ public class UsuarioController {
 
 		}
 
+	}
+	
+	/**
+	 * Retorna os dados de todos os funcionarios cadastrados
+	 * 
+	 * @return Lista de vagas cadastradas
+	 */
+	@GetMapping(value = "/funcionario/todos")
+	@PreAuthorize("hasAnyRole('ADM')")
+	public ResponseEntity<Response<List<UsuarioDto>>> buscarTodosOsFuncionarios() {
+
+		Response<List<UsuarioDto>> response = new Response<List<UsuarioDto>>();
+
+		try {
+			log.info("Controller: buscando todas os funcionarios");
+
+			Optional<List<Usuario>> funcionarios = usuarioService.buscarTodosOsFuncionarios();
+
+			response.setDados(ConversaoUtils.ConverterListaUsuario(funcionarios.get()));
+
+			return ResponseEntity.ok(response);
+
+		} catch (ConsistenciaException e) {
+			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
+			response.adicionarErro(e.getMensagem());
+			return ResponseEntity.badRequest().body(response);
+
+		} catch (Exception e) {
+
+			log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage());
+			response.adicionarErro("Ocorreu um erro na aplicação: {}", e.getMessage());
+			return ResponseEntity.status(500).body(response);
+
+		}
 	}
 
 	/**

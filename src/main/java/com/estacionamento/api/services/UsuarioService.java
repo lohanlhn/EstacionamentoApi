@@ -51,19 +51,16 @@ public class UsuarioService {
 
 	}
 
-	public Optional<Usuario> buscarPorEmail(String email) throws ConsistenciaException {
+	public Optional<List<Usuario>> buscarTodosOsFuncionarios() throws ConsistenciaException {
+		log.info("Service: buscando todas os funcionarios");
 
-		log.info("Service: buscando um usuário com o id: {}", email);
+		Optional<List<Usuario>> funcionarios = usuarioRepository.findFuncionarios();
 
-		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
-
-		if (!usuario.isPresent()) {
-			log.info("Service: Nenhum usuário com id: {} foi encontrado", email);
-			throw new ConsistenciaException("Nenhum usuário com id: {} foi encontrado", email);
+		if (!funcionarios.isPresent() || funcionarios.get().size() < 0) {
+			log.info("Service: nenhum funcionario foi encontrado");
+			throw new ConsistenciaException("Nenhum funcionario foi encontrado");
 		}
-
-		return usuario;
-
+		return funcionarios;
 	}
 
 	public Optional<Usuario> verificarCredenciais(String email) throws ConsistenciaException {

@@ -116,6 +116,16 @@ public class ConversaoUtils {
      	return usuarioDto;
 
 	}
+	
+	public static List<UsuarioDto> ConverterListaUsuario(List<Usuario> usuarios){
+		
+		List<UsuarioDto> usuariosDto = new ArrayList<UsuarioDto>();
+		
+		for(Usuario usuario : usuarios) 
+			usuariosDto.add(ConverterUsuario(usuario));
+		
+		return usuariosDto;
+	}
 
 	public static RegraDto ConverterRegra(Regra regra) {
 
@@ -225,6 +235,8 @@ public class ConversaoUtils {
 		return listVeiculoDto;
 		
 	}
+	
+	
 
 	
 }
