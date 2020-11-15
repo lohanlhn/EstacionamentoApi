@@ -1,12 +1,8 @@
 package com.estacionamento.api.repositories;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.After;
@@ -18,8 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.estacionamento.api.repositories.ClienteRepository;
 import com.estacionamento.api.entities.Cliente;
+import com.estacionamento.api.entities.Usuario;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,6 +35,11 @@ public class ClienteRepositoryTest {
 			clienteTeste.setId(1);
 			clienteTeste.setTelefone("12345678910");
 			clienteTeste.setCpf("05887098082");
+			
+			Usuario usuario = new Usuario();
+			usuario.setId(1);
+			
+			clienteTeste.setUsuario(usuario);
 			
 		}
 		
@@ -69,7 +70,7 @@ public class ClienteRepositoryTest {
 	@Test
 	public void testFindByCpf() {
 		
-		Optional<Cliente> cliente = clienteRepository.findByCpf(clienteTeste.getCpf());
+		Optional<Cliente> cliente = clienteRepository.findByUsuarioId(clienteTeste.getUsuario().getId());
 		assertEquals(clienteTeste.getCpf(), cliente.get().getCpf());
 		
 	}

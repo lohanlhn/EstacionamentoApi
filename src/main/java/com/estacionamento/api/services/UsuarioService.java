@@ -1,5 +1,7 @@
 package com.estacionamento.api.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -118,51 +120,21 @@ public class UsuarioService {
 
 		log.info("Service: salvando o usuario: {}", usuario);
 
-		// Se foi informando ID na DTO, é porque trata-se de uma ALTERAÇÃO
-		if (usuario.getId() > 0) {
+		if (usuario.getId() > 0)
+			buscarPorId(usuario.getId());
 
-			// Verificar se o ID existe na base
-			Optional<Usuario> usr = buscarPorId(usuario.getId());
+		usuario.setSenha(SenhaUtils.gerarHash(usuario.getSenha()));
 
-			// Setando a senha do objeto usuário com a mesma senha encontarda na base.
-			// Se não fizermos isso, a senha fica em branco.
-			usuario.setSenha(usr.get().getSenha());
-
-		}
-
-		// Carregando as regras definidas para o usuário, caso existam
-//		if (usuario.getRegras() != null) {
-//
-//			List<Regra> aux = new ArrayList<Regra>(usuario.getRegras().size());
-//			
-//			
-//
-//			for (Regra regra : usuario.getRegras()) {
-//
-//				Optional<Regra> rg = Optional.ofNullable(regraReprository.findByNome(regra.getNome()));
-//
-//				if (rg.isPresent()) {
-//					aux.add(rg.get());
-//				} else {
-//
-//					log.info("A regra '{}' não existe", regra.getNome());
-//					throw new ConsistenciaException("A regra '{}' não existe", regra.getNome());
-//
-//				}
-//
-//			}
-//
-//			usuario.setRegras(aux);
-//
-//		}
 		// Verifica se o tipo de usuario está correto
 		if (!usuario.getTipo().equals("F")) {
 			log.info("O tipo deve ser F");
 			throw new ConsistenciaException("O tipo deve ser F");
 		}
 		
+		List<Regra> aux = new ArrayList<Regra>();		
 		Regra regra = regraReprository.findByNome("ROLE_FUNC");
-		usuario.getRegras().add(regra);
+		aux.add(regra);
+		usuario.setRegras(aux);
 		
 
 		try {

@@ -3,7 +3,6 @@ package com.estacionamento.api.repositories;
 import static org.junit.Assert.*;
 
 import java.text.ParseException;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -35,8 +34,7 @@ public class UsuarioRepositoryTest {
 		usuarioTeste.setNome("Nome Teste");
 		usuarioTeste.setEmail("05887098082");
 		usuarioTeste.setSenha("666");
-		usuarioTeste.setTipo("2");
-		usuarioTeste.setAtivo(true);
+		usuarioTeste.setTipo("2");		
 		
 		
 	}

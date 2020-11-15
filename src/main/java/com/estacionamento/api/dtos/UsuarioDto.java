@@ -1,7 +1,5 @@
 package com.estacionamento.api.dtos;
 
-import java.util.List;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
  
@@ -28,8 +26,7 @@ public class UsuarioDto {
    	@Length(min = 8, max = 25,
    	message = "Senha deve conter entre 8 e 25 caracteres.")
    	private String senha;
-   	
-   	@NotEmpty(message = "Telefone não pode ser vazio.")
+   	   	
    	@Length(min = 10, max = 11,
    		   	message = "O telefone deve conter entre 10 e 11 caracteres.")
    	private String telefone;
@@ -38,8 +35,7 @@ public class UsuarioDto {
    	@Length(min = 11, max = 11,
    		   	message = "O cpf deve conter 11 caracteres.")
    	private String cpf;
-   	
-   	private List<RegraDto> regras;   	
+   	   
    	
 
 	public String getId() {
@@ -72,17 +68,7 @@ public class UsuarioDto {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
-	}
-
-	public List<RegraDto> getRegras() {
-		return regras;
-	}
-
-	public void setRegras(List<RegraDto> regras) {
-		this.regras = regras;
-	}
-	
-	
+	}	
 
 	public String getSenha() {
 		return senha;
@@ -111,7 +97,9 @@ public class UsuarioDto {
 	@Override
 	public String toString() {
 		return "UsuarioDto [id=" + id + ", nome=" + nome + ", email=" + email + ", tipo=" + tipo + ", senha=" + senha
-				+ ", telefone=" + telefone + ", cpf=" + cpf + ", regras=" + regras + "]";
+				+ ", telefone=" + telefone + ", cpf=" + cpf + "]";
 	}
+
+
 	
 }

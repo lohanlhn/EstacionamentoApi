@@ -96,24 +96,7 @@ public class ConversaoUtils {
      	usuario.setNome(usuarioDto.getNome());
      	usuario.setEmail(usuarioDto.getEmail());     	
      	usuario.setSenha(usuarioDto.getSenha());
-     	usuario.setTipo(usuarioDto.getTipo());
-     	
-     	     	
-
-     	if (usuarioDto.getRegras() != null && usuarioDto.getRegras().size() > 0) {
-
-            	usuario.setRegras(new ArrayList<Regra>());
-
-            	for (RegraDto regraDto : usuarioDto.getRegras()) {
-
-                   	Regra regra = new Regra();
-                   	regra.setNome(regraDto.getNome());
-
-                   	usuario.getRegras().add(regra);
-
-            	}
-
-     	}
+     	usuario.setTipo(usuarioDto.getTipo());     	          	
 
      	return usuario;
 
@@ -128,25 +111,7 @@ public class ConversaoUtils {
      	usuarioDto.setNome(usuario.getNome());
      	usuarioDto.setEmail(usuario.getEmail());     
      	usuarioDto.setSenha(usuario.getSenha());
-     	usuarioDto.setTipo(usuario.getTipo());     	
-
-     	if (usuario.getRegras() != null) {
-            	
-            	usuarioDto.setRegras(new ArrayList<RegraDto>());
-
-            	for (int i = 0; i < usuario.getRegras().size(); i++) {
-                   	
-                   	RegraDto regraDto = new RegraDto();
-                   	
-                   	regraDto.setNome(usuario.getRegras().get(i).getNome());
-                   	regraDto.setDescricao(usuario.getRegras().get(i).getDescricao());
-                   	regraDto.setAtivo(usuario.getRegras().get(i).getAtivo());
-                   	
-                   	usuarioDto.getRegras().add(regraDto);
-                   	
-            	}
-
-     	}
+     	usuarioDto.setTipo(usuario.getTipo());     	     	
 
      	return usuarioDto;
 
