@@ -38,7 +38,7 @@ public class Usuario implements Serializable{
 	@Column(name = "tipo", nullable = false)
 	private String tipo;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
    	@JoinTable(name = "Usuario_Regra",
    	           joinColumns = { @JoinColumn(name = "usuario_id") },
    	           inverseJoinColumns = { @JoinColumn(name = "regra_id") })

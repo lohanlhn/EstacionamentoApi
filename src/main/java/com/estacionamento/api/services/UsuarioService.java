@@ -148,4 +148,15 @@ public class UsuarioService {
 		}
 
 	}
+	
+	public void excluirPorId(int id) throws ConsistenciaException {
+		 
+     	log.info("Service: excluíndo o usuario de id: {}", id);
+
+     	buscarPorId(id);
+     	
+     	usuarioRepository.deletarRegraDoUsuario(id);
+     	usuarioRepository.deleteById(id);
+
+	}
 }

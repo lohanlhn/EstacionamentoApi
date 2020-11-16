@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -193,6 +194,44 @@ public class UsuarioController {
 
 			// Salvando o usuário
 			response.setDados(ConversaoUtils.converterUsuario(this.usuarioService.salvarFuncionario(usuario)));
+			return ResponseEntity.ok(response);
+
+		} catch (ConsistenciaException e) {
+
+			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
+			response.adicionarErro(e.getMensagem());
+			return ResponseEntity.badRequest().body(response);
+
+		} catch (Exception e) {
+
+			log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage());
+			response.adicionarErro("Ocorreu um erro na aplicação: {}", e.getMessage());
+			return ResponseEntity.status(500).body(response);
+
+		}
+
+	}
+	
+	/**
+	 * Exclui um usuario a partir do id informado no parâmtero
+	 * 
+	 * @param id do usuario a ser excluído
+	 * @return Sucesso/erro
+	 */
+	@DeleteMapping(value = "/excluir/{id}")
+	@PreAuthorize("hasAnyRole('ADM')")
+	public ResponseEntity<Response<String>> excluirPorId(@PathVariable("id") int id) {
+
+		Response<String> response = new Response<String>();
+
+		try {
+
+			log.info("Controller: excluíndo usuario de ID: {}", id);
+
+			usuarioService.excluirPorId(id);
+
+			response.setDados("Usuario de id: " + id + " excluído com sucesso");
+
 			return ResponseEntity.ok(response);
 
 		} catch (ConsistenciaException e) {

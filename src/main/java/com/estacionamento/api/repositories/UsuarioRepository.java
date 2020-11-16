@@ -23,5 +23,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
    	@Modifying(clearAutomatically = true)
    	@Query("UPDATE Usuario SET senha = :novasenha WHERE email = :emailUsuario")
    	void alterarSenhaUsuario(@Param("novasenha") String novasenha, @Param("emailUsuario") String emailUsuario);   	
+   	
+   	@Transactional
+   	@Modifying(clearAutomatically = true)
+   	@Query(value = "DELETE FROM usuario_regra WHERE usuario_id = :id", nativeQuery = true)
+   	void deletarRegraDoUsuario(@Param("id") int id);
 
 }
