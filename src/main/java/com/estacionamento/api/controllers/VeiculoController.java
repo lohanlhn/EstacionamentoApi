@@ -39,15 +39,15 @@ public class VeiculoController {
 	@Autowired
 	private VeiculoService veiculoService;
 	
-	@GetMapping(value = "/cliente/{clienteId}")
-	public ResponseEntity<Response<List<VeiculoDto>>> buscarPorClienteid(@PathVariable("clienteId") int clienteId) {
+	@GetMapping(value = "/cliente/{usuarioId}")
+	public ResponseEntity<Response<List<VeiculoDto>>> buscarPorClienteid(@PathVariable("usuarioId") int usuarioId) {
 		
 		Response<List<VeiculoDto>> response = new Response<List<VeiculoDto>>();
 		
 		try {
-			log.info("Controller: buscando Veiculos do cliente de ID: {}",clienteId);
+			log.info("Controller: buscando Veiculos do cliente de ID: {}",usuarioId);
 			
-			Optional<List<Veiculo>> listaVeiculo = veiculoService.buscarPorClienteId(clienteId);
+			Optional<List<Veiculo>> listaVeiculo = veiculoService.buscarPorClienteId(usuarioId);
 			
 			response.setDados(ConversaoUtils.converterListaVeiculo(listaVeiculo));
 			

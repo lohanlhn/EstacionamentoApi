@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.estacionamento.api.entities.Cliente;
 import com.estacionamento.api.entities.Regra;
 import com.estacionamento.api.entities.Usuario;
-import com.estacionamento.api.repositories.ClienteRepository;
 import com.estacionamento.api.repositories.RegraRepository;
 import com.estacionamento.api.repositories.UsuarioRepository;
 import com.estacionamento.api.utils.ConsistenciaException;
@@ -31,10 +29,7 @@ public class UsuarioService {
 	@Autowired
 	private RegraRepository regraReprository;
 
-	@Autowired
-	private ClienteRepository clienteRepository;
-
-	
+		
 
 	public Optional<Usuario> buscarPorId(int id) throws ConsistenciaException {
 
@@ -81,7 +76,7 @@ public class UsuarioService {
 
 	}
 	
-	public Usuario salvarCliente(Usuario usuario, String telefone, String cpf) throws ConsistenciaException {
+	public Usuario salvarCliente(Usuario usuario) throws ConsistenciaException {
 
 		log.info("Service: salvando o usuario: {}", usuario);
 
@@ -90,21 +85,10 @@ public class UsuarioService {
 
 		usuario.setSenha(SenhaUtils.gerarHash(usuario.getSenha()));
 		
-		if (!usuario.getTipo().equals("C")) {
-			log.info("O tipo deve ser C");
-			throw new ConsistenciaException("O tipo deve ser C");
-		}
-
+		usuario.setTipo("C");
+		
 		try {
 			usuarioRepository.save(usuario);
-
-			Cliente cliente = new Cliente();
-
-			cliente.setTelefone(telefone);
-			cliente.setCpf(cpf);
-			cliente.setUsuario(usuarioRepository.findByEmail(usuario.getEmail()).get());
-
-			clienteRepository.save(cliente);
 
 			return usuario;
 
@@ -126,11 +110,7 @@ public class UsuarioService {
 
 		usuario.setSenha(SenhaUtils.gerarHash(usuario.getSenha()));
 
-		// Verifica se o tipo de usuario está correto
-		if (!usuario.getTipo().equals("F")) {
-			log.info("O tipo deve ser F");
-			throw new ConsistenciaException("O tipo deve ser F");
-		}
+		usuario.setTipo("F");
 		
 		List<Regra> aux = new ArrayList<Regra>();		
 		Regra regra = regraReprository.findByNome("ROLE_FUNC");

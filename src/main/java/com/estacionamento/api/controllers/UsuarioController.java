@@ -77,7 +77,7 @@ public class UsuarioController {
 	 * @param Dados de entrada do usuário
 	 * @return Dados do usuario persistido
 	 */
-	@PostMapping
+	@PostMapping(value = "/cliente")	
 	public ResponseEntity<Response<UsuarioDto>> salvarCliente(@Valid @RequestBody UsuarioDto usuarioDto,
 			BindingResult result) {
 
@@ -103,7 +103,7 @@ public class UsuarioController {
 			Usuario usuario = ConversaoUtils.converterUsuarioDto(usuarioDto);
 
 			// Salvando o usuário
-			response.setDados(ConversaoUtils.converterUsuario(this.usuarioService.salvarCliente(usuario, usuarioDto.getTelefone(), usuarioDto.getCpf())));
+			response.setDados(ConversaoUtils.converterUsuario(this.usuarioService.salvarCliente(usuario)));
 			return ResponseEntity.ok(response);
 
 		} catch (ConsistenciaException e) {

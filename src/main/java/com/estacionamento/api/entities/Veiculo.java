@@ -36,7 +36,7 @@ public class Veiculo implements Serializable {
 	
 	@JsonBackReference
    	@ManyToOne(fetch = FetchType.EAGER)
-	private Cliente cliente;
+	private Usuario usuario;
 
 	public int getId() {
 		return id;
@@ -78,18 +78,18 @@ public class Veiculo implements Serializable {
 		this.tipo = tipo;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
 	public String toString() {
 		return "Veiculo [id=" + id + ", marca=" + marca + ", cor=" + cor + ", placa=" + placa + ", tipo=" + tipo
-				+ ", cliente=" + cliente + "]";
+				+ ", usuario=" + usuario + "]";
 	}
 	
 	

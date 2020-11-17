@@ -10,7 +10,6 @@ import com.estacionamento.api.dtos.VagaDto;
 import com.estacionamento.api.dtos.VagaOcupadaDto;
 import com.estacionamento.api.dtos.ValoresDto;
 import com.estacionamento.api.dtos.VeiculoDto;
-import com.estacionamento.api.entities.Cliente;
 import com.estacionamento.api.entities.Usuario;
 import com.estacionamento.api.entities.Vaga;
 import com.estacionamento.api.entities.VagaOcupada;
@@ -93,8 +92,8 @@ public class ConversaoUtils {
 
      	usuario.setNome(usuarioDto.getNome());
      	usuario.setEmail(usuarioDto.getEmail());     	
-     	usuario.setSenha(usuarioDto.getSenha());
-     	usuario.setTipo(usuarioDto.getTipo());     	          	
+     	usuario.setSenha(usuarioDto.getSenha());     	
+     	usuario.setTelefone(usuarioDto.getTelefone());     	  
 
      	return usuario;
 
@@ -109,7 +108,7 @@ public class ConversaoUtils {
      	usuarioDto.setNome(usuario.getNome());
      	usuarioDto.setEmail(usuario.getEmail());     
      	usuarioDto.setSenha(usuario.getSenha());
-     	usuarioDto.setTipo(usuario.getTipo());     	     	
+     	usuarioDto.setTelefone(usuario.getTelefone());
 
      	return usuarioDto;
 
@@ -187,7 +186,7 @@ public static List<VagaOcupadaDto> converterListaVagaOcupada (Optional<List<Vaga
 		veiculoDto.setCor(veiculo.getCor());
 		veiculoDto.setPlaca(veiculo.getPlaca());
 		veiculoDto.setTipo(String.valueOf(veiculo.getTipo()));
-		veiculoDto.setClienteid(Integer.toString(veiculo.getCliente().getId()));
+		veiculoDto.setUsuarioId(Integer.toString(veiculo.getUsuario().getId()));
 		
 		return veiculoDto;
 	}
@@ -203,10 +202,10 @@ public static List<VagaOcupadaDto> converterListaVagaOcupada (Optional<List<Vaga
 		veiculo.setPlaca(veiculoDto.getPlaca());
 		veiculo.setTipo(veiculoDto.getTipo().charAt(0));
 		
-		Cliente cliente = new Cliente();
-		cliente.setId(Integer.parseInt(veiculoDto.getClienteid()));
+		Usuario usuario = new Usuario();
+		usuario.setId(Integer.parseInt(veiculoDto.getUsuarioId()));
 		
-		veiculo.setCliente(cliente);
+		veiculo.setUsuario(usuario);
 		
 		return veiculo;
 		

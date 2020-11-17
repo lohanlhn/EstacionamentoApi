@@ -37,14 +37,14 @@ public class VeiculoService {
 	}
 	
 	@Cacheable("cacheVeiculosPorCliente")
-	public Optional<List<Veiculo>> buscarPorClienteId (int clienteId) throws ConsistenciaException {
+	public Optional<List<Veiculo>> buscarPorClienteId (int usuarioId) throws ConsistenciaException {
 		
-		log.info("Service: Buscando os veiculos do cliente de id: {}", clienteId);
-		Optional<List<Veiculo>> veiculos = Optional.ofNullable(veiculoRepository.findBycliente_id(clienteId));
+		log.info("Service: Buscando os veiculos do cliente de id: {}", usuarioId);
+		Optional<List<Veiculo>> veiculos = veiculoRepository.findByUsuarioId(usuarioId);
 		
 		if(!veiculos.isPresent() || veiculos.get().size() < 1) {
-			log.info("Service: Nenhum veiculo encontrado do cliente de Id: {}", clienteId);
-			throw new ConsistenciaException("Nenhum veiculo encontrado do cliente de Id: {}", clienteId);
+			log.info("Service: Nenhum veiculo encontrado do cliente de Id: {}", usuarioId);
+			throw new ConsistenciaException("Nenhum veiculo encontrado do cliente de Id: {}", usuarioId);
 			
 		}
 		

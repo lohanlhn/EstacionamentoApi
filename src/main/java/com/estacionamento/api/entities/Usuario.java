@@ -38,6 +38,9 @@ public class Usuario implements Serializable{
 	@Column(name = "tipo", nullable = false)
 	private String tipo;
 	
+	@Column(name = "telefone", nullable = false)
+	private String telefone;
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
    	@JoinTable(name = "Usuario_Regra",
    	           joinColumns = { @JoinColumn(name = "usuario_id") },
@@ -92,11 +95,20 @@ public class Usuario implements Serializable{
 	public void setRegras(List<Regra> regras) {
 		this.regras = regras;
 	}
+	
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", tipo=" + tipo
-				+ ", regras=" + regras + "]";
+				+ ", telefone=" + telefone + ", regras=" + regras + "]";
 	}
+	
 	
 }

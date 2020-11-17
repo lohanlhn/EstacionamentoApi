@@ -22,7 +22,7 @@ public class VeiculoDto {
 	private String tipo;
 	
 	@NotEmpty(message = "Id do Cliente não pode ser vazio.")
-	private String clienteid;
+	private String usuarioId;
 
 	public String getId() {
 		return id;
@@ -64,13 +64,21 @@ public class VeiculoDto {
 		this.tipo = tipo;
 	}
 
-	public String getClienteid() {
-		return clienteid;
+	public String getUsuarioId() {
+		return usuarioId;
 	}
 
-	public void setClienteid(String clienteid) {
-		this.clienteid = clienteid;
+	public void setUsuarioId(String usuarioId) {
+		this.usuarioId = usuarioId;
 	}
+
+	@Override
+	public String toString() {
+		return "VeiculoDto [id=" + id + ", marca=" + marca + ", cor=" + cor + ", placa=" + placa + ", tipo=" + tipo
+				+ ", usuarioId=" + usuarioId + "]";
+	}
+
+
 	
 	
 	
