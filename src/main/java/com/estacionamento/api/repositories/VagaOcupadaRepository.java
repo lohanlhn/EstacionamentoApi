@@ -29,5 +29,9 @@ public interface VagaOcupadaRepository extends JpaRepository<VagaOcupada, Intege
 	@Query(value = "SELECT * FROM vagaocupada WHERE paga = 0", nativeQuery = true)
 	Optional<List<VagaOcupada>> buscarVagaNaoPagas();
 	
+	@Transactional
+   	@Modifying(clearAutomatically = true)
+   	@Query(value = "UPDATE VagaOcupada SET paga = 1  WHERE id = :id", nativeQuery = true)
+	void alterarPaga(@Param("id") int id);
 
 }
