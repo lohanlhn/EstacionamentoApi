@@ -176,5 +176,19 @@ public class VagaOcupadaService {
 		return tudo;
 	}
 	
+	public void confirmarPaga(int id) throws ConsistenciaException{
+		log.info("Services: Confirmando pagamento da vagaOcupda de id: {]", id);
+		
+		Optional<VagaOcupada> vaga = vagaOcupadaRepository.findById(id);
+		
+		if(!vaga.isPresent()) {
+			log.info("Service: Nenhuma Vaga Ocupada de id: {} foi encontrada");
+			throw new ConsistenciaException("Nenhuma Vaga Ocupada de id: {} foi encontrada");
+		}
+		
+		vagaOcupadaRepository.alterarPaga(id);
+		
+	}
+	
 	
 }
