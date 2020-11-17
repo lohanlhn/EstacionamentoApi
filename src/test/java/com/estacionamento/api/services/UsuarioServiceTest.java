@@ -14,7 +14,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -98,9 +97,12 @@ public class UsuarioServiceTest {
 	@Test
 	public void testSalvarClienteSucesso() throws ConsistenciaException{
 		
+		Usuario usuario = new Usuario();
+		usuario.setTelefone("999");
+		
 		BDDMockito.given(usuarioRepository.save(Mockito.any(Usuario.class))).willReturn(new Usuario());
 		
-		Usuario resultado = usuarioService.salvarCliente(new Usuario());
+		Usuario resultado = usuarioService.salvarCliente(usuario);
 		
 		assertNotNull(resultado);
 				
@@ -111,7 +113,7 @@ public class UsuarioServiceTest {
 	public void testSalvarFuncionarioSucesso() throws ConsistenciaException{
 		
 		Usuario usuario = new Usuario();
-		usuario.setTipo("F");		
+		usuario.setTelefone("999");		
 		
 		BDDMockito.given(usuarioRepository.save(Mockito.any(Usuario.class))).willReturn(new Usuario());				
 		
