@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.estacionamento.api.dtos.RegraDto;
 import com.estacionamento.api.dtos.UsuarioDto;
 import com.estacionamento.api.dtos.VagaDto;
 import com.estacionamento.api.dtos.VagaOcupadaDto;
 import com.estacionamento.api.dtos.ValoresDto;
 import com.estacionamento.api.dtos.VeiculoDto;
 import com.estacionamento.api.entities.Cliente;
-import com.estacionamento.api.entities.Regra;
 import com.estacionamento.api.entities.Usuario;
 import com.estacionamento.api.entities.Vaga;
 import com.estacionamento.api.entities.VagaOcupada;
@@ -127,28 +125,6 @@ public class ConversaoUtils {
 		return usuariosDto;
 	}
 
-	public static RegraDto converterRegra(Regra regra) {
-
-     	RegraDto regraDto = new RegraDto();
-
-     	regraDto.setNome(regra.getNome());
-     	regraDto.setDescricao(regra.getDescricao());
-     	regraDto.setAtivo(regra.getAtivo());
-
-     	return regraDto;
-
-	}
-
-	public static List<RegraDto> converterListaRegras(List<Regra> regras) {
-
-     	List<RegraDto> regrasDto = new ArrayList<RegraDto>();
-
-     	for (Regra regra : regras)
-            	regrasDto.add(converterRegra(regra));
-
-     	return regrasDto;
-
-	}
 	
 	public static VagaOcupadaDto converterVagaOcupada(VagaOcupada vagaOcupada) {
 		VagaOcupadaDto vagaOcupadaDto = new VagaOcupadaDto();
