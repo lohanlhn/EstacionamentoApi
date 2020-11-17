@@ -116,4 +116,52 @@ public class UsuarioServiceTest {
 		assertNotNull(resultado);
 				
 	}
+	
+	@Test(expected = ConsistenciaException.class)
+	public void testSalvarClienteFalhaTipo() throws ConsistenciaException{
+		
+		Usuario usuario = new Usuario();
+		usuario.setTipo("T");
+		
+		usuarioService.salvarCliente(usuario, "999", "999");		
+				
+	}
+	
+	@Test
+	public void testSalvarFuncionarioSucesso() throws ConsistenciaException{
+		
+		Usuario usuario = new Usuario();
+		usuario.setTipo("F");		
+		
+		BDDMockito.given(usuarioRepository.save(Mockito.any(Usuario.class))).willReturn(new Usuario());				
+		
+		Usuario resultado = usuarioService.salvarFuncionario(usuario);
+		
+		assertNotNull(resultado);
+				
+	}
+	
+	@Test(expected = ConsistenciaException.class)
+	public void testSalvarFuncionarioFalhaTipo() throws ConsistenciaException{
+		
+		Usuario usuario = new Usuario();
+		usuario.setTipo("T");
+		
+		usuarioService.salvarFuncionario(usuario);	
+				
+	}
+	
+	@Test
+	public void testExcluirSucesso() throws ConsistenciaException{
+		
+		BDDMockito.given(usuarioRepository.findById(Mockito.anyInt())).willReturn(Optional.of(new Usuario()));				
+		
+		usuarioService.excluirPorId(1);		
+	}
+	
+	@Test(expected = ConsistenciaException.class)
+	public void testExcluirFalha() throws ConsistenciaException{
+				
+		usuarioService.excluirPorId(1);		
+	}
 }
