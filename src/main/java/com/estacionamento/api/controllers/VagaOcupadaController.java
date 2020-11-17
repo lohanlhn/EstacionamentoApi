@@ -274,28 +274,21 @@ public class VagaOcupadaController {
 		}
 	}
 	
-	@PostMapping(value = "/ConfirmarPagamento")
-	public  ResponseEntity<Response<VagaOcupadaDto>> ConfirmarPagamento(@Valid @RequestBody VagaOcupadaDto vagaOcupadaDto,
-			BindingResult result) throws ParseException{
+	@PostMapping(value = "/ConfirmarPagamento/{idVagaOcupada}")
+	public  ResponseEntity<Response<VagaOcupadaDto>> ConfirmarPagamento(@PathVariable("idVagaOcupada") int id) throws ParseException{
 		
 		Response<VagaOcupadaDto> response = new Response<VagaOcupadaDto>();
 		
 		try {
-			log.info("Controller: Confirmando Pagamento da vagaOcupada de id: {}", vagaOcupadaDto.getId());
+			log.info("Controller: Confirmando Pagamento da vagaOcupada de id: {}", id);
 			
-			if(result.hasErrors()) {
-				for (int i = 0; i < result.getErrorCount(); i++) {
-					response.adicionarErro(result.getAllErrors().get(i).getDefaultMessage());
-				}
-				
-				log.info("Controller: Os campos obrigatórios não foram preenchidos");
-				return ResponseEntity.badRequest().body(response);
-			}
 			
-			VagaOcupada vagaOcupada = ConversaoUtils.converterVagaOcupadaDto(vagaOcupadaDto);
+			Optional<VagaOcupada> vagaOcupada = Optional.empty();
 			
-			this.vagaOcupadaService.confirmarPaga(vagaOcupada.getId());;
-			response.setDados(vagaOcupadaDto);
+			this.vagaOcupadaService.confirmarPaga(id);;
+			vagaOcupada.get().setPaga(true);
+			
+			response.setDados(ConversaoUtils.converterVagaOcupada(vagaOcupada.get()));
 			return ResponseEntity.ok(response);
 			
 			
