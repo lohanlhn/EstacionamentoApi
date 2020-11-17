@@ -16,7 +16,7 @@ ADD CONSTRAINT `FK_Veiculo_Usuario`
   ON UPDATE NO ACTION;
 
 ALTER TABLE `estacionamento`.`usuario` 
-ADD COLUMN `telefone` VARCHAR(11) NULL AFTER `tipo`;
+ADD COLUMN `telefone` VARCHAR(11) NOT NULL AFTER `tipo`;
   
   
 DROP TABLE `estacionamento`.`cliente`;
