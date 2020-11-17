@@ -1,6 +1,7 @@
 package com.estacionamento.api.services;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,7 +58,6 @@ public class VagaOcupadaService {
 	}
 	
 	public void ocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
-		ocuparVaga.setDisponivel(false);
 		
 		log.info("Service: Ocupando a Vaga : {}", ocuparVaga.getCodVaga());
 		
@@ -81,7 +81,7 @@ public class VagaOcupadaService {
 		vagaRepository.alterarDisponibilidade(ocuparVaga.getDisponivel(), ocuparVaga.getId());
 	}
 	public void desocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
-		ocuparVaga.setDisponivel(true);
+		
 		log.info("Service: Desocupando a Vaga : {}", ocuparVaga.getCodVaga());
 		
 		Optional<Vaga> vaga = vagaRepository.findById(ocuparVaga.getId()); 
@@ -108,15 +108,21 @@ public class VagaOcupadaService {
 	public double VerValor (int id) throws ConsistenciaException, ParseException{
 		log.info("Service: Buscando o Valor.");
 		
+		Date now = new Date();
+		
 		Optional<VagaOcupada> vagaOcupada = vagaOcupadaRepository.findById(id);
+		vagaOcupada.get().setHoraSaida(now);
 
 		if (!vagaOcupada.isPresent()) {
 			log.info("Service: Nenhum vagaOcupada com id: {} foi encontrado", id);
 			throw new ConsistenciaException("Nenhum vagaOcupada com id: {} foi encontrado", id);
 		}
+		alterarHoraSaida(vagaOcupada);
 		
 		List<Valores> valores = valoresRepository.findAll();
 		vagaOcupada.get().setValor(CalculaValor.CalculaValores(valores, vagaOcupada));
+		
+		alterarValor(vagaOcupada);
 		
 		return vagaOcupada.get().getValor();
 	}
@@ -136,11 +142,38 @@ public class VagaOcupadaService {
 		log.info("Service: Alterando a HoraSaida salvo.");
 		
 		if(!vagaOcupada.isPresent()) {
-			log.info("Service nenhuma VagaOcupada com id: {} foi encontado", vagaOcupada.get().getId());
+			log.info("Service: nenhuma VagaOcupada com id: {} foi encontado", vagaOcupada.get().getId());
 			throw new ConsistenciaException("Nenhum vagaOcupada com id: {} foi encontrado", vagaOcupada.get().getId());
 		}
 		
 		vagaOcupadaRepository.alterarHoraSaida(vagaOcupada.get().getHoraSaida(), vagaOcupada.get().getId());
+	}
+	
+	public Optional<List<VagaOcupada>> buscarVagasNaoPagas() throws ConsistenciaException{
+		log.info("Service: Buscando VagasOcupadas não pagas");
+		
+		Optional<List<VagaOcupada>> listaVagasOcupadas = vagaOcupadaRepository.buscarVagaNaoPagas();
+		
+		if(!listaVagasOcupadas.isPresent()) {
+			log.info("Service: nenhuma VagaOcupada sem estar paga encontrada");
+			throw new ConsistenciaException("Nenhuma VagaOcupada sem estar paga encontrada");
+		}
+		
+		
+		return listaVagasOcupadas;
+	}
+	
+	public Optional<List<VagaOcupada>> buscarTodasVagaOcupadas() throws ConsistenciaException{
+		log.info("Services: Buscando todas as VagasOcupadas");
+		
+		Optional<List<VagaOcupada>> tudo = Optional.of(vagaOcupadaRepository.findAll());
+		
+		if(!tudo.isPresent()) {
+			log.info("Service: Nenhuma VagaOcupada encontrada");
+			throw new ConsistenciaException("Nenhuma VagaOcupada encontrada");
+		}
+		
+		return tudo;
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.estacionamento.api.controllers;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -219,86 +220,58 @@ public class VagaOcupadaController {
 		}
 	}
 	
-	@PostMapping(value = "/AlterarValor")
-	public  ResponseEntity<Response<VagaOcupadaDto>> alterarValor(@Valid @RequestBody VagaOcupadaDto vagaOcupadaDto,
-			BindingResult result) throws ParseException{
+	@GetMapping(value = "/VagasOcupadasNaoPagas")
+	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
+	public ResponseEntity<Response<List<VagaOcupadaDto>>> buscarVagasNaoPagas () {
 		
-		Response<VagaOcupadaDto> response = new Response<VagaOcupadaDto>();
+		Response<List<VagaOcupadaDto>> response = new Response<List<VagaOcupadaDto>>();
 		
 		try {
-			log.info("Controller: Alterando o valor da VagaOcupada: {}", vagaOcupadaDto.getId());
+			log.info("Controller: buscando vagasOcupadas não pagas");
 			
-			if(result.hasErrors()) {
-				for (int i = 0; i < result.getErrorCount(); i++) {
-					response.adicionarErro(result.getAllErrors().get(i).getDefaultMessage());
-				}
-				
-				log.info("Controller: Os campos obrigatórios não foram preenchidos");
-				return ResponseEntity.badRequest().body(response);
-			}
+			Optional<List<VagaOcupada>> vagasOcupadas = vagaOcupadaService.buscarVagasNaoPagas();
+			response.setDados(ConversaoUtils.converterListaVagaOcupada(vagasOcupadas));
 			
-			Optional<VagaOcupada> vagaOcupada = Optional.ofNullable(ConversaoUtils.converterVagaOcupadaDto(vagaOcupadaDto));
-			
-			this.vagaOcupadaService.alterarValor(vagaOcupada);
-			response.setDados(vagaOcupadaDto);
 			return ResponseEntity.ok(response);
 			
+		} catch (ConsistenciaException e) {
 			
-		}catch (ConsistenciaException e) {
-			
-			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
+			log.info("Controller: Inconsistência de dados: {} ", e.getMensagem());
 			response.adicionarErro(e.getMensagem());
 			return ResponseEntity.badRequest().body(response);
-
 		} catch (Exception e) {
-
+			
 			log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage());
-			response.adicionarErro("Ocorreu um erro na aplicação: {}", e.getMessage());
+			response.adicionarErro("Ocorreu um erro na aplicação: {]", e.getMessage());
 			return ResponseEntity.status(500).body(response);
-
 		}
-		
 	}
 	
-	@PostMapping(value = "/AlterarHoraSaidas")
-	public  ResponseEntity<Response<VagaOcupadaDto>> alterarHoraSaida(@Valid @RequestBody VagaOcupadaDto vagaOcupadaDto,
-			BindingResult result) throws ParseException{
+	@GetMapping(value = "/BuscarTodas")
+	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
+	public ResponseEntity<Response<List<VagaOcupadaDto>>> buscarTodasVagas () {
 		
-		Response<VagaOcupadaDto> response = new Response<VagaOcupadaDto>();
+		Response<List<VagaOcupadaDto>> response = new Response<List<VagaOcupadaDto>>();
 		
 		try {
-			log.info("Controller: Alterando a HoraSaida da VagaOcupada: {}", vagaOcupadaDto.getId());
+			log.info("Controller: buscando vagasOcupadas não pagas");
 			
-			if(result.hasErrors()) {
-				for (int i = 0; i < result.getErrorCount(); i++) {
-					response.adicionarErro(result.getAllErrors().get(i).getDefaultMessage());
-				}
-				
-				log.info("Controller: Os campos obrigatórios não foram preenchidos");
-				return ResponseEntity.badRequest().body(response);
-			}
+			Optional<List<VagaOcupada>> vagasOcupadas = vagaOcupadaService.buscarTodasVagaOcupadas();
+			response.setDados(ConversaoUtils.converterListaVagaOcupada(vagasOcupadas));
 			
-			Optional<VagaOcupada> vagaOcupada = Optional.ofNullable(ConversaoUtils.converterVagaOcupadaDto(vagaOcupadaDto));
-			
-			this.vagaOcupadaService.alterarValor(vagaOcupada);
-			response.setDados(vagaOcupadaDto);
 			return ResponseEntity.ok(response);
 			
+		} catch (ConsistenciaException e) {
 			
-		}catch (ConsistenciaException e) {
-			
-			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
+			log.info("Controller: Inconsistência de dados: {} ", e.getMensagem());
 			response.adicionarErro(e.getMensagem());
 			return ResponseEntity.badRequest().body(response);
-
 		} catch (Exception e) {
-
+			
 			log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage());
-			response.adicionarErro("Ocorreu um erro na aplicação: {}", e.getMessage());
+			response.adicionarErro("Ocorreu um erro na aplicação: {]", e.getMessage());
 			return ResponseEntity.status(500).body(response);
-
 		}
-		
 	}
 
 }

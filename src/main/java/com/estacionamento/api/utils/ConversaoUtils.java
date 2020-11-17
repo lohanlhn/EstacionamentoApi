@@ -167,6 +167,18 @@ public class ConversaoUtils {
 		return vagaOcupada;
 	}
 	
+public static List<VagaOcupadaDto> converterListaVagaOcupada (Optional<List<VagaOcupada>> listaVagaOcupada) throws ParseException {
+		
+		List<VagaOcupadaDto> listVagaOcupadaDto = new ArrayList<VagaOcupadaDto>();
+		
+		for (VagaOcupada vagaOcupada : listaVagaOcupada.get()) {
+			listVagaOcupadaDto.add(converterVagaOcupada(vagaOcupada));
+		}
+		
+		return listVagaOcupadaDto;
+		
+	}
+	
 	public static VeiculoDto conveterVeiculo (Veiculo veiculo) throws ParseException {
 		VeiculoDto veiculoDto = new VeiculoDto();
 		

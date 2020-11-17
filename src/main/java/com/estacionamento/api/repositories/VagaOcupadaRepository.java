@@ -1,6 +1,8 @@
 package com.estacionamento.api.repositories;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,6 +24,10 @@ public interface VagaOcupadaRepository extends JpaRepository<VagaOcupada, Intege
    	@Modifying(clearAutomatically = true)
    	@Query("UPDATE VagaOcupada SET valor = :novoValor WHERE id = :id")
 	void alterarValor(@Param("novoValor") double valor, @Param("id") int id);
+	
+	@Transactional(readOnly = true)
+	@Query(value = "SELECT * FROM vagaocupada WHERE paga = 0", nativeQuery = true)
+	Optional<List<VagaOcupada>> buscarVagaNaoPagas();
 	
 
 }
