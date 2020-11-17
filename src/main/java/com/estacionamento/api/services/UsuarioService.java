@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.estacionamento.api.entities.Cliente;
 import com.estacionamento.api.entities.Regra;
@@ -57,7 +56,7 @@ public class UsuarioService {
 
 		Optional<List<Usuario>> funcionarios = usuarioRepository.findFuncionarios();
 
-		if (!funcionarios.isPresent() || funcionarios.get().size() < 0) {
+		if (!funcionarios.isPresent() || funcionarios.get().size() < 1) {
 			log.info("Service: nenhum funcionario foi encontrado");
 			throw new ConsistenciaException("Nenhum funcionario foi encontrado");
 		}
@@ -71,8 +70,8 @@ public class UsuarioService {
 		Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
 
 		if (!usuario.isPresent()) {
-			log.info("Service: Nenhum usuário ativo com email: {} foi encontrado", email);
-			throw new ConsistenciaException("Nenhum usuário ativo com email: {} foi encontrado", email);
+			log.info("Service: Nenhum usuário com email: {} foi encontrado", email);
+			throw new ConsistenciaException("Nenhum usuário com email: {} foi encontrado", email);
 		}
 
 		usuario.get().setRegras(
@@ -81,8 +80,7 @@ public class UsuarioService {
 		return usuario;
 
 	}
-
-	@Transactional
+	
 	public Usuario salvarCliente(Usuario usuario, String telefone, String cpf) throws ConsistenciaException {
 
 		log.info("Service: salvando o usuario: {}", usuario);
@@ -91,6 +89,11 @@ public class UsuarioService {
 			buscarPorId(usuario.getId());
 
 		usuario.setSenha(SenhaUtils.gerarHash(usuario.getSenha()));
+		
+		if (!usuario.getTipo().equals("C")) {
+			log.info("O tipo deve ser C");
+			throw new ConsistenciaException("O tipo deve ser C");
+		}
 
 		try {
 			usuarioRepository.save(usuario);

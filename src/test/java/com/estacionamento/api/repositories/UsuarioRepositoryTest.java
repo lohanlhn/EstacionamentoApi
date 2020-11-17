@@ -3,6 +3,8 @@ package com.estacionamento.api.repositories;
 import static org.junit.Assert.*;
 
 import java.text.ParseException;
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -18,7 +20,6 @@ import com.estacionamento.api.entities.Usuario;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-
 public class UsuarioRepositoryTest {
 	
 
@@ -32,9 +33,9 @@ public class UsuarioRepositoryTest {
 		usuarioTeste = new Usuario();
 		
 		usuarioTeste.setNome("Nome Teste");
-		usuarioTeste.setEmail("05887098082");
+		usuarioTeste.setEmail("teste@email.com");
 		usuarioTeste.setSenha("666");
-		usuarioTeste.setTipo("2");		
+		usuarioTeste.setTipo("F");		
 		
 		
 	}
@@ -59,6 +60,22 @@ public class UsuarioRepositoryTest {
 		
 		Usuario usuario = usuarioRepository.findById(usuarioTeste.getId()).get();
 		assertEquals(usuarioTeste.getId(), usuario.getId());
+		
+	}
+	
+	@Test
+	public void testFindByEmail() {
+		
+		Usuario usuario = usuarioRepository.findByEmail(usuarioTeste.getEmail()).get();
+		assertEquals(usuarioTeste.getEmail(), usuario.getEmail());
+		
+	}
+	
+	@Test
+	public void testFindByFuncionarios() {
+		
+		Optional<List<Usuario>> usuarios = usuarioRepository.findFuncionarios();		
+		assertEquals(usuarioTeste.getId(), usuarios.get().get(0).getId());
 		
 	}
 	
