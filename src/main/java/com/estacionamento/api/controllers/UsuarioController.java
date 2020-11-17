@@ -70,6 +70,40 @@ public class UsuarioController {
 
 		}
 	}
+	
+	/**
+	 * Retorna os dados de um os usuario através de seu email
+	 * 
+	 * @param Email do usuario
+	 * @return Dados do usuario
+	 */
+	@GetMapping(value = "/{email}")
+	public ResponseEntity<Response<UsuarioDto>> buscarPeloEmail(@PathVariable("email") String email) {
+
+		Response<UsuarioDto> response = new Response<UsuarioDto>();
+
+		try {
+			log.info("Controller: buscando todas os funcionarios");
+
+			Optional<Usuario> usuario = usuarioService.buscarPorEmail(email);
+
+			response.setDados(ConversaoUtils.converterUsuario(usuario.get()));
+
+			return ResponseEntity.ok(response);
+
+		} catch (ConsistenciaException e) {
+			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
+			response.adicionarErro(e.getMensagem());
+			return ResponseEntity.badRequest().body(response);
+
+		} catch (Exception e) {
+
+			log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage());
+			response.adicionarErro("Ocorreu um erro na aplicação: {}", e.getMessage());
+			return ResponseEntity.status(500).body(response);
+
+		}
+	}
 
 	/**
 	 * Persiste um usuário cliente na base.
