@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.estacionamento.api.entities.Cliente;
 import com.estacionamento.api.entities.Regra;
 import com.estacionamento.api.entities.Usuario;
+import com.estacionamento.api.repositories.ClienteRepository;
 import com.estacionamento.api.repositories.RegraRepository;
 import com.estacionamento.api.repositories.UsuarioRepository;
 import com.estacionamento.api.utils.ConsistenciaException;
@@ -32,7 +33,7 @@ public class UsuarioService {
 	private RegraRepository regraReprository;
 
 	@Autowired
-	private ClienteService clienteService;
+	private ClienteRepository clienteRepository;
 
 	
 
@@ -100,7 +101,7 @@ public class UsuarioService {
 			cliente.setCpf(cpf);
 			cliente.setUsuario(usuarioRepository.findByEmail(usuario.getEmail()).get());
 
-			clienteService.salvar(cliente);
+			clienteRepository.save(cliente);
 
 			return usuario;
 

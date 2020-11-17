@@ -36,44 +36,6 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
-
-	/**
-	 * Retorna os dados de um usuario a partir do id informado
-	 *
-	 * @param Id do usuário
-	 * @return Dados do usuário
-	 */
-	@GetMapping(value = "/{id}")
-	@PreAuthorize("hasAnyRole('ADM')")
-	public ResponseEntity<Response<UsuarioDto>> buscarPorId(@PathVariable("id") int id) {
-
-		Response<UsuarioDto> response = new Response<UsuarioDto>();
-
-		try {
-
-			log.info("Controller: buscando usuario com id: {}", id);
-
-			Optional<Usuario> usuario = usuarioService.buscarPorId(id);
-
-			response.setDados(ConversaoUtils.converterUsuario(usuario.get()));
-
-			return ResponseEntity.ok(response);
-
-		} catch (ConsistenciaException e) {
-
-			log.info("Controller: Inconsistência de dados: {}", e.getMessage());
-			response.adicionarErro(e.getMensagem());
-			return ResponseEntity.badRequest().body(response);
-
-		} catch (Exception e) {
-
-			log.error("Controller: Ocorreu um erro na aplicação: {}", e.getMessage());
-			response.adicionarErro("Ocorreu um erro na aplicação: {}", e.getMessage());
-			return ResponseEntity.status(500).body(response);
-
-		}
-
-	}
 	
 	/**
 	 * Retorna os dados de todos os funcionarios cadastrados

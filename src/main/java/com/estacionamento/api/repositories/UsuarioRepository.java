@@ -17,12 +17,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
    	
 	@Transactional(readOnly = true)
 	@Query("SELECT usr FROM Usuario usr WHERE usr.tipo = 'F'")
-	Optional<List<Usuario>> findFuncionarios();
-	
-   	@Transactional
-   	@Modifying(clearAutomatically = true)
-   	@Query("UPDATE Usuario SET senha = :novasenha WHERE email = :emailUsuario")
-   	void alterarSenhaUsuario(@Param("novasenha") String novasenha, @Param("emailUsuario") String emailUsuario);   	
+	Optional<List<Usuario>> findFuncionarios();	
    	
    	@Transactional
    	@Modifying(clearAutomatically = true)
