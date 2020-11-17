@@ -18,10 +18,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.estacionamento.api.entities.Cliente;
 import com.estacionamento.api.entities.Regra;
 import com.estacionamento.api.entities.Usuario;
-import com.estacionamento.api.repositories.ClienteRepository;
 import com.estacionamento.api.repositories.UsuarioRepository;
 import com.estacionamento.api.utils.ConsistenciaException;
 
@@ -32,9 +30,6 @@ public class UsuarioServiceTest {
 
 	@MockBean
 	private UsuarioRepository usuarioRepository;
-	
-	@MockBean
-	private ClienteRepository clienteRepository;
 	
 	@Autowired
 	private UsuarioService usuarioService;
@@ -103,29 +98,14 @@ public class UsuarioServiceTest {
 	@Test
 	public void testSalvarClienteSucesso() throws ConsistenciaException{
 		
-		Usuario usuario = new Usuario();
-		usuario.setTipo("C");
-		usuario.setEmail("teste");
-		
 		BDDMockito.given(usuarioRepository.save(Mockito.any(Usuario.class))).willReturn(new Usuario());
-		BDDMockito.given(clienteRepository.save(Mockito.any(Cliente.class))).willReturn(new Cliente());
-		BDDMockito.given(usuarioRepository.findByEmail(Mockito.anyString())).willReturn(Optional.of(usuario));
 		
-		Usuario resultado = usuarioService.salvarCliente(usuario, "999", "999");
+		Usuario resultado = usuarioService.salvarCliente(new Usuario());
 		
 		assertNotNull(resultado);
 				
 	}
 	
-	@Test(expected = ConsistenciaException.class)
-	public void testSalvarClienteFalhaTipo() throws ConsistenciaException{
-		
-		Usuario usuario = new Usuario();
-		usuario.setTipo("T");
-		
-		usuarioService.salvarCliente(usuario, "999", "999");		
-				
-	}
 	
 	@Test
 	public void testSalvarFuncionarioSucesso() throws ConsistenciaException{
@@ -141,15 +121,6 @@ public class UsuarioServiceTest {
 				
 	}
 	
-	@Test(expected = ConsistenciaException.class)
-	public void testSalvarFuncionarioFalhaTipo() throws ConsistenciaException{
-		
-		Usuario usuario = new Usuario();
-		usuario.setTipo("T");
-		
-		usuarioService.salvarFuncionario(usuario);	
-				
-	}
 	
 	@Test
 	public void testExcluirSucesso() throws ConsistenciaException{
