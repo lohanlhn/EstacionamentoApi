@@ -36,6 +36,7 @@ public class UsuarioRepositoryTest {
 		usuarioTeste.setEmail("teste@email.com");
 		usuarioTeste.setSenha("666");
 		usuarioTeste.setTipo("F");		
+		usuarioTeste.setTelefone("999");
 		
 		
 	}

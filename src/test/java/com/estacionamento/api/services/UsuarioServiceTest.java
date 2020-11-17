@@ -97,12 +97,9 @@ public class UsuarioServiceTest {
 	@Test
 	public void testSalvarClienteSucesso() throws ConsistenciaException{
 		
-		Usuario usuario = new Usuario();
-		usuario.setTelefone("999");
-		
 		BDDMockito.given(usuarioRepository.save(Mockito.any(Usuario.class))).willReturn(new Usuario());
 		
-		Usuario resultado = usuarioService.salvarCliente(usuario);
+		Usuario resultado = usuarioService.salvarCliente(new Usuario());
 		
 		assertNotNull(resultado);
 				
@@ -112,12 +109,10 @@ public class UsuarioServiceTest {
 	@Test
 	public void testSalvarFuncionarioSucesso() throws ConsistenciaException{
 		
-		Usuario usuario = new Usuario();
-		usuario.setTelefone("999");		
-		
+
 		BDDMockito.given(usuarioRepository.save(Mockito.any(Usuario.class))).willReturn(new Usuario());				
 		
-		Usuario resultado = usuarioService.salvarFuncionario(usuario);
+		Usuario resultado = usuarioService.salvarFuncionario(new Usuario());
 		
 		assertNotNull(resultado);
 				
