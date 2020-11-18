@@ -109,6 +109,7 @@ public class ConversaoUtils {
      	usuarioDto.setEmail(usuario.getEmail());     
      	usuarioDto.setSenha(usuario.getSenha());
      	usuarioDto.setTelefone(usuario.getTelefone());
+     	usuarioDto.setTipo(usuario.getTipo());
 
      	return usuarioDto;
 

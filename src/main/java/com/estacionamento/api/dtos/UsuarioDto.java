@@ -24,6 +24,8 @@ public class UsuarioDto {
 	@NotEmpty(message = "Telefone não pode ser vazio.")
 	@Length(min = 10, max = 11, message = "O telefone deve conter entre 10 e 11 caracteres.")
 	private String telefone;
+	
+	private String tipo;
 
 	public String getId() {
 		return id;
@@ -63,6 +65,14 @@ public class UsuarioDto {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	@Override
