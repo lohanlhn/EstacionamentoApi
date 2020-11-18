@@ -65,7 +65,7 @@ public class VeiculoService {
 		
 		Optional<Usuario> usuario = usuarioRepository.findById(veiculo.getUsuario().getId());
 		
-		if(usuario.isEmpty()) {
+		if(usuario.get().getId() == 0) {
 			log.info("Service: O usuarioId: {} não está cadastrado", veiculo.getUsuario().getId());
 			throw new ConsistenciaException("O usuarioId: {} não está cadastrado", veiculo.getUsuario().getId());
 		}
