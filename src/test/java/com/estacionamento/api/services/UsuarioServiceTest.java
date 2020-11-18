@@ -51,6 +51,23 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test
+	public void testBuscarPorEmailExistente() throws ConsistenciaException{
+		BDDMockito.given(usuarioRepository.findByEmail(Mockito.anyString())).willReturn(Optional.of(new Usuario()));
+		
+		Optional<Usuario> resultado = usuarioService.buscarPorEmail("teste");
+		
+		assertTrue(resultado.isPresent());
+	}
+	
+	@Test(expected = ConsistenciaException.class)
+	public void testBuscarPorEmailNaoExistente() throws ConsistenciaException{
+		BDDMockito.given(usuarioRepository.findByEmail(Mockito.anyString())).willReturn(Optional.empty());
+		
+		usuarioService.buscarPorEmail("teste");
+			
+	}
+		
+	@Test
 	public void testBuscarFuncionariosExistentes() throws ConsistenciaException{
 		
 		List<Usuario> lstUsuarios = new ArrayList<>(); 

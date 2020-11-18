@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -105,8 +104,7 @@ public class VeiculoController {
 		}
 	}
 	
-	@DeleteMapping(value = "excluirVeiculo/{id}")
-   	@PreAuthorize("hasAnyRole('EXCLUSAO')")
+	@DeleteMapping(value = "excluirVeiculo/{id}")   	
    	public ResponseEntity<Response<String>> excluirPorId(@PathVariable("id") int id){
          	
          	Response<String> response = new Response<String>();

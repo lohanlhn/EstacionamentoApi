@@ -19,9 +19,10 @@ public class VeiculoDto {
 	private String placa;
 	
 	@NotEmpty(message = "Tipo não pode ser vazio.")
+	@Length(min = 1, max = 1 , message = "A placa deve conter apenas 1 digito"  )
 	private String tipo;
 	
-	@NotEmpty(message = "Id do Cliente não pode ser vazio.")
+	@NotEmpty(message = "Id do Usuario não pode ser vazio.")
 	private String usuarioId;
 
 	public String getId() {

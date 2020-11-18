@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.estacionamento.api.entities.Veiculo;
+import com.estacionamento.api.repositories.UsuarioRepository;
 import com.estacionamento.api.repositories.VeiculoRepository;
 import com.estacionamento.api.utils.ConsistenciaException;
 
@@ -21,6 +22,9 @@ public class VeiculoService {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	public Optional<Veiculo> buscarPorId(int id) throws ConsistenciaException {
 		log.info("Service: buscando um veiculo com o id: {}", id);
@@ -57,12 +61,17 @@ public class VeiculoService {
 
 		if (veiculo.getId() > 0)
 			buscarPorId(veiculo.getId());
+		
+		if(usuarioRepository.findById(veiculo.getUsuario().getId()).isEmpty()) {
+			log.info("Service: O usuarioId: {} não está cadastrado", veiculo.getUsuario().getId());
+			throw new ConsistenciaException("O usuarioId: {} não está cadastrado", veiculo.getUsuario().getId());
+		}
 
 		try {
 			return veiculoRepository.save(veiculo);
 		} catch (DataIntegrityViolationException e) {
-			log.info("Service: A placa: {} já está cadastrado para outra placa", veiculo.getPlaca());
-			throw new ConsistenciaException("O CodVaga: {} já está cadastrado para outra vaga", veiculo.getPlaca());
+			log.info("Service: A placa: {} já está cadastrada para outro veiculo", veiculo.getPlaca());
+			throw new ConsistenciaException("A placa: {} já está cadastrada para outro veiculo", veiculo.getPlaca());
 		}
 
 	}
