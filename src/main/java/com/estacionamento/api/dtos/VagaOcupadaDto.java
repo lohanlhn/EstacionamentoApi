@@ -1,5 +1,7 @@
 package com.estacionamento.api.dtos;
 
+import javax.validation.constraints.NotEmpty;
+
 
 public class VagaOcupadaDto {
 	
@@ -13,8 +15,10 @@ public class VagaOcupadaDto {
 	
 	private String paga;
 	
+	@NotEmpty(message = "O id da vaga não pode ser vazio.")
 	private String vagaId;
 	
+	@NotEmpty(message = "O id do veiculo não pode ser vazio")
 	private String veiculoId;
 
 	public String getId() {

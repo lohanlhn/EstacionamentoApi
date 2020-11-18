@@ -52,16 +52,18 @@ public class VagaOcupadaService {
 
 		if (vagaOcupada.getId() > 0)
 			buscarPorId(vagaOcupada.getId());
+		
+		ocuparVaga(vagaOcupada);
 
 		return vagaOcupadaRepository.save(vagaOcupada);
 
 	}
 	
-	public void ocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
+	public void ocuparVaga(VagaOcupada ocuparVaga) throws ConsistenciaException {
 		
-		log.info("Service: Ocupando a Vaga : {}", ocuparVaga.getCodVaga());
+		Optional<Vaga> vaga = vagaRepository.findById(ocuparVaga.getVaga().getId());
 		
-		Optional<Vaga> vaga = vagaRepository.findById(ocuparVaga.getId()); 
+		log.info("Service: Ocupando a Vaga : {}", vaga.get().getCodVaga()); 
 		
 		if(!vaga.isPresent()) {
 			log.info("Service: Nunhuma vaga com id: {} foi encontrada", ocuparVaga.getId());
@@ -77,20 +79,21 @@ public class VagaOcupadaService {
 					"Não é possivel ocupar essa vaga, pois a vaga selecionada já está ocupada");
 		}
 		
+		vaga.get().setDisponivel(false);
 		
-		vagaRepository.alterarDisponibilidade(ocuparVaga.getDisponivel(), ocuparVaga.getId());
+		vagaRepository.alterarDisponibilidade(vaga.get().getDisponivel(), ocuparVaga.getVaga().getId());
 	}
-	public void desocuparVaga(Vaga ocuparVaga) throws ConsistenciaException {
+	public void desocuparVaga(Optional<VagaOcupada> desocuparVaga) throws ConsistenciaException {
 		
-		log.info("Service: Desocupando a Vaga : {}", ocuparVaga.getCodVaga());
+		Optional<Vaga> vaga = vagaRepository.findById(desocuparVaga.get().getVaga().getId());
 		
-		Optional<Vaga> vaga = vagaRepository.findById(ocuparVaga.getId()); 
+		log.info("Service: Desocupando a Vaga : {}", vaga.get().getCodVaga()); 
 		
 		if(!vaga.isPresent()) {
-			log.info("Service: Nunhuma vaga com id: {} foi encontrada", ocuparVaga.getId());
+			log.info("Service: Nunhuma vaga com id: {} foi encontrada", vaga.get().getId());
 			
 		
-			throw new ConsistenciaException("Nunhuma vaga com id: {} foi encontrada", ocuparVaga.getId());
+			throw new ConsistenciaException("Nunhuma vaga com id: {} foi encontrada", vaga.get().getId());
 		}
 		
 		if (!vaga.get().getDisponivel()) {
@@ -101,8 +104,9 @@ public class VagaOcupadaService {
 					"Não é possivel Desocupar essa vaga, pois a vaga selecionada já está Desocupada");
 		}
 		
+		vaga.get().setDisponivel(true);
 		
-		vagaRepository.alterarDisponibilidade(ocuparVaga.getDisponivel(), ocuparVaga.getId());
+		vagaRepository.alterarDisponibilidade(vaga.get().getDisponivel(), desocuparVaga.get().getVaga().getId());
 	}
 	
 	public double VerValor (int id) throws ConsistenciaException, ParseException{
@@ -111,12 +115,14 @@ public class VagaOcupadaService {
 		Date now = new Date();
 		
 		Optional<VagaOcupada> vagaOcupada = vagaOcupadaRepository.findById(id);
-		vagaOcupada.get().setHoraSaida(now);
 
 		if (!vagaOcupada.isPresent()) {
 			log.info("Service: Nenhum vagaOcupada com id: {} foi encontrado", id);
 			throw new ConsistenciaException("Nenhum vagaOcupada com id: {} foi encontrado", id);
 		}
+		
+		vagaOcupada.get().setHoraSaida(now);
+		
 		alterarHoraSaida(vagaOcupada);
 		
 		List<Valores> valores = valoresRepository.findAll();
@@ -187,6 +193,8 @@ public class VagaOcupadaService {
 		}
 		
 		vagaOcupadaRepository.alterarPaga(id);
+		
+		desocuparVaga(vaga);
 		
 	}
 	
