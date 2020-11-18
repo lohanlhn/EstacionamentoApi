@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.estacionamento.api.entities.Usuario;
 import com.estacionamento.api.entities.Veiculo;
 import com.estacionamento.api.repositories.UsuarioRepository;
 import com.estacionamento.api.repositories.VeiculoRepository;
@@ -62,7 +63,9 @@ public class VeiculoService {
 		if (veiculo.getId() > 0)
 			buscarPorId(veiculo.getId());
 		
-		if(usuarioRepository.findById(veiculo.getUsuario().getId()).isEmpty()) {
+		Optional<Usuario> usuario = usuarioRepository.findById(veiculo.getUsuario().getId());
+		
+		if(usuario.isEmpty()) {
 			log.info("Service: O usuarioId: {} não está cadastrado", veiculo.getUsuario().getId());
 			throw new ConsistenciaException("O usuarioId: {} não está cadastrado", veiculo.getUsuario().getId());
 		}
