@@ -576,14 +576,4 @@ public class UsuarioControllerTest {
 		.andExpect(jsonPath("$.erros").isEmpty());
 	}
 	
-	@Test
-	@WithMockUser(roles = "ADM")
-	public void testExcluirPorIdInconsistencia() throws Exception{				
-		
-		mvc.perform(MockMvcRequestBuilders.delete("/api/usuario/excluir/1")
-				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.dados").value("Usuario de id: 1 excluído com sucesso"))
-		.andExpect(jsonPath("$.erros").isEmpty());
-	}
 }

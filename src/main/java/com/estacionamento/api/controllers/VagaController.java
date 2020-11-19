@@ -44,7 +44,7 @@ public class VagaController {
 	 */
 	@GetMapping(value = "/todas")
 	@PreAuthorize("hasAnyRole('FUNC')")
-	public ResponseEntity<Response<List<VagaDto>>> buscarTodosAsVagas() {
+	public ResponseEntity<Response<List<VagaDto>>> buscarTodasAsVagas() {
 
 		Response<List<VagaDto>> response = new Response<List<VagaDto>>();
 
@@ -128,7 +128,7 @@ public class VagaController {
 
 			vagaService.excluirPorId(id);
 
-			response.setDados("Valor de id: " + id + "excluído com sucesso");
+			response.setDados("Vaga de id: " + id + " excluído com sucesso");
 
 			return ResponseEntity.ok(response);
 		} catch (ConsistenciaException e) {
