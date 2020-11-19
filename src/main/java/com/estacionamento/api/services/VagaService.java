@@ -54,7 +54,7 @@ public class VagaService {
 
 		Optional<List<Vaga>> vagas = Optional.ofNullable(vagaRepository.findAll());
 
-		if (!vagas.isPresent() || vagas.get().size() < 0) {
+		if (!vagas.isPresent() || vagas.get().size() == 0) {
 			log.info("Service: nenhuma vaga foi encontrada");
 			throw new ConsistenciaException("Nenhum vaga foi encontrada");
 		}
