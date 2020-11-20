@@ -84,9 +84,9 @@ public class VagaOcupadaController {
 				return ResponseEntity.badRequest().body(response);
 			}
 			
-			VagaOcupada vagaOcupada = ConversaoUtils.converterVagaOcupadaDto(vagaOcupadaDto);
+			VagaOcupada vagaOcupada = this.vagaOcupadaService.salvar(ConversaoUtils.converterVagaOcupadaDto(vagaOcupadaDto));
 			
-			response.setDados(ConversaoUtils.converterVagaOcupada(this.vagaOcupadaService.salvar(vagaOcupada)));
+			response.setDados(ConversaoUtils.converterVagaOcupada(vagaOcupada));
 			
 			return ResponseEntity.ok(response);
 			
