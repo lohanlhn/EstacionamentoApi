@@ -60,8 +60,8 @@ public class ValoresControllersTest {
 		mvc.perform(MockMvcRequestBuilders.post("/api/valores").content(json).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.dados.id").value(objEntrada.getId()))
-				.andExpect(jsonPath("$.dados.codVaga").value(objEntrada.getMinutagem()))
-				.andExpect(jsonPath("$.dados.disponivel").value(objEntrada.getValor()))
+				.andExpect(jsonPath("$.dados.minutagem").value(objEntrada.getMinutagem()))
+				.andExpect(jsonPath("$.dados.valor").value(objEntrada.getValor()))
 				.andExpect(jsonPath("$.erros").isEmpty());
 	}
 
