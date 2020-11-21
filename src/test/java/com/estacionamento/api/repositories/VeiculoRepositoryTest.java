@@ -30,6 +30,9 @@ public class VeiculoRepositoryTest {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Autowired
+	private RegraRepository regraRepository;
+	
 	private Veiculo veiculoTeste;
 	
 	private Usuario usuarioTeste;
@@ -43,6 +46,7 @@ public class VeiculoRepositoryTest {
 		usuarioTeste.setSenha("666");
 		usuarioTeste.setTipo("F");		
 		usuarioTeste.setTelefone("999");
+		usuarioTeste.setRegras(regraRepository.findAll());
 		
 		
 	}
