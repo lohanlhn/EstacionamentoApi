@@ -26,8 +26,27 @@ public class VeiculoRepositoryTest {
 
 	@Autowired
 	private VeiculoRepository veiculoRepository;
-		
+	
+	@Autowired
+	private RegraRepository regrasRepository;
+	
 	private Veiculo veiculoTeste;
+	
+	private Usuario usuarioTeste;
+	
+	private void criarUsuarioTeste() throws ParseException{
+		
+		usuarioTeste = new Usuario();
+		
+		usuarioTeste.setNome("Testador");
+		usuarioTeste.setEmail("test123@test.test");
+		usuarioTeste.setSenha("teste123");
+		usuarioTeste.setTipo("cliente");
+		usuarioTeste.setTelefone("(12)12345-6789");
+		usuarioTeste.setRegras(regrasRepository.findAll());
+		
+		
+	}
 		
 	private void criarVeiculoTeste() throws ParseException{
 			
@@ -37,7 +56,11 @@ public class VeiculoRepositoryTest {
 		veiculoTeste.setCor("Azul");
 		veiculoTeste.setPlaca("ABC1D23");
 		veiculoTeste.setTipo('C');
-		veiculoTeste.getUsuario().setId(1);
+		
+		criarUsuarioTeste();
+		
+		veiculoTeste.setUsuario(usuarioTeste);
+		
 		
 	}
 		
