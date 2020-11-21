@@ -53,7 +53,7 @@ public class VagaOcupadaService {
 		if (vagaOcupada.getId() > 0)
 			buscarPorId(vagaOcupada.getId());
 		
-		ocuparVaga(vagaOcupada);
+		//ocuparVaga(vagaOcupada);
 
 		return vagaOcupadaRepository.save(vagaOcupada);
 
@@ -83,6 +83,7 @@ public class VagaOcupadaService {
 		
 		vagaRepository.alterarDisponibilidade(vaga.get().getDisponivel(), ocuparVaga.getVaga().getId());
 	}
+	
 	public void desocuparVaga(Optional<VagaOcupada> desocuparVaga) throws ConsistenciaException {
 		
 		Optional<Vaga> vaga = vagaRepository.findById(desocuparVaga.get().getVaga().getId());

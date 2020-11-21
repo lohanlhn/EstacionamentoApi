@@ -14,6 +14,8 @@ public class VagaDto {
 	
 	@NotEmpty(message= "Disponivel não pode ser vazio")
 	private String disponivel;
+	
+	
 	public String getId() {
 		return id;
 	}

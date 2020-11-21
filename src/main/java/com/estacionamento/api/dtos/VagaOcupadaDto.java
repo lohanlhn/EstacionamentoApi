@@ -2,6 +2,8 @@ package com.estacionamento.api.dtos;
 
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
+
 
 public class VagaOcupadaDto {
 	
@@ -15,9 +17,11 @@ public class VagaOcupadaDto {
 	
 	private String paga;
 	
+	@Length(min = 1, message = "O id da vaga deve ter ao minimo 1 digito")
 	@NotEmpty(message = "O id da vaga não pode ser vazio.")
 	private String vagaId;
 	
+	@Length(min = 1, message = "O id do veiculo deve ter ao minimo 1 digito")
 	@NotEmpty(message = "O id do veiculo não pode ser vazio")
 	private String veiculoId;
 
