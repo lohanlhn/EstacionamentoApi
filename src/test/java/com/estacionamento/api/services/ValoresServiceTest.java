@@ -17,9 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.estacionamento.api.entities.Vaga;
 import com.estacionamento.api.entities.Valores;
-import com.estacionamento.api.repositories.VagaRepository;
 import com.estacionamento.api.repositories.ValoresRepository;
 import com.estacionamento.api.utils.ConsistenciaException;
 
@@ -60,6 +58,29 @@ public class ValoresServiceTest {
 		
 		assertNotNull(resultado);
 				
+	}
+	
+	@Test
+	public void testBuscarTodasOsValoresExistentes() throws ConsistenciaException{
+		
+		List<Valores> lstValores = new ArrayList<>(); 
+		lstValores.add(new Valores());
+		
+		BDDMockito.given(valoresRepository.findAll()).willReturn(lstValores);
+		
+		Optional<List<Valores>> resultado = valoresService.buscarTodosOsValores();
+		
+		assertTrue(resultado.get().size() > 0);
+	}
+	
+	@Test(expected = ConsistenciaException.class)
+	public void testBuscarTodasOsValoresInexistentes() throws ConsistenciaException{
+		
+		List<Valores> lstValores = new ArrayList<>(); 
+		
+		BDDMockito.given(valoresRepository.findAll()).willReturn(lstValores);
+		
+		valoresService.buscarTodosOsValores();		
 	}
 	
 	@Test

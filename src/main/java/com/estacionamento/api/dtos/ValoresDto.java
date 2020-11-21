@@ -7,10 +7,10 @@ public class ValoresDto {
 
 //teste git kraken
 	
-	@NotEmpty(message= "minutagem não pode ser vazio")	
+	//@NotEmpty(message= "minutagem não pode ser vazio")	
 	private String minutagem;
 	
-	@NotEmpty(message= "minutagem não pode ser vazio")	
+	@NotEmpty(message= "O valor não pode ser vazio")	
 	private String valor;
 	
 	public void setId(String id) {
