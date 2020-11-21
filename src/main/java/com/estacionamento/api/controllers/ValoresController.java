@@ -127,7 +127,7 @@ public class ValoresController {
 			
 			valoresService.excluirPorId(id);
 			
-			response.setDados("Valor de id: " + id + "excluído com sucesso");
+			response.setDados("Valor de id: " + id + " excluído com sucesso");
 			
 			return ResponseEntity.ok(response);
 		}catch (ConsistenciaException e) {
