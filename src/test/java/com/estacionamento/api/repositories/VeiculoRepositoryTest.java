@@ -27,12 +27,9 @@ public class VeiculoRepositoryTest {
 	@Autowired
 	private VeiculoRepository veiculoRepository;
 	
-	@Autowired
-	private RegraRepository regrasRepository;
-	
 	private Veiculo veiculoTeste;
 	
-	private Usuario usuarioTeste;
+	/*private Usuario usuarioTeste;
 	
 	private void criarUsuarioTestes() throws ParseException {
 		
@@ -45,7 +42,7 @@ public class VeiculoRepositoryTest {
 		usuarioTeste.setTelefone("999");
 		
 		
-	}
+	}*/
 		
 	private void criarVeiculoTeste() throws ParseException{
 			
@@ -56,9 +53,9 @@ public class VeiculoRepositoryTest {
 		veiculoTeste.setPlaca("ABC1D23");
 		veiculoTeste.setTipo('C');
 		
-		criarUsuarioTestes();
+		/*criarUsuarioTestes();
 		
-		veiculoTeste.setUsuario(usuarioTeste);
+		veiculoTeste.setUsuario(usuarioTeste);*/
 		
 		
 	}
@@ -91,7 +88,7 @@ public class VeiculoRepositoryTest {
 	
 	@Test
 	public void testFindByUsuarioId() {
-		Optional<List<Veiculo>> veiculos = veiculoRepository.findByUsuarioId(veiculoTeste.getUsuario().getId());
+		Optional<List<Veiculo>> veiculos = veiculoRepository.findByUsuarioId(1);
 		assertEquals(veiculoTeste.getId(), veiculos.get().get(0).getId());
 	}
 }
