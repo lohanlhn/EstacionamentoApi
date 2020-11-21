@@ -52,7 +52,12 @@ public class VeiculoRepositoryTest {
 		veiculoTeste.setCor("Azul");
 		veiculoTeste.setPlaca("ABC1D23");
 		veiculoTeste.setTipo('C');
-		veiculoTeste.getUsuario().setId(1);;
+		
+		Usuario usuario = new Usuario();
+		
+		usuario.setId(1);
+		
+		veiculoTeste.setUsuario(usuario);
 		
 		/*criarUsuarioTestes();
 		
