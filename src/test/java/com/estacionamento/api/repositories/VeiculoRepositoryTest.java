@@ -34,16 +34,15 @@ public class VeiculoRepositoryTest {
 	
 	private Usuario usuarioTeste;
 	
-	private void criarUsuarioTeste() throws ParseException{
+	private void criarUsuarioTestes() throws ParseException {
 		
 		usuarioTeste = new Usuario();
 		
-		usuarioTeste.setNome("Testador");
-		usuarioTeste.setEmail("test123@test.test");
-		usuarioTeste.setSenha("teste123");
-		usuarioTeste.setTipo("cliente");
-		usuarioTeste.setTelefone("(12)12345-6789");
-		usuarioTeste.setRegras(regrasRepository.findAll());
+		usuarioTeste.setNome("Nome Teste");
+		usuarioTeste.setEmail("teste@email.com");
+		usuarioTeste.setSenha("666");
+		usuarioTeste.setTipo("F");		
+		usuarioTeste.setTelefone("999");
 		
 		
 	}
@@ -57,7 +56,7 @@ public class VeiculoRepositoryTest {
 		veiculoTeste.setPlaca("ABC1D23");
 		veiculoTeste.setTipo('C');
 		
-		criarUsuarioTeste();
+		criarUsuarioTestes();
 		
 		veiculoTeste.setUsuario(usuarioTeste);
 		
