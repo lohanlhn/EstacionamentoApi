@@ -29,7 +29,7 @@ public class VeiculoRepositoryTest {
 		
 	private Veiculo veiculoTeste;
 		
-	private void criarVagaTeste() throws ParseException{
+	private void criarVeiculoTeste() throws ParseException{
 			
 		veiculoTeste = new Veiculo();
 		
@@ -37,19 +37,17 @@ public class VeiculoRepositoryTest {
 		veiculoTeste.setCor("Azul");
 		veiculoTeste.setPlaca("ABC1D23");
 		veiculoTeste.setTipo('C');
-		
-		Usuario usuario = new Usuario();
-		
-		usuario.setId(1);
-		
-		veiculoTeste.setUsuario(usuario);
+		veiculoTeste.getUsuario().setId(1);
 		
 	}
 		
 	@Before
 	public void setUp() throws Exception{
-		criarVagaTeste();
+		
+		criarVeiculoTeste();
+		
 		veiculoRepository.save(veiculoTeste);
+	
 	}
 		
 	@After
