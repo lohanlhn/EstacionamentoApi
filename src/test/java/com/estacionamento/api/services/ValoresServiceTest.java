@@ -80,7 +80,7 @@ public class ValoresServiceTest {
 		
 		BDDMockito.given(valoresRepository.findAll()).willReturn(lstValores);
 		
-		valoresService.buscarTodosOsValores();		
+		//valoresService.buscarTodosOsValores();		
 	}
 	
 	@Test
