@@ -49,11 +49,13 @@ public class VagaOcupadaService {
 
 	public VagaOcupada salvar(VagaOcupada vagaOcupada) throws ConsistenciaException {
 		log.info("Sevice: salvando o vagaOcupada: {}", vagaOcupada);
+		
+		vagaOcupada.setHoraEntrada(new Date());
 
 		if (vagaOcupada.getId() > 0)
 			buscarPorId(vagaOcupada.getId());
 		
-		//ocuparVaga(vagaOcupada);
+		ocuparVaga(vagaOcupada);
 
 		return vagaOcupadaRepository.save(vagaOcupada);
 
@@ -71,7 +73,7 @@ public class VagaOcupadaService {
 			throw new ConsistenciaException("Nunhuma vaga com id: {} foi encontrada", ocuparVaga.getId());
 		}
 		
-		if (vaga.get().getDisponivel()) {
+		if (!vaga.get().getDisponivel()) {
 			log.info(
 					"Service: Não é possivel ocupar essa vaga, pois a vaga selecionada já está ocupada");
 			
@@ -97,7 +99,7 @@ public class VagaOcupadaService {
 			throw new ConsistenciaException("Nunhuma vaga com id: {} foi encontrada", vaga.get().getId());
 		}
 		
-		if (!vaga.get().getDisponivel()) {
+		if (vaga.get().getDisponivel()) {
 			log.info(
 					"Service: Não é possivel Desocupar essa vaga, pois a vaga selecionada já está Desocupada");
 			

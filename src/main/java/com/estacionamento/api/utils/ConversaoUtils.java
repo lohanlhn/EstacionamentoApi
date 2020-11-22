@@ -131,7 +131,9 @@ public class ConversaoUtils {
 		
 		vagaOcupadaDto.setId(Integer.toString(vagaOcupada.getId()));
 		vagaOcupadaDto.setHoraEntrada(vagaOcupada.getHoraEntrada().toString());
-		vagaOcupadaDto.setHoraSaida(vagaOcupada.getHoraSaida().toString());
+		if(!(vagaOcupada.getHoraSaida() == null)) {
+			vagaOcupadaDto.setHoraSaida(vagaOcupada.getHoraSaida().toString());
+		}
 		vagaOcupadaDto.setValor(Double.toString(vagaOcupada.getValor()));
 		vagaOcupadaDto.setPaga(Boolean.toString(vagaOcupada.isPaga()));
 		
@@ -149,10 +151,10 @@ public class ConversaoUtils {
 		if (vagaOcupadaDto.getId() != null && vagaOcupadaDto.getId() != "")
 			vagaOcupada.setId(Integer.parseInt(vagaOcupadaDto.getId()));
 		
-		vagaOcupada.setHoraEntrada(new SimpleDateFormat("dd/MM/yyyy").parse(vagaOcupadaDto.getHoraEntrada()));
-		vagaOcupada.setHoraSaida(new SimpleDateFormat("dd/MM/yyyy").parse(vagaOcupadaDto.getHoraSaida()));
-		vagaOcupada.setValor(Double.parseDouble(vagaOcupadaDto.getValor()));
-		vagaOcupada.setPaga(Boolean.parseBoolean(vagaOcupadaDto.getPaga()));
+		//vagaOcupada.setHoraEntrada(new SimpleDateFormat("dd/MM/yyyy").parse(vagaOcupadaDto.getHoraEntrada()));
+		//vagaOcupada.setHoraSaida(new SimpleDateFormat("dd/MM/yyyy").parse(vagaOcupadaDto.getHoraSaida()));
+		//vagaOcupada.setValor(Double.parseDouble(vagaOcupadaDto.getValor()));
+		//vagaOcupada.setPaga(Boolean.parseBoolean(vagaOcupadaDto.getPaga()));
 		
 		Vaga vaga = new Vaga();
 		

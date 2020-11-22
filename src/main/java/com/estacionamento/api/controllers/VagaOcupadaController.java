@@ -108,7 +108,7 @@ public class VagaOcupadaController {
 	}
 	
 	@GetMapping(value = "Valor/{idVagaOcupada}")
-	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
+	@PreAuthorize("hasAnyRole('FUNC')")
 	public ResponseEntity<Response<VagaOcupadaDto>> VerValor(@PathVariable("idVagaOcupada") int id) throws java.text.ParseException{
 		
 		Response<VagaOcupadaDto> response = new Response<VagaOcupadaDto>();
@@ -116,7 +116,7 @@ public class VagaOcupadaController {
 		try {
 			log.info("Controller: Buscando Valor");
 			
-			Optional<VagaOcupada> vagaOcupada = Optional.empty();
+			Optional<VagaOcupada> vagaOcupada = vagaOcupadaService.buscarPorId(id);
 			vagaOcupada.get().setValor(vagaOcupadaService.VerValor(id));
 			
 			response.setDados(ConversaoUtils.converterVagaOcupada(vagaOcupada.get()));
@@ -138,7 +138,7 @@ public class VagaOcupadaController {
 	}
 	
 	@GetMapping(value = "/VagasOcupadasNaoPagas")
-	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
+	@PreAuthorize("hasAnyRole('ADM')")
 	public ResponseEntity<Response<List<VagaOcupadaDto>>> buscarVagasNaoPagas () {
 		
 		Response<List<VagaOcupadaDto>> response = new Response<List<VagaOcupadaDto>>();
@@ -165,7 +165,7 @@ public class VagaOcupadaController {
 	}
 	
 	@GetMapping(value = "/BuscarTodas")
-	@PreAuthorize("hasAnyRole('ADM_USUARIO')")
+	@PreAuthorize("hasAnyRole('ADM')")
 	public ResponseEntity<Response<List<VagaOcupadaDto>>> buscarTodasVagas () {
 		
 		Response<List<VagaOcupadaDto>> response = new Response<List<VagaOcupadaDto>>();
@@ -200,7 +200,7 @@ public class VagaOcupadaController {
 			log.info("Controller: Confirmando Pagamento da vagaOcupada de id: {}", id);
 			
 			
-			Optional<VagaOcupada> vagaOcupada = Optional.empty();
+			Optional<VagaOcupada> vagaOcupada = vagaOcupadaService.buscarPorId(id);
 			
 			this.vagaOcupadaService.confirmarPaga(id);;
 			vagaOcupada.get().setPaga(true);
