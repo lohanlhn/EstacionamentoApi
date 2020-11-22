@@ -32,7 +32,7 @@ public class Veiculo implements Serializable {
 	private String placa;
 	
 	@Column(name = "tipo", nullable = false)
-	private char tipo;
+	private String tipo;
 	
 	@JsonBackReference
    	@ManyToOne(fetch = FetchType.EAGER)
@@ -70,11 +70,11 @@ public class Veiculo implements Serializable {
 		this.placa = placa;
 	}
 
-	public char getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(char tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 

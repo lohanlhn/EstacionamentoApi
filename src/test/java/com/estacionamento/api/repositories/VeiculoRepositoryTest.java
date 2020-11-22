@@ -1,6 +1,6 @@
 package com.estacionamento.api.repositories;
 
-/*import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,15 +16,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.estacionamento.api.entities.Usuario;
 import com.estacionamento.api.entities.Veiculo;
-import com.sun.el.parser.ParseException;*/
+import com.sun.el.parser.ParseException;
 
-
-/*@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("test")*/
+@ActiveProfiles("test")
 public class VeiculoRepositoryTest {
 
-	/*@Autowired
+	@Autowired
 	private VeiculoRepository veiculoRepository;
 	
 	@Autowired
@@ -58,7 +57,7 @@ public class VeiculoRepositoryTest {
 		veiculoTeste.setMarca("Fiat");
 		veiculoTeste.setCor("Azul");
 		veiculoTeste.setPlaca("ABC1D23");
-		veiculoTeste.setTipo('C');
+		veiculoTeste.setTipo("C");
 		
 		criarUsuarioTeste();
 		
@@ -101,5 +100,5 @@ public class VeiculoRepositoryTest {
 	public void testFindByUsuarioId() {
 		Optional<List<Veiculo>> veiculos = veiculoRepository.findByUsuarioId(veiculoTeste.getUsuario().getId());
 		assertEquals(veiculoTeste.getId(), veiculos.get().get(0).getId());
-	}*/
+	}
 }

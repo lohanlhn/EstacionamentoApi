@@ -188,7 +188,7 @@ public static List<VagaOcupadaDto> converterListaVagaOcupada (Optional<List<Vaga
 		veiculoDto.setMarca(veiculo.getMarca());
 		veiculoDto.setCor(veiculo.getCor());
 		veiculoDto.setPlaca(veiculo.getPlaca());
-		veiculoDto.setTipo(String.valueOf(veiculo.getTipo()));
+		veiculoDto.setTipo(veiculo.getTipo());
 		veiculoDto.setUsuarioId(Integer.toString(veiculo.getUsuario().getId()));
 		
 		return veiculoDto;
@@ -203,7 +203,7 @@ public static List<VagaOcupadaDto> converterListaVagaOcupada (Optional<List<Vaga
 		veiculo.setMarca(veiculoDto.getMarca());
 		veiculo.setCor(veiculoDto.getCor());
 		veiculo.setPlaca(veiculoDto.getPlaca());
-		veiculo.setTipo(veiculoDto.getTipo().charAt(0));
+		veiculo.setTipo(veiculoDto.getTipo());;
 		
 		Usuario usuario = new Usuario();
 		usuario.setId(Integer.parseInt(veiculoDto.getUsuarioId()));

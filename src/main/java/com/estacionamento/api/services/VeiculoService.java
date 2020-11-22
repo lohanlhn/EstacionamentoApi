@@ -71,7 +71,9 @@ public class VeiculoService {
 		}
 
 		try {
-			return veiculoRepository.save(veiculo);
+			veiculoRepository.save(veiculo);
+			
+			return veiculo;
 		} catch (DataIntegrityViolationException e) {
 			log.info("Service: A placa: {} já está cadastrada para outro veiculo", veiculo.getPlaca());
 			throw new ConsistenciaException("A placa: {} já está cadastrada para outro veiculo", veiculo.getPlaca());
