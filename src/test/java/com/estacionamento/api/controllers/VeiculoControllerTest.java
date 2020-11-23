@@ -248,7 +248,7 @@ VeiculoDto objEntrada = new VeiculoDto();
 		objEntrada.setMarca("Fiat");
 		objEntrada.setCor("Preto");
 		objEntrada.setPlaca("JYK2750");
-		objEntrada.setTipo("C");
+		objEntrada.setTipo("C1");
 		objEntrada.setUsuarioId("2");
 		
 		String json = new ObjectMapper().writeValueAsString(objEntrada);
