@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.estacionamento.api.dtos.VeiculoDto;
+import com.estacionamento.api.entities.Usuario;
 import com.estacionamento.api.entities.Veiculo;
 import com.estacionamento.api.services.VeiculoService;
 import com.estacionamento.api.utils.ConsistenciaException;
@@ -50,14 +51,38 @@ public class VeiculoControllerTest {
 		veiculo.setCor("Vermelho");
 		veiculo.setPlaca("JYK2750");
 		veiculo.setTipo("C");
-		
-
+		veiculo.setUsuario(new Usuario());
+		veiculo.getUsuario().setId(1);
 		return veiculo;
+	}
+	
+	@Test
+	@WithMockUser
+	public void testBuscarPorClienteIdSucesso() throws Exception {
+
+		Veiculo veiculo = criarVeiculoTeste();
+		List<Veiculo> lstVeiculo = new ArrayList<>();
+		lstVeiculo.add(veiculo);
+
+		BDDMockito.given(veiculoService.buscarPorClienteId(Mockito.anyInt()))
+				.willReturn(Optional.of(lstVeiculo));
+
+		mvc.perform(
+				MockMvcRequestBuilders.get("/api/veiculo/usuario/1").accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(jsonPath("$.dados[0].id").value(veiculo.getId()))
+				.andExpect(jsonPath("$.dados[0].marca").value(veiculo.getMarca()))
+				.andExpect(jsonPath("$.dados[0].cor").value(veiculo.getCor()))
+				.andExpect(jsonPath("$.dados[0].placa").value(veiculo.getPlaca()))
+				.andExpect(jsonPath("$.dados[0].tipo").value(veiculo.getTipo()))
+				.andExpect(jsonPath("$.dados[0].usuarioId").value(veiculo.getUsuario().getId()))
+				.andExpect(jsonPath("$.erros").isEmpty());
+
 	}
 	
 	@Test
 	@WithMockUser(roles = "ADM")
 	public void testSalvarSucesso() throws Exception {
+		
 		Veiculo veiculo = criarVeiculoTeste();
 		VeiculoDto objEntrada = ConversaoUtils.conveterVeiculo(veiculo);
 
@@ -65,7 +90,8 @@ public class VeiculoControllerTest {
 
 		BDDMockito.given(veiculoService.salvar(Mockito.any(Veiculo.class))).willReturn(veiculo);
 
-		mvc.perform(MockMvcRequestBuilders.post("/api/veiculo").content(json).contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(MockMvcRequestBuilders.post("/api/veiculo")
+				.content(json).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.dados.id").value(objEntrada.getId()))
@@ -73,9 +99,10 @@ public class VeiculoControllerTest {
 				.andExpect(jsonPath("$.dados.cor").value(objEntrada.getCor()))
 				.andExpect(jsonPath("$.dados.placa").value(objEntrada.getPlaca()))		
 				.andExpect(jsonPath("$.dados.tipo").value(objEntrada.getTipo()))	
+				.andExpect(jsonPath("$.dados.usuarioId").value(objEntrada.getUsuarioId()))
 				.andExpect(jsonPath("$.erros").isEmpty());
 	}
-
+		
 	@Test
 	@WithMockUser(roles = "ADM")
 	public void testSalvarInconsistencia() throws Exception {
@@ -93,15 +120,5 @@ public class VeiculoControllerTest {
 	}
 
 
-	@Test
-	@WithMockUser(roles = "ADM")
-	public void testExcluirPorIdSucesso() throws Exception{				
-		
-		mvc.perform(MockMvcRequestBuilders.delete("/api/veiculo/excluir/1")
-				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$.dados").value("Veiculo de id: 1 excluído com sucesso"))
-		.andExpect(jsonPath("$.erros").isEmpty());
-	}
 	
 }
