@@ -150,7 +150,7 @@ public class VeiculoControllerTest {
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$.erros").value("Marca não pode ser vazio"));
+			.andExpect(jsonPath("$.erros").value("Marca não pode ser vazio."));
 	}
 	
 	@Test
@@ -171,7 +171,94 @@ public class VeiculoControllerTest {
 			.contentType(MediaType.APPLICATION_JSON)
 			.accept(MediaType.APPLICATION_JSON))
 			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$.erros").value("Cor não pode ser vazio"));
+			.andExpect(jsonPath("$.erros").value("Cor não pode ser vazio."));
 	}
 	
+	@Test
+	@WithMockUser(roles = "ADM")
+	public void testSalvarPlacaEmBranco() throws Exception {
+		
+		VeiculoDto objEntrada = new VeiculoDto();
+		
+		objEntrada.setMarca("Fiat");
+		objEntrada.setCor("Preto");
+		objEntrada.setTipo("C");
+		objEntrada.setUsuarioId("2");
+		
+		String json = new ObjectMapper().writeValueAsString(objEntrada);
+
+		mvc.perform(MockMvcRequestBuilders.post("/api/veiculo")
+			.content(json)
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.erros").value("Placa não pode ser vazio."));
+	}
+	
+	@Test
+	@WithMockUser(roles = "ADM")
+	public void testSalvarPlacaInvalido() throws Exception {
+		
+		VeiculoDto objEntrada = new VeiculoDto();
+		
+		objEntrada.setMarca("Fiat");
+		objEntrada.setCor("Preto");
+		objEntrada.setPlaca("JYK27501");
+		objEntrada.setTipo("C");
+		objEntrada.setUsuarioId("2");
+		
+		
+		String json = new ObjectMapper().writeValueAsString(objEntrada);
+
+		mvc.perform(MockMvcRequestBuilders.post("/api/veiculo")
+			.content(json)
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.erros").value("A placa deve conter apenas 7 digitos"));
+	}
+	
+	@Test
+	@WithMockUser(roles = "ADM")
+	public void testSalvarTipoEmBranco() throws Exception {
+		
+		VeiculoDto objEntrada = new VeiculoDto();
+		
+		objEntrada.setMarca("Fiat");
+		objEntrada.setCor("Preto");
+		objEntrada.setPlaca("JYK2750");
+		objEntrada.setUsuarioId("2");
+		
+		String json = new ObjectMapper().writeValueAsString(objEntrada);
+
+		mvc.perform(MockMvcRequestBuilders.post("/api/veiculo")
+			.content(json)
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.erros").value("Tipo não pode ser vazio."));
+	}
+	
+	@Test
+	@WithMockUser(roles = "ADM")
+	public void testSalvarTipoInvalido() throws Exception {
+		
+		VeiculoDto objEntrada = new VeiculoDto();
+		
+		objEntrada.setMarca("Fiat");
+		objEntrada.setCor("Preto");
+		objEntrada.setPlaca("JYK27501");
+		objEntrada.setTipo("CA");
+		objEntrada.setUsuarioId("2");
+		
+		
+		String json = new ObjectMapper().writeValueAsString(objEntrada);
+
+		mvc.perform(MockMvcRequestBuilders.post("/api/veiculo")
+			.content(json)
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.erros").value("O tipo deve conter apenas 1 digito"));
+	}
 }

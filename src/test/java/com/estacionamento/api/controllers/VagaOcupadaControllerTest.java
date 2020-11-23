@@ -44,6 +44,7 @@ public class VagaOcupadaControllerTest {
 	private VagaOcupadaService vagaOcupadaService;
 
 	private VagaOcupada criarVagaOcupadaTeste() {
+		
 		VagaOcupada vagaOcupada = new VagaOcupada();
 
 		vagaOcupada.setId(1);
@@ -56,15 +57,20 @@ public class VagaOcupadaControllerTest {
 	@Test
 	@WithMockUser(roles = "ADM")
 	public void testSalvarSucesso() throws Exception {
+		
 		VagaOcupada vagaOcupada = criarVagaOcupadaTeste();
 		VagaOcupadaDto objEntrada = ConversaoUtils.converterVagaOcupada(vagaOcupada);
 
 		String json = new ObjectMapper().writeValueAsString(objEntrada);
 
-		BDDMockito.given(vagaOcupadaService.salvar(Mockito.any(VagaOcupada.class))).willReturn(vagaOcupada);
+		BDDMockito.given(vagaOcupadaService.salvar(Mockito.any(VagaOcupada.class)))
+		.willReturn(vagaOcupada);
 
-		mvc.perform(MockMvcRequestBuilders.post("/api/vaga").content(json).contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+		mvc.perform(MockMvcRequestBuilders.post("/api/vagaOcupada")
+				.content(json)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.dados.id").value(objEntrada.getId()))
 				.andExpect(jsonPath("$.dados.valor").value(objEntrada.getValor()))
 				.andExpect(jsonPath("$.dados.paga").value(objEntrada.getPaga()))
