@@ -197,7 +197,7 @@ public class VeiculoControllerTest {
 	
 	@Test
 	@WithMockUser(roles = "ADM")
-	public void testSalvarPlacaInvalido() throws Exception {
+	public void testSalvarPlacaExcedente() throws Exception {
 		
 		VeiculoDto objEntrada = new VeiculoDto();
 		
@@ -240,17 +240,16 @@ public class VeiculoControllerTest {
 	}
 	
 	@Test
-	@WithMockUser(roles = "ADM")
-	public void testSalvarTipoInvalido() throws Exception {
+	@WithMockUser
+	public void testSalvarTipoExcedente() throws Exception {
 		
-		VeiculoDto objEntrada = new VeiculoDto();
+VeiculoDto objEntrada = new VeiculoDto();
 		
 		objEntrada.setMarca("Fiat");
 		objEntrada.setCor("Preto");
-		objEntrada.setPlaca("JYK27501");
-		objEntrada.setTipo("CA");
+		objEntrada.setPlaca("JYK2750");
+		objEntrada.setTipo("C");
 		objEntrada.setUsuarioId("2");
-		
 		
 		String json = new ObjectMapper().writeValueAsString(objEntrada);
 
