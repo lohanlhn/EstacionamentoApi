@@ -1,9 +1,12 @@
 package com.estacionamento.api.services;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,7 @@ import com.estacionamento.api.entities.Vaga;
 import com.estacionamento.api.repositories.VagaRepository;
 import com.estacionamento.api.repositories.ValoresRepository;
 import com.estacionamento.api.utils.ConsistenciaException;
+import com.estacionamento.api.utils.ConversaoUtils;
 import com.estacionamento.api.utils.CalculaValor;
 
 @Service
@@ -47,10 +51,12 @@ public class VagaOcupadaService {
 
 	}
 
-	public VagaOcupada salvar(VagaOcupada vagaOcupada) throws ConsistenciaException {
+	public VagaOcupada salvar(VagaOcupada vagaOcupada) throws ConsistenciaException, ParseException {
 		log.info("Sevice: salvando o vagaOcupada: {}", vagaOcupada);
 		
-		vagaOcupada.setHoraEntrada(new Date());
+		Date now = new Date();
+		
+		vagaOcupada.setHoraEntrada(now);
 
 		if (vagaOcupada.getId() > 0)
 			buscarPorId(vagaOcupada.getId());
@@ -114,6 +120,8 @@ public class VagaOcupadaService {
 	
 	public double VerValor (int id) throws ConsistenciaException, ParseException{
 		log.info("Service: Buscando o Valor.");
+		
+		
 		
 		Date now = new Date();
 		

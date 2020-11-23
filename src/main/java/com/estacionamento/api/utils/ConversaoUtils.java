@@ -2,6 +2,7 @@ package com.estacionamento.api.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ import com.estacionamento.api.entities.Vaga;
 import com.estacionamento.api.entities.VagaOcupada;
 import com.estacionamento.api.entities.Valores;
 import com.estacionamento.api.entities.Veiculo;
-import com.sun.el.parser.ParseException;
+import java.text.ParseException;
 
 public class ConversaoUtils {
 	public static Valores converterValoresDto(ValoresDto valoresDto) throws ParseException{
@@ -224,6 +225,18 @@ public static List<VagaOcupadaDto> converterListaVagaOcupada (Optional<List<Vaga
 		
 		return listVeiculoDto;
 		
+	}
+	
+	public static Date conveterDataFuso (Date data) throws ParseException {
+		
+		long hora = data.getTime();
+		long diff = hora - 10800000;
+		String help = String.valueOf(diff);
+		
+		Date nova = new SimpleDateFormat("dd/MM/yyyy").parse(help);
+		
+		
+		return nova;
 	}
 	
 	
