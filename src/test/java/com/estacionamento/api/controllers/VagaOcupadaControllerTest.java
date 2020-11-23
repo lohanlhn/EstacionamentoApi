@@ -24,7 +24,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
 import com.estacionamento.api.dtos.VagaOcupadaDto;
+import com.estacionamento.api.entities.Usuario;
+import com.estacionamento.api.entities.Vaga;
 import com.estacionamento.api.entities.VagaOcupada;
+import com.estacionamento.api.entities.Veiculo;
 import com.estacionamento.api.services.VagaOcupadaService;
 import com.estacionamento.api.utils.ConsistenciaException;
 import com.estacionamento.api.utils.ConversaoUtils;
@@ -49,7 +52,13 @@ public class VagaOcupadaControllerTest {
 
 		vagaOcupada.setId(1);
 		vagaOcupada.setValor(10);
+		vagaOcupada.getHoraEntrada();
+		vagaOcupada.getHoraSaida();
 		vagaOcupada.setPaga(true);
+		vagaOcupada.setVaga(new Vaga());
+		vagaOcupada.getVaga().setId(1);
+		vagaOcupada.setVeiculo(new Veiculo());
+		vagaOcupada.getVeiculo().setId(1);
 
 		return vagaOcupada;
 	}
@@ -74,6 +83,10 @@ public class VagaOcupadaControllerTest {
 				.andExpect(jsonPath("$.dados.id").value(objEntrada.getId()))
 				.andExpect(jsonPath("$.dados.valor").value(objEntrada.getValor()))
 				.andExpect(jsonPath("$.dados.paga").value(objEntrada.getPaga()))
+				.andExpect(jsonPath("$.dados.horaEntrada").value(objEntrada.getHoraEntrada()))
+				.andExpect(jsonPath("$.dados.horaSaida").value(objEntrada.getHoraSaida()))
+				.andExpect(jsonPath("$.dados.vagaId").value(objEntrada.getVaga()))
+				.andExpect(jsonPath("$.dados.veiculoId").value(objEntrada.getVeiculo()))
 				.andExpect(jsonPath("$.erros").isEmpty());
 	}
 
@@ -88,7 +101,7 @@ public class VagaOcupadaControllerTest {
 		BDDMockito.given(vagaOcupadaService.salvar(Mockito.any(VagaOcupada.class)))
 				.willThrow(new ConsistenciaException("Teste inconsistência."));
 
-		mvc.perform(MockMvcRequestBuilders.post("/api/vaga").content(json).contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(MockMvcRequestBuilders.post("/api/vagaOcupada").content(json).contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest())
 				.andExpect(jsonPath("$.erros").value("Teste inconsistência."));
 	}
