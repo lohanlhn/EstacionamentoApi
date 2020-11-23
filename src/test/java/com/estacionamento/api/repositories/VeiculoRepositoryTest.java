@@ -33,7 +33,6 @@ public class VeiculoRepositoryTest {
 	private RegraRepository regraRepository;
 	
 	private Veiculo veiculoTeste;
-	
 	private Usuario usuarioTeste;
 	
 	private void criarUsuarioTeste() throws ParseException {
@@ -70,11 +69,9 @@ public class VeiculoRepositoryTest {
 	public void setUp() throws Exception{
 		
 		criarUsuarioTeste();
-		
-		usuarioRepository.save(usuarioTeste);
-		
 		criarVeiculoTeste();
 		
+		usuarioRepository.save(usuarioTeste);
 		veiculoRepository.save(veiculoTeste);
 	
 	}
@@ -82,6 +79,7 @@ public class VeiculoRepositoryTest {
 	@After
 	public void tearDown() throws Exception{
 		veiculoRepository.deleteAll();
+		usuarioRepository.deleteAll();
 	}
 		
 	@Test
@@ -98,7 +96,7 @@ public class VeiculoRepositoryTest {
 	
 	@Test
 	public void testFindByUsuarioId() {
-		Optional<List<Veiculo>> veiculos = veiculoRepository.findByUsuarioId(veiculoTeste.getUsuario().getId());
-		assertEquals(veiculoTeste.getId(), veiculos.get().get(0).getId());
+		Optional<List<Veiculo>> lstveiculos = veiculoRepository.findByUsuarioId(veiculoTeste.getUsuario().getId());
+		assertEquals(veiculoTeste.getId(), lstveiculos.get().get(0).getId());
 	}
 }

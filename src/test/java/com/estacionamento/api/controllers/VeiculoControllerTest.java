@@ -57,7 +57,7 @@ public class VeiculoControllerTest {
 	}
 	
 	@Test
-	@WithMockUser
+	@WithMockUser(roles = "ADM")
 	public void testBuscarPorClienteIdSucesso() throws Exception {
 
 		Veiculo veiculo = criarVeiculoTeste();
@@ -68,8 +68,10 @@ public class VeiculoControllerTest {
 				.willReturn(Optional.of(lstVeiculo));
 
 		mvc.perform(
-				MockMvcRequestBuilders.get("/api/veiculo/usuario/1").accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk()).andExpect(jsonPath("$.dados[0].id").value(veiculo.getId()))
+				MockMvcRequestBuilders.get("/api/veiculo/usuario/4")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.dados[0].id").value(veiculo.getId()))
 				.andExpect(jsonPath("$.dados[0].marca").value(veiculo.getMarca()))
 				.andExpect(jsonPath("$.dados[0].cor").value(veiculo.getCor()))
 				.andExpect(jsonPath("$.dados[0].placa").value(veiculo.getPlaca()))
@@ -77,6 +79,17 @@ public class VeiculoControllerTest {
 				.andExpect(jsonPath("$.dados[0].usuarioId").value(veiculo.getUsuario().getId()))
 				.andExpect(jsonPath("$.erros").isEmpty());
 
+	}
+	
+	@Test
+	@WithMockUser(roles = "ADM")
+	public void testBuscarPorClienteIdInconsistencia() throws Exception {
+		BDDMockito.given(veiculoService.buscarPorClienteId(Mockito.anyInt()))
+				.willThrow(new ConsistenciaException("Teste inconsistência"));
+
+		mvc.perform(
+				MockMvcRequestBuilders.get("/api/veiculo/usuario/4").accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest()).andExpect(jsonPath("$.erros").value("Teste inconsistência"));
 	}
 	
 	@Test
@@ -119,6 +132,46 @@ public class VeiculoControllerTest {
 				.andExpect(jsonPath("$.erros").value("Teste inconsistência."));
 	}
 
+	@Test
+	@WithMockUser(roles = "ADM")
+	public void testSalvarMarcaEmBranco() throws Exception {
+		
+		VeiculoDto objEntrada = new VeiculoDto();
+		
+		objEntrada.setCor("Preto");
+		objEntrada.setPlaca("JYK2750");
+		objEntrada.setTipo("C");
+		objEntrada.setUsuarioId("2");
+		
+		String json = new ObjectMapper().writeValueAsString(objEntrada);
 
+		mvc.perform(MockMvcRequestBuilders.post("/api/veiculo")
+			.content(json)
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.erros").value("Marca não pode ser vazio"));
+	}
+	
+	@Test
+	@WithMockUser(roles = "ADM")
+	public void testSalvarCorEmBranco() throws Exception {
+		
+		VeiculoDto objEntrada = new VeiculoDto();
+		
+		objEntrada.setMarca("Fiat");
+		objEntrada.setPlaca("JYK2750");
+		objEntrada.setTipo("C");
+		objEntrada.setUsuarioId("2");
+		
+		String json = new ObjectMapper().writeValueAsString(objEntrada);
+
+		mvc.perform(MockMvcRequestBuilders.post("/api/veiculo")
+			.content(json)
+			.contentType(MediaType.APPLICATION_JSON)
+			.accept(MediaType.APPLICATION_JSON))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$.erros").value("Cor não pode ser vazio"));
+	}
 	
 }
