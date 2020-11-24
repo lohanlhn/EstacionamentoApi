@@ -42,7 +42,7 @@ public class VagaOcupadaRepositoryTest {
 	private void criarVagaTeste() throws ParseException{
 		
 		vagaTeste = new Vaga();
-		vagaTeste.setId(1);
+		
 		vagaTeste.setCodVaga("2");
 		vagaTeste.setDisponivel(true);
 		
@@ -52,8 +52,7 @@ public class VagaOcupadaRepositoryTest {
 	private void criarVeiculoTeste() throws ParseException{
 			
 			veiculoTeste = new Veiculo();
-			
-			veiculoTeste.setId(1);;
+						
 			veiculoTeste.setMarca("Fiat");
 			veiculoTeste.setCor("Vermelho");
 			veiculoTeste.setPlaca("ABC1D23");
@@ -65,16 +64,11 @@ public class VagaOcupadaRepositoryTest {
 	private void criarVagaOcupadaTeste() throws ParseException{
 		
 		vagaOcupadaTeste = new VagaOcupada();
-		
-		vagaOcupadaTeste.setId(1);
+				
 		vagaOcupadaTeste.setValor(10);
 		vagaOcupadaTeste.setHoraEntrada(new Date());
 		vagaOcupadaTeste.setHoraSaida(null);
 		vagaOcupadaTeste.setPaga(true);
-	
-		
-		criarVeiculoTeste();
-		criarVagaTeste();
 		
 		vagaOcupadaTeste.setVeiculo(veiculoTeste);
 		vagaOcupadaTeste.setVaga(vagaTeste);
