@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,11 +50,11 @@ public class VagaOcupadaControllerTest {
 	private VagaOcupada criarVagaOcupadaTeste() {
 		
 		VagaOcupada vagaOcupada = new VagaOcupada();
-
+		
 		vagaOcupada.setId(1);
 		vagaOcupada.setValor(10);
-		vagaOcupada.getHoraEntrada();
-		vagaOcupada.getHoraSaida();
+		vagaOcupada.setHoraEntrada(new Date());
+		vagaOcupada.setHoraSaida(null);
 		vagaOcupada.setPaga(true);
 		vagaOcupada.setVaga(new Vaga());
 		vagaOcupada.getVaga().setId(1);
