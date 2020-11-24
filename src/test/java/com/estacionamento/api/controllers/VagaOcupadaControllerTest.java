@@ -86,8 +86,8 @@ public class VagaOcupadaControllerTest {
 				.andExpect(jsonPath("$.dados.paga").value(objEntrada.getPaga()))
 				.andExpect(jsonPath("$.dados.horaEntrada").value(objEntrada.getHoraEntrada()))
 				.andExpect(jsonPath("$.dados.horaSaida").value(objEntrada.getHoraSaida()))
-				.andExpect(jsonPath("$.dados.vagaId").value(objEntrada.getVaga()))
-				.andExpect(jsonPath("$.dados.veiculoId").value(objEntrada.getVeiculo()))
+				.andExpect(jsonPath("$.dados.vaga").value(objEntrada.getVaga()))
+				.andExpect(jsonPath("$.dados.veiculo").value(objEntrada.getVeiculo()))
 				.andExpect(jsonPath("$.erros").isEmpty());
 	}
 
