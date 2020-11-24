@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+
 import com.estacionamento.api.dtos.VeiculoDto;
 import com.estacionamento.api.entities.Usuario;
 import com.estacionamento.api.entities.Veiculo;
@@ -68,7 +69,7 @@ public class VeiculoControllerTest {
 				.willReturn(Optional.of(lstVeiculo));
 
 		mvc.perform(
-				MockMvcRequestBuilders.get("/api/veiculo/usuario/4")
+				MockMvcRequestBuilders.get("/api/veiculo/cliente/1")
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$.dados[0].id").value(veiculo.getId()))
@@ -88,7 +89,7 @@ public class VeiculoControllerTest {
 				.willThrow(new ConsistenciaException("Teste inconsistência"));
 
 		mvc.perform(
-				MockMvcRequestBuilders.get("/api/veiculo/usuario/4").accept(MediaType.APPLICATION_JSON))
+				MockMvcRequestBuilders.get("/api/veiculo/cliente/1").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isBadRequest()).andExpect(jsonPath("$.erros").value("Teste inconsistência"));
 	}
 	
